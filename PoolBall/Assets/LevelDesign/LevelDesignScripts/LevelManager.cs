@@ -1,0 +1,68 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
+public class LevelManager : MonoBehaviour
+{
+    public static LevelManager inst { get; private set; }
+
+    [SerializeField] float timeScale=1f;
+    [SerializeField] public float score=0f;
+
+    [SerializeField] CanvasScript canvas;
+
+    private void Awake()
+    {
+        inst = this;
+
+        GameObject bulletPool = GameObject.Find("BulletPool");
+        if (bulletPool == null) { new GameObject("BulletPool");}
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
+
+        Time.timeScale = timeScale;
+    }
+
+    public void AddScore(float scr)
+    {
+        score += Mathf.RoundToInt(scr);
+        canvas.UpdateScoreText(score);
+
+    }
+
+    public void SlowDownTime()
+    {
+        StopAllCoroutines();
+        StartCoroutine(SlowDown());
+    }
+
+    public void ResetTime()
+    {
+        StopAllCoroutines();
+        timeScale = 1f;
+    }
+    private IEnumerator SlowDown()
+    {
+        float startScale = timeScale;
+        float targetScale = 0.5f;
+        float duration = 0.5f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
+            timeScale = Mathf.Lerp(startScale, targetScale, normalizedTime);
+            yield return null;
+        }
+
+        timeScale = targetScale; //snap
+    }
+}
