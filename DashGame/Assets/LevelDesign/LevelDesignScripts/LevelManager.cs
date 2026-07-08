@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = timeScale;
     }
 
-    public void ChangeHealth(int _health)
+    public void ChangeHealth(int _health) //for both + and - health
     {
         health += _health;
         canvas.UpdateHealth();
@@ -48,6 +48,11 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public void AddKey()
+    {
+        keys++;
+        canvas.UpdateKeys();
+    }
     public void SlowDownTime()
     {
         StopAllCoroutines();

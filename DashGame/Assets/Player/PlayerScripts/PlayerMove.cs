@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float jumpDuration = 0.6f; // Snappy airtime
     private bool isJumping = false;
     private float jumpYOffset = 0f; // Stores our temporary height
+    [SerializeField] float ground_y;
 
     private Vector3 currentVelocity;
     private CapsuleCollider capsuleCollider;
@@ -39,6 +40,8 @@ public class PlayerMove : MonoBehaviour
         playerAim = GetComponent<PlayerAim>();
         rb= GetComponent<Rigidbody>();
         rb.isKinematic = true;
+
+        ground_y=transform.position.y;
     }
 
     void Update()
@@ -60,6 +63,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (isKnockedBack || isFalling || isJumping) return;
         currentVelocity = direction * speed;
+        transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         currentVelocity.y = 0; // Lock perfectly flat to the table surface
         isMoving = true;
     }
@@ -272,13 +276,14 @@ public class PlayerMove : MonoBehaviour
             transform.position = Vector3.Lerp(startPosition, targetPosition, curvedPercent);
             yield return null;
         }
+        transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         isKnockedBack = false;
     }
 
     //Trigger colliders from pockets.
     public void Fall(Vector3 holePosition)
     {
-        if (!isFalling&&!isJumping)
+        if (!isFalling)
         {
             isFalling = true;
             isMoving = false;

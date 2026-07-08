@@ -6,7 +6,7 @@ public class KeyBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            LevelManager.inst.keys++;
+            LevelManager.inst.AddKey();
             Destroy(this.gameObject);
         }
     }

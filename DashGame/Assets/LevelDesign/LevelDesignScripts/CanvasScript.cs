@@ -31,7 +31,7 @@ public class CanvasScript : MonoBehaviour
     }
     public void UpdateKeys()
     {
-
+        keyText.text = "Keys: "+ LevelManager.inst.keys.ToString("F0");
     }
     public void UpdateScoreText(float scr)
     {

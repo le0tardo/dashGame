@@ -62,6 +62,11 @@ public class PlayerAim : MonoBehaviour
         launchSpeed = Mathf.Min(launchSpeed, maxSpeed);
         ResetArrow();
 
+        if (launchSpeed < 10) //threshold
+        {
+            launchSpeed = 10;
+        }
+        print("Laucnh speed: " +launchSpeed);
         // Launch!
         if(moveScript!=null)moveScript.Launch(launchDirection, launchSpeed);
         LevelManager.inst.ResetTime();
