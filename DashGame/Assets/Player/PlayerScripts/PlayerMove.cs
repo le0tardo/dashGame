@@ -11,6 +11,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask doorLayer;
     [SerializeField] private LayerMask hurtLayer;
     [SerializeField] private float fallSpeed = 30f;
+    [Header("Jump")]
+    [SerializeField] private float jumpHeight = 4f;
+    [SerializeField] private float jumpDuration = 0.6f; // Snappy airtime
+    private bool isJumping = false;
+    private float jumpYOffset = 0f; // Stores our temporary height
 
     private Vector3 currentVelocity;
     private CapsuleCollider capsuleCollider;
@@ -53,6 +58,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Launch(Vector3 direction, float speed)
     {
+        if (isKnockedBack || isFalling || isJumping) return;
         currentVelocity = direction * speed;
         currentVelocity.y = 0; // Lock perfectly flat to the table surface
         isMoving = true;
@@ -151,7 +157,54 @@ public class PlayerMove : MonoBehaviour
             transform.position += frameMovement;
         }
     }
+    public void Jump()
+    {
+        // Safety gate: Don't jump if already jumping or falling down a hole
+        if (isJumping || isFalling) return;
 
+        StartCoroutine(JumpRoutine());
+    }
+    private System.Collections.IEnumerator JumpRoutine()
+    {
+        isJumping = true;
+        float elapsedTime = 0f;
+
+        // Save the exact Y level of your table surface before leaping
+        float tableSurfaceY = transform.position.y - jumpYOffset;
+
+        while (elapsedTime < jumpDuration)
+        {
+            // Use unscaledDeltaTime so the jump speed matches real time 
+            // even if you slow down time to aim mid-air!
+            elapsedTime += Time.unscaledDeltaTime;
+
+            float percent = Mathf.Clamp01(elapsedTime / jumpDuration);
+
+            // --- THE PARABOLA FORMULA ---
+            // 4 * x * (1 - x) creates a perfect arc that starts at 0, 
+            // peaks at 1 right in the middle (0.5), and drops back to 0 at the end.
+            float arcNormalized = 4f * percent * (1f - percent);
+
+            // Scale the arc by our desired height
+            jumpYOffset = arcNormalized * jumpHeight;
+
+            // Apply the height to our current position
+            Vector3 currentPos = transform.position;
+            currentPos.y = tableSurfaceY + jumpYOffset;
+            transform.position = currentPos;
+
+            yield return null;
+        }
+
+        // --- LANDING ---
+        // Safely snap back down to the exact table height
+        Vector3 finalPos = transform.position;
+        finalPos.y = tableSurfaceY;
+        transform.position = finalPos;
+
+        jumpYOffset = 0f;
+        isJumping = false;
+    }
     void CheckHitLayer(LayerMask layer)
     {
         //print("Hit: " + layer.ToString()); //need to format af, forloops and stuff...
@@ -225,7 +278,7 @@ public class PlayerMove : MonoBehaviour
     //Trigger colliders from pockets.
     public void Fall(Vector3 holePosition)
     {
-        if (!isFalling)
+        if (!isFalling&&!isJumping)
         {
             isFalling = true;
             isMoving = false;
