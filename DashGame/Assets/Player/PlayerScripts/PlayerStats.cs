@@ -9,16 +9,11 @@ public class PlayerStats : MonoBehaviour
         Falling,
         Dead
     }
-
-    [SerializeField] float health;
-    float maxHealth;
-    public float mass;
     public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
 
     PlayerMove move;
     private void Start()
     {
-        maxHealth = health;
         move=GetComponent<PlayerMove>();
     }
     public void SetState(PlayerState newState)
@@ -28,13 +23,20 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(float dmg, Vector3 hitPos)
     {
-        health-=dmg;
-        Mathf.Clamp(health, 0, maxHealth);
-        if (health <= 0) {Destroy(this.gameObject);}
-
-        //move.KnockBack(hitPos,dmg); //regular knockback with the same movement system
         move.StartKnockBack(hitPos, dmg);
+        SubtractHealth(dmg);
     }
 
+    public void Hurt(float dmg, Vector3 hitPos)
+    {
+        move.StartKnockBack(hitPos, 2.5f);
+        CameraShake.inst.Shake(0.05f, 2f); //extra camera shake
+        SubtractHealth(dmg);
+    }
 
+    void SubtractHealth(float dmg)
+    {
+        dmg = -dmg;
+        LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg));
+    }
 }

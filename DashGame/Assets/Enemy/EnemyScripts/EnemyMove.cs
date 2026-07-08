@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI; // 1. Added the NavMesh namespace
+using UnityEngine.AI;
 
 public class EnemyMove : MonoBehaviour
 {

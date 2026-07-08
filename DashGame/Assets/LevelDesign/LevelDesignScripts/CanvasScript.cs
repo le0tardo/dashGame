@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class CanvasScript : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI healthText;
+    [SerializeField] TextMeshProUGUI keyText;
     [SerializeField] TextMeshProUGUI scoreText;
+    int drawHealth;
+    int drawKey;
     float drawScore;
     float t = 0.1f;
 
@@ -12,8 +16,22 @@ public class CanvasScript : MonoBehaviour
 
     private void Start()
     {
+        drawHealth=LevelManager.inst.health;
+        healthText.text ="Health: "+drawHealth.ToString("F0")+"/"+LevelManager.inst.maxHealth.ToString("F0");
+        drawKey = LevelManager.inst.keys;
+        keyText.text = "Keys: "+LevelManager.inst.keys.ToString("F0");
         drawScore=LevelManager.inst.score;
         scoreText.text = "Score: "+drawScore.ToString("F0");
+    }
+
+    public void UpdateHealth()
+    {
+        drawHealth = LevelManager.inst.health;
+        healthText.text = "Health: " + drawHealth.ToString("F0") + "/" + LevelManager.inst.maxHealth.ToString("F0");
+    }
+    public void UpdateKeys()
+    {
+
     }
     public void UpdateScoreText(float scr)
     {

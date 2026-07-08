@@ -136,7 +136,7 @@ public class PlayerSlots : MonoBehaviour
                 Gizmos.color = Color.red; // Taken chair
                 Gizmos.DrawSphere(worldPos, 0.25f);
                 // Draw a handy thin line from the slot to its zombie occupier
-                Gizmos.DrawLine(worldPos, slots[i].occupier.transform.position);
+               // Gizmos.DrawLine(worldPos, slots[i].occupier.transform.position);
             }
         }
     }

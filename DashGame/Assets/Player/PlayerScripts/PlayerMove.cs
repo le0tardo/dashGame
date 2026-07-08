@@ -8,6 +8,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float bounciness = 0.85f;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask doorLayer;
+    [SerializeField] private LayerMask hurtLayer;
     [SerializeField] private float fallSpeed = 30f;
 
     private Vector3 currentVelocity;
@@ -89,11 +91,12 @@ public class PlayerMove : MonoBehaviour
         Vector3 pointBottom = transform.position + Vector3.up * (radius - (height / 2f));
         Vector3 pointTop = transform.position + Vector3.up * ((height / 2f) - radius);
 
-        LayerMask combinedLayers = wallLayer | enemyLayer;
+        LayerMask combinedLayers = wallLayer | enemyLayer | doorLayer | hurtLayer;
 
         // 4. Manual swept collision check
         if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, combinedLayers))
         {
+            CheckHitLayer(combinedLayers);
             // Move forward right up to the point of contact
             transform.position += directionThisFrame * Mathf.Max(0, hit.distance - 0.01f);
 
@@ -122,10 +125,25 @@ public class PlayerMove : MonoBehaviour
                     tenemy.GetHit(Mathf.Floor(currentVelocity.magnitude/10f));
                 }
             }
+            if ((doorLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
+            {
+                print("player hit door!");
+                DoorBehaviour door =hit.collider.gameObject.GetComponent<DoorBehaviour>();
+                if (door != null)
+                {
+                    door.KnockOnDoor(Mathf.Floor(currentVelocity.magnitude / 10f));
+                }
+            }
+            if ((hurtLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
+            {
+                float hurtForce=(currentVelocity.magnitude/10);
+                Vector3 hurtPos = hit.collider.gameObject.transform.position;
+                playerStats.Hurt(1,hurtPos);
+            }
 
-            // Bounce physics: Reflect the vector cleanly off the wall/obstacle normal
-            currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;
-            currentVelocity.y = 0;
+                // Bounce physics: Reflect the vector cleanly off the wall/obstacle normal
+                currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;
+                currentVelocity.y = 0;
         }
         else
         {
@@ -134,8 +152,14 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    void CheckHitLayer(LayerMask layer)
+    {
+        //print("Hit: " + layer.ToString()); //need to format af, forloops and stuff...
+    }
     public void KnockBack(Vector3 hitPos, float hitForce)
     {
+        print("THIS SHOULD NOT TRIGGER! Old knockback");
+        /*
         // 1. Calculate the direction pushing AWAY from the impact source
         Vector3 pushDirection = transform.position - hitPos;
 
@@ -154,6 +178,7 @@ public class PlayerMove : MonoBehaviour
         currentVelocity = pushDirection.normalized * hitForce*10;
         print("knockback player at direction: " + pushDirection.normalized + " with force: " + hitForce*10);
         isMoving = true;//idk??
+        */
     }
     public void StartKnockBack(Vector3 hitPos, float distance)
     {

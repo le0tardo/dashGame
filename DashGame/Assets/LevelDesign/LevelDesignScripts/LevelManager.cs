@@ -7,15 +7,21 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager inst { get; private set; }
 
+    [Header("Level Stats")]
+    [SerializeField] public int health;
+    [SerializeField] public int maxHealth;
+    [SerializeField] public int keys;
+
     [SerializeField] float timeScale=1f;
     [SerializeField] public float score=0f;
 
     [SerializeField] CanvasScript canvas;
 
+
     private void Awake()
     {
         inst = this;
-
+        maxHealth = health;
         GameObject bulletPool = GameObject.Find("BulletPool");
         if (bulletPool == null) { new GameObject("BulletPool");}
     }
@@ -30,6 +36,11 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = timeScale;
     }
 
+    public void ChangeHealth(int _health)
+    {
+        health += _health;
+        canvas.UpdateHealth();
+    }
     public void AddScore(float scr)
     {
         score += Mathf.RoundToInt(scr);
@@ -51,7 +62,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator SlowDown()
     {
         float startScale = timeScale;
-        float targetScale = 0.5f;
+        float targetScale = 0.25f;
         float duration = 0.5f;
         float elapsedTime = 0f;
 
