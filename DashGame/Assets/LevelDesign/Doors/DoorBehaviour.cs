@@ -4,7 +4,7 @@ public class DoorBehaviour : MonoBehaviour
 {
     [SerializeField] float health=100;
     float maxHealth;
-    [SerializeField] bool breakable=true;
+    [SerializeField] public bool breakable=true;
     private void Start()
     {
         maxHealth = health;

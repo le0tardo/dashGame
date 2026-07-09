@@ -9,7 +9,9 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private float bounciness = 0.85f;
     [SerializeField] private float fallSpeed = 20;
     [SerializeField] private LayerMask wallLayers;
+    [SerializeField] private LayerMask doorLayers;
     [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private LayerMask hurtLayers;
     [SerializeField] private float homingSpeed = 3f;
     private Transform playerTransform;
     private PlayerSlots playerSlots;
@@ -124,7 +126,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 pointBottom = transform.position + Vector3.up * (radius - (height / 2f));
         Vector3 pointTop = transform.position + Vector3.up * ((height / 2f) - radius);
 
-        LayerMask combinedLayers = wallLayers | enemyLayers;
+        LayerMask combinedLayers = wallLayers | enemyLayers | hurtLayers | doorLayers;
         if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, combinedLayers))
         {
             if (hit.collider == capsuleCollider)
@@ -141,6 +143,22 @@ public class EnemyMove : MonoBehaviour
                 {
                     otherEnemy.GetHit(currentVelocity * 0.8f);
                 }
+            }
+
+            if ((hurtLayers.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
+            {
+                combat.TakeDamage(10f);
+            }
+
+
+            if ((doorLayers.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
+            {
+                DoorBehaviour door=hit.collider.gameObject.GetComponent<DoorBehaviour>();
+                if (door != null)
+                {
+                    if (door.breakable) door.KnockOnDoor(Mathf.Floor(currentVelocity.magnitude/10));
+                }
+
             }
 
             currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;
