@@ -11,6 +11,8 @@ public class PlayerAim : MonoBehaviour
     [SerializeField] private SpriteRenderer arrowSprite;
     [SerializeField] private float maxArrowLength;
 
+    [SerializeField] bool staminaAfford=true;
+
     private PlayerMove moveScript;
     private Camera mainCamera;
     private Vector3 dragStartPosition;
@@ -66,8 +68,27 @@ public class PlayerAim : MonoBehaviour
         {
             launchSpeed = 10;
         }
-        // Launch!
-        if(moveScript!=null)moveScript.Launch(launchDirection, launchSpeed);
+
+        staminaAfford = Mathf.Floor(launchSpeed / 10) <= LevelManager.inst.stamina;
+
+        if (staminaAfford)
+        {
+            // Launch!
+            LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
+            if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
+        }
+        else
+        {
+            //just use remainder stamina as launchSpeed? + penalty
+            float remainderStamina=LevelManager.inst.stamina;
+            float penalty = 5; //overshooting stamina bar results in half
+            remainderStamina = remainderStamina * penalty;
+            LevelManager.inst.UseStamina(Mathf.Floor(remainderStamina));
+            if (moveScript != null) moveScript.Launch(launchDirection, remainderStamina);
+            print("launch speed = stamina = "+remainderStamina);
+            CameraShake.inst.Shake(0.1f, 1f);
+        }
+
         LevelManager.inst.ResetTime();
     }
 
@@ -86,6 +107,10 @@ public class PlayerAim : MonoBehaviour
         float currentPercentage = Mathf.Clamp01(dragDistance / maxDragDistance);
         float targetLength = currentPercentage * maxArrowLength;
         arrowSprite.size = new Vector2(arrowSprite.size.x, targetLength);
+
+        //check stamina while aiming
+        bool canAffordCurrentLaunch = dragDistance <= LevelManager.inst.stamina;
+        if(!canAffordCurrentLaunch)arrowSprite.color=Color.red;else arrowSprite.color=Color.green;
     }
     private Vector3 GetMouseWorldPosition()
     {
@@ -103,5 +128,6 @@ public class PlayerAim : MonoBehaviour
     {
         arrowSprite.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         arrowSprite.size = new Vector2(2,2);
+        arrowSprite.color = Color.white;
     }
 }

@@ -86,7 +86,7 @@ public class PlayerMove : MonoBehaviour
         float distanceThisFrame = frameMovement.magnitude;
         Vector3 directionThisFrame = frameMovement.normalized;
 
-        // Face movement direction smoothly
+        // face direction
         if (directionThisFrame != Vector3.zero)
         {
             float rotationSpeed = 15f;
@@ -103,20 +103,19 @@ public class PlayerMove : MonoBehaviour
 
         LayerMask combinedLayers = wallLayer | enemyLayer | doorLayer | hurtLayer;
 
-        // 4. Manual swept collision check
+        // 4. collision check
         if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, combinedLayers))
         {
             CheckHitLayer(combinedLayers);
-            // Move forward right up to the point of contact
+            // Move forward to point of contact
             transform.position += directionThisFrame * Mathf.Max(0, hit.distance - 0.01f);
 
-            // Dynamic camera shake based on velocity intensity
             if (CameraShake.inst != null)
             {
                 CameraShake.inst.Shake(0.1f, (currentVelocity.magnitude / 100f));
             }
 
-            // Hit processing for enemies
+            // enemies
             if ((enemyLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
             {
                 //walking enemy
@@ -151,7 +150,7 @@ public class PlayerMove : MonoBehaviour
                 playerStats.Hurt(1,hurtPos);
             }
 
-                // Bounce physics: Reflect the vector cleanly off the wall/obstacle normal
+                // bounce physics
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;
                 currentVelocity.y = 0;
         }
@@ -172,27 +171,19 @@ public class PlayerMove : MonoBehaviour
     {
         isJumping = true;
         float elapsedTime = 0f;
-
-        // Save the exact Y level of your table surface before leaping
         float tableSurfaceY = transform.position.y - jumpYOffset;
 
         while (elapsedTime < jumpDuration)
         {
-            // Use unscaledDeltaTime so the jump speed matches real time 
-            // even if you slow down time to aim mid-air!
+
             elapsedTime += Time.unscaledDeltaTime;
 
             float percent = Mathf.Clamp01(elapsedTime / jumpDuration);
 
-            // --- THE PARABOLA FORMULA ---
-            // 4 * x * (1 - x) creates a perfect arc that starts at 0, 
-            // peaks at 1 right in the middle (0.5), and drops back to 0 at the end.
             float arcNormalized = 4f * percent * (1f - percent);
 
-            // Scale the arc by our desired height
             jumpYOffset = arcNormalized * jumpHeight;
 
-            // Apply the height to our current position
             Vector3 currentPos = transform.position;
             currentPos.y = tableSurfaceY + jumpYOffset;
             transform.position = currentPos;
@@ -200,8 +191,6 @@ public class PlayerMove : MonoBehaviour
             yield return null;
         }
 
-        // --- LANDING ---
-        // Safely snap back down to the exact table height
         Vector3 finalPos = transform.position;
         finalPos.y = tableSurfaceY;
         transform.position = finalPos;
@@ -212,30 +201,6 @@ public class PlayerMove : MonoBehaviour
     void CheckHitLayer(LayerMask layer)
     {
         //print("Hit: " + layer.ToString()); //need to format af, forloops and stuff...
-    }
-    public void KnockBack(Vector3 hitPos, float hitForce)
-    {
-        print("THIS SHOULD NOT TRIGGER! Old knockback");
-        /*
-        // 1. Calculate the direction pushing AWAY from the impact source
-        Vector3 pushDirection = transform.position - hitPos;
-
-        // 2. Lock it perfectly flat to the table surface (Y = 0)
-        pushDirection.y = 0f;
-
-        // Safety check: If the hit position is somehow exactly on the player's center,
-        // default to pushing them backward relative to where they are currently facing.
-        if (pushDirection == Vector3.zero)
-        {
-            pushDirection = -transform.forward;
-        }
-
-        // 3. Inject this vector into your existing movement loop
-        // This functions exactly like Launch(), triggering isMoving and applying deceleration!
-        currentVelocity = pushDirection.normalized * hitForce*10;
-        print("knockback player at direction: " + pushDirection.normalized + " with force: " + hitForce*10);
-        isMoving = true;//idk??
-        */
     }
     public void StartKnockBack(Vector3 hitPos, float distance)
     {

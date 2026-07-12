@@ -8,9 +8,15 @@ public class LevelManager : MonoBehaviour
     public static LevelManager inst { get; private set; }
 
     [Header("Level Stats")]
-    [SerializeField] public int health;
-    [SerializeField] public int maxHealth;
-    [SerializeField] public int keys;
+    [SerializeField] public float health;
+    [SerializeField] public float maxHealth;
+    [SerializeField] public float stamina;
+    [SerializeField] public float maxStamina;
+    [SerializeField] public float staminaRegenTime=1f;
+    [SerializeField] private float staminaRegenRate = 10f;
+    [SerializeField] public float staminaRegenDelay=1f;
+
+    [SerializeField] public float keys;
 
     [SerializeField] float timeScale=1f;
     [SerializeField] public float score=0f;
@@ -34,12 +40,44 @@ public class LevelManager : MonoBehaviour
         }
 
         Time.timeScale = timeScale;
+
+        if (stamina < maxStamina)
+        {
+            FillStamina();
+        }
     }
 
     public void ChangeHealth(int _health) //for both + and - health
     {
         health += _health;
         canvas.UpdateHealth();
+    }
+
+    public void UseStamina(float amount)
+    {
+        stamina = Mathf.Clamp(stamina - amount, 0f, maxStamina);
+        print("used "+amount +" stamina");
+        canvas.UpdateStamina();
+
+        staminaRegenTime = staminaRegenDelay;//pause before regenig
+    }
+    void FillStamina()
+    {
+        if (staminaRegenTime > 0f)
+        {
+            staminaRegenTime-= Time.deltaTime;//unsclaed time for consistant regen on aim
+            return;
+        }
+        if (stamina < maxStamina)
+        {
+            stamina += staminaRegenRate * Time.unscaledDeltaTime;
+
+            if (stamina > maxStamina)
+            {
+                stamina = maxStamina;
+            }
+        }
+        canvas.UpdateStamina();
     }
     public void AddScore(float scr)
     {
