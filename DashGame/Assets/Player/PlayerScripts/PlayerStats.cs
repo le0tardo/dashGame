@@ -25,6 +25,7 @@ public class PlayerStats : MonoBehaviour
     {
         move.StartKnockBack(hitPos, dmg);
         SubtractHealth(dmg);
+        CameraShake.inst.Shake(0.1f,dmg/4);
     }
 
     public void Hurt(float dmg, Vector3 hitPos)

@@ -15,11 +15,12 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float jumpDuration = 0.6f; // Snappy airtime
     private bool isJumping = false;
-    private float jumpYOffset = 0f; // Stores our temporary height
+    private float jumpYOffset = 0f;
     [SerializeField] float ground_y;
 
     private Vector3 currentVelocity;
     private CapsuleCollider capsuleCollider;
+    float playerRadius;
     private SphereCollider mouseCollider;
     private Rigidbody rb;
 
@@ -35,6 +36,7 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
+        playerRadius=capsuleCollider.radius;
         mouseCollider = GetComponent<SphereCollider>();
         playerStats = GetComponent<PlayerStats>();
         playerAim = GetComponent<PlayerAim>();
@@ -204,22 +206,40 @@ public class PlayerMove : MonoBehaviour
     }
     public void StartKnockBack(Vector3 hitPos, float distance)
     {
+        // Safety gate: Don't get knocked back if already airborne or sliding
         if (isKnockedBack || isFalling) return;
 
-        // calculate direction away from enemy
+        // 1. Calculate direction away from the hazard
         Vector3 pushDirection = transform.position - hitPos;
-        pushDirection.y = 0f;
-        //fallback vector
+        pushDirection.y = 0f; // Keep the calculation on a flat horizontal plane
+
+        // Fallback vector in case positions are perfectly overlapping
         if (pushDirection == Vector3.zero)
         {
             pushDirection = -transform.forward;
         }
 
-        // calculate destination point
-        Vector3 targetPosition = transform.position + (pushDirection.normalized * distance);
+        Vector3 origin = transform.position;
+        Vector3 direction = pushDirection.normalized;
 
-        // start movement
-        StartCoroutine(KnockbackRoutine(targetPosition));
+        // 2. Map out the ideal, uninhibited target destination
+        Vector3 idealTargetPosition = origin + (direction * distance);
+        Vector3 finalTargetPosition = idealTargetPosition;
+
+        // 3. Fire the SphereCast using the correct Unity signature parameters:
+        // (origin, radius, direction, out hitInfo, maxDistance, layerMask)
+        if (Physics.SphereCast(origin, playerRadius, direction, out RaycastHit hit, distance, wallLayer))
+        {
+            // A wall is blocking the way! Pull the target destination back to the impact point,
+            // leaving a tiny 0.02 unit safety cushion so we don't clip flat inside the geometry.
+            float safeDistance = hit.distance - 0.02f;
+            safeDistance = Mathf.Max(0f, safeDistance);
+
+            finalTargetPosition = origin + (direction * safeDistance);
+        }
+
+        // 4. Hand the completely wall-bounded position over to your Lerp routine
+        StartCoroutine(KnockbackRoutine(finalTargetPosition));
     }
 
     private System.Collections.IEnumerator KnockbackRoutine(Vector3 targetPosition)
