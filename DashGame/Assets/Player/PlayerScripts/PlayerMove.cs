@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     private float jumpYOffset = 0f;
     [SerializeField] float ground_y;
 
-    private Vector3 currentVelocity;
+    public Vector3 currentVelocity;
     private CapsuleCollider capsuleCollider;
     float playerRadius;
     private SphereCollider mouseCollider;
