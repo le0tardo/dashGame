@@ -17,7 +17,7 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("player entered:" + name);
+            //print("player entered:" + name);
             RoomManager.inst.currentRoom = this.transform;
             RoomManager.inst.ChangeRoom(this.transform);
 
@@ -37,7 +37,7 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("player exited:" + name);
+            //print("player exited:" + name);
             DeactivateRoom();
         }
     }
@@ -69,7 +69,7 @@ public class RoomBehaviour : MonoBehaviour
     }
     void DeactivateRoom()
     {
-        print(name + " has been deactivated");
+        //print(name + " has been deactivated");
 
         foreach (GameObject enemy in enemies)
         {

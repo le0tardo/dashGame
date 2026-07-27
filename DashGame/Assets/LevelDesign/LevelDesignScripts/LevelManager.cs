@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
     public void UseStamina(float amount)
     {
         stamina = Mathf.Clamp(stamina - amount, 0f, maxStamina);
-        print("used "+amount +" stamina");
+        //print("used "+amount +" stamina");
         canvas.UpdateStamina();
 
         staminaRegenTime = staminaRegenDelay;//pause before regenig
