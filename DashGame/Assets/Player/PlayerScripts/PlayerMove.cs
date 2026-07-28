@@ -31,7 +31,7 @@ public class PlayerMove : MonoBehaviour
     private bool isKnockedBack = false;
 
     private PlayerStats playerStats;
-    private PlayerAim playerAim;
+    [SerializeField] private PlayerAimUI playerAim;
 
     void Start()
     {
@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
         playerRadius=capsuleCollider.radius;
         mouseCollider = GetComponent<SphereCollider>();
         playerStats = GetComponent<PlayerStats>();
-        playerAim = GetComponent<PlayerAim>();
+        if(playerAim==null)playerAim = GetComponent<PlayerAimUI>();
         rb= GetComponent<Rigidbody>();
         rb.isKinematic = true;
 

@@ -28,7 +28,16 @@ public class DoorBehaviour : MonoBehaviour
             if (LevelManager.inst.keys > 0)
             {
                 LevelManager.inst.keys--;
-                Destroy(this.gameObject);
+                OpenKeyDoor();
+
+            }
+            else
+            {
+                //wobble anim
+                if (anim != null)
+                {
+                    anim.SetTrigger("hit");
+                }
             }
         }
     }
@@ -43,7 +52,16 @@ public class DoorBehaviour : MonoBehaviour
         }
         BoxCollider bx=GetComponent<BoxCollider>();
         bx.enabled = false;
+    }
 
-        //Destroy(this.gameObject);
+    void OpenKeyDoor()
+    {
+        if (anim != null) anim.SetTrigger("open");
+        Invoke("DestroyKeyDoor", 0.5f);
+    }
+
+    void DestroyKeyDoor()
+    {
+        Destroy(this.gameObject);
     }
 }
