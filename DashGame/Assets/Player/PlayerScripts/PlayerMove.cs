@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask doorLayer;
     [SerializeField] private LayerMask hurtLayer;
+    [SerializeField] private LayerMask bumperLayer;
     [SerializeField] private float fallSpeed = 30f;
     [Header("Jump")]
     [SerializeField] private float jumpHeight = 4f;
@@ -110,9 +111,9 @@ public class PlayerMove : MonoBehaviour
         Vector3 pointBottom = transform.position + Vector3.up * (radius - (height / 2f));
         Vector3 pointTop = transform.position + Vector3.up * ((height / 2f) - radius);
 
-        LayerMask combinedLayers = wallLayer | enemyLayer | doorLayer | hurtLayer;
-
         // 4. collision check
+        LayerMask combinedLayers = wallLayer | enemyLayer | doorLayer | hurtLayer | bumperLayer;
+
         if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, combinedLayers))
         {
             CheckHitLayer(combinedLayers);
@@ -157,6 +158,12 @@ public class PlayerMove : MonoBehaviour
                 float hurtForce=(currentVelocity.magnitude/10);
                 Vector3 hurtPos = hit.collider.gameObject.transform.position;
                 playerStats.Hurt(1,hurtPos);
+            }
+            if ((bumperLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
+            {
+                print("player bumper hit");
+                currentVelocity = currentVelocity * 3f;
+                CameraShake.inst.Shake(0.15f,3f);
             }
 
                 // bounce physics
