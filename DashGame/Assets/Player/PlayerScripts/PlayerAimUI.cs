@@ -16,6 +16,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     [Header("References")]
     [SerializeField] private PlayerMove moveScript;
+    [SerializeField] Animator playerAnimator;
     private Camera mainCamera;
 
     private Vector2 dragStartScreenPos;
@@ -40,6 +41,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             isDragging = true;
             dragStartScreenPos = eventData.position;
             LevelManager.inst.SlowDownTime();
+        }
+
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("aim");
         }
     }
 
@@ -106,6 +112,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
 
         LevelManager.inst.ResetTime();
+
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("dash");
+        }
     }
 
     // -------------------------------------------------------------

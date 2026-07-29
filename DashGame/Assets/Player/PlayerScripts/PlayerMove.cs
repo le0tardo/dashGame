@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
 
     private PlayerStats playerStats;
     [SerializeField] private PlayerAimUI playerAim;
+    [SerializeField] Animator playerAnimator;
 
     void Start()
     {
@@ -80,6 +81,12 @@ public class PlayerMove : MonoBehaviour
         {
             currentVelocity = Vector3.zero;
             isMoving = false;
+
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("idle");
+            }
+
             return;
         }
 
