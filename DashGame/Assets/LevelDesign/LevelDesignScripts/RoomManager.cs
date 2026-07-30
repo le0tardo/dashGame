@@ -15,6 +15,8 @@ public class RoomManager : MonoBehaviour
     }
     public void ChangeRoom(Transform newRoom)
     {
+        StopAllCoroutines();
+
         Vector3 newRoomPosition = new Vector3
             (
                 newRoom.transform.position.x,
