@@ -18,6 +18,11 @@ public class DoorBehaviour : MonoBehaviour
         {
             health -= dmg;
             if (anim != null) { anim.SetTrigger("hit"); }
+
+            GameObject pl = GameObject.Find("Player");
+            Vector3 midpoint = (transform.position + pl.transform.position) / 2f;
+
+            HitFxManager.inst.HitFX1(midpoint, dmg);
             if (health <= 0)
             {
                 BreakDoor();
