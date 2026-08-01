@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager inst { get; private set; }
 
+    [SerializeField] public PlayerMove playerMove;
+    [SerializeField] public PlayerStats playerStats;
+
     [Header("Level Stats")]
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
@@ -28,6 +31,9 @@ public class LevelManager : MonoBehaviour
     {
         inst = this;
         maxHealth = health;
+        GameObject playerObj = GameObject.Find("Player");
+        if (playerObj != null) {playerMove=playerObj.GetComponent<PlayerMove>();playerStats = playerObj.GetComponent<PlayerStats>(); }
+
         GameObject bulletPool = GameObject.Find("BulletPool");
         if (bulletPool == null) { new GameObject("BulletPool");}
     }
@@ -35,8 +41,7 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            string currentSceneName = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(currentSceneName);
+            ResetLevel();
         }
 
         Time.timeScale = timeScale;
@@ -47,6 +52,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void ResetLevel()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
     public void ChangeHealth(int _health) //for both + and - health
     {
         health += _health;

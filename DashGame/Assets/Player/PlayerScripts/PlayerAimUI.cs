@@ -94,6 +94,9 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         staminaAfford = Mathf.Floor(launchSpeed / 10) <= LevelManager.inst.stamina;
 
+        //check if faster than current, dont want to be able to slow down? Felt good! keeping.
+        if (launchSpeed <= moveScript.currentVelocity.magnitude) return;
+
         if (staminaAfford)
         {
             LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
@@ -115,7 +118,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         if (playerAnimator != null)
         {
-            playerAnimator.SetTrigger("dash");
+            //playerAnimator.SetTrigger("dash");
         }
     }
 
@@ -146,7 +149,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             arrowSprite.transform.rotation = Quaternion.Euler(90f, angle, 0f);
 
             // Rotate player object graphics directly
-            moveScript.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (!moveScript.isMoving)
+            {
+                moveScript.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
+
         }
 
         float currentPercentage = Mathf.Clamp01(dragDistance / maxDragDistance);

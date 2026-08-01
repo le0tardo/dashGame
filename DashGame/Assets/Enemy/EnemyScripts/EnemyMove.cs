@@ -1,17 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyMove : MonoBehaviour, IHittable
 {
     [Header("Movement & Bounce")]
     [SerializeField] private float stopThreshold = 0.1f;
     [SerializeField] private float deceleration = 2f;
     [SerializeField] private float bounciness = 0.85f;
+    public float hitBounce => bounciness;
     [SerializeField] private float fallSpeed = 20;
-    [SerializeField] private LayerMask wallLayers;
-    [SerializeField] private LayerMask doorLayers;
-    [SerializeField] private LayerMask enemyLayers;
-    [SerializeField] private LayerMask hurtLayers;
+    [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float homingSpeed = 3f;
     private Transform playerTransform;
     private PlayerSlots playerSlots;
@@ -36,7 +35,7 @@ public class EnemyMove : MonoBehaviour
             agent.speed = homingSpeed;
             agent.acceleration = 30f;
             agent.angularSpeed = 360f;
-            agent.acceleration = 1000;
+            agent.acceleration = 1000f;
             agent.avoidancePriority=Random.Range(1, 100);
         }
 
@@ -48,6 +47,16 @@ public class EnemyMove : MonoBehaviour
         }
     }
 
+    public void OnHit(Vector3 hitPosition, float power)
+    {
+        print("player hit enemy!");
+        //bounce off player
+        GetHit(hitPosition);
+        Vector3 fxPos = (transform.position + hitPosition) / 2;
+        HitFxManager.inst.HitFX1(fxPos,power/10);
+        CameraShake.inst.Shake(0.15f, 1.5f);
+        AudioManager.inst.PlayEnemyImpactSound(power/4);
+    }
     void Update()
     {
         if (playerTransform == null) return;
@@ -63,11 +72,12 @@ public class EnemyMove : MonoBehaviour
                 currentVelocity = Vector3.zero;
                 isBouncing = false;
 
-                // Safety snap navmesh agent
+                // snap navmesh agent
                 if (agent != null && !isFalling)
                 {
                     agent.Warp(transform.position);
                     agent.enabled = true;
+                    //end poolBallMode
                 }
             }
         }
@@ -89,7 +99,7 @@ public class EnemyMove : MonoBehaviour
             agent.enabled = false;
         }
 
-        currentVelocity = incomingVelocity;
+        currentVelocity = incomingVelocity*2; //bounciness
         isBouncing = true;
 
         float bounceDamage = Mathf.Floor(currentVelocity.magnitude/10);
@@ -126,8 +136,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 pointBottom = transform.position + Vector3.up * (radius - (height / 2f));
         Vector3 pointTop = transform.position + Vector3.up * ((height / 2f) - radius);
 
-        LayerMask combinedLayers = wallLayers | enemyLayers | hurtLayers | doorLayers;
-        if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, combinedLayers))
+        if (Physics.CapsuleCast(pointBottom, pointTop, radius, directionThisFrame, out RaycastHit hit, distanceThisFrame, hitLayer))
         {
             if (hit.collider == capsuleCollider)
             {
@@ -137,28 +146,12 @@ public class EnemyMove : MonoBehaviour
 
             transform.position += directionThisFrame * Mathf.Max(0, hit.distance - 0.01f);
 
-            if ((enemyLayers.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
+            if ((enemyLayer.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
             {
                 if (hit.collider.gameObject.TryGetComponent<EnemyMove>(out EnemyMove otherEnemy))
                 {
                     otherEnemy.GetHit(currentVelocity * 0.8f);
                 }
-            }
-
-            if ((hurtLayers.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
-            {
-                combat.TakeDamage(10f);
-            }
-
-
-            if ((doorLayers.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
-            {
-                DoorBehaviour door=hit.collider.gameObject.GetComponent<DoorBehaviour>();
-                if (door != null)
-                {
-                    if (door.breakable) door.KnockOnDoor(Mathf.Floor(currentVelocity.magnitude/10));
-                }
-
             }
 
             currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;

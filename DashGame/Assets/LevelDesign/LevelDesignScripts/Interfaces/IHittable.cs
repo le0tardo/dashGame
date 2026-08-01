@@ -1,4 +1,6 @@
+using UnityEngine;
 public interface IHittable
 {
-    void OnHit();
+    public float hitBounce { get; }
+    void OnHit(Vector3 hitPosition, float power);
 }

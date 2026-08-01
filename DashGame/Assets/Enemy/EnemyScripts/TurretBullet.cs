@@ -35,6 +35,7 @@ public class TurretBullet : MonoBehaviour
             if (Physics.SphereCast(transform.position, transform.localScale.x, moveDirection, out RaycastHit pHit, 1, playerLayer))
             {
                 print("bullet hit player");
+                LevelManager.inst.ChangeHealth(-1);
                 DisableBullet();
 
             }
