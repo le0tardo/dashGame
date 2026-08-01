@@ -36237,9 +36237,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -85265,7 +85262,7 @@ Transform:
   m_GameObject: {fileID: 304978014}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: 0, z: -8.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -87703,9 +87700,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -110053,9 +110047,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -114180,9 +114171,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -115038,9 +115026,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -122674,9 +122659,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -128578,7 +128560,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -128687,15 +128669,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopThreshold: 0.5
-  deceleration: 10
+  deceleration: 25
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
     serializedVersion: 2
     m_Bits: 8192
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -128708,7 +128687,7 @@ Transform:
   m_GameObject: {fileID: 461548629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: 21.875}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -139575,9 +139554,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -142344,9 +142320,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -145848,9 +145821,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -165306,9 +165276,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -175238,9 +175205,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -206007,9 +205971,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -207719,9 +207680,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -216768,9 +216726,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -255640,9 +255595,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -335707,9 +335659,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -339399,9 +339348,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -359130,9 +359076,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -359951,9 +359894,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -379843,9 +379783,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -389428,9 +389365,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -397952,9 +397886,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -422727,9 +422658,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -427558,9 +427486,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2
@@ -588710,9 +588635,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -598401,9 +598323,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   homingSpeed: 2
   isBouncing: 0
   isFalling: 0
@@ -599396,9 +599315,6 @@ MonoBehaviour:
   bounciness: 0.5
   fallSpeed: 20
   hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   homingSpeed: 2

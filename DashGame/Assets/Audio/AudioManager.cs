@@ -17,7 +17,6 @@ public class AudioManager : MonoBehaviour
     {
         vol =(vol / 10);
         vol=Mathf.Clamp(vol, 0, 1);
-        print("volume: " + vol);
         source.volume = vol;
         int r=Random.Range(0, impacts.Length);
         source.PlayOneShot(impacts[r]);
@@ -26,9 +25,8 @@ public class AudioManager : MonoBehaviour
     public void PlayEnemyImpactSound(float vol)
     {
         vol = (vol / 10);
+        source.volume = vol-0.5f;
         vol = Mathf.Clamp(vol, 0, 1);
-        print("volume: " + vol);
-        source.volume = vol;
         int r = Random.Range(0, enemyImpacts.Length);
         source.PlayOneShot(enemyImpacts[r]);
 

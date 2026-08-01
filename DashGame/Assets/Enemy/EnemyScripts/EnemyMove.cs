@@ -10,7 +10,6 @@ public class EnemyMove : MonoBehaviour, IHittable
     public float hitBounce => bounciness;
     [SerializeField] private float fallSpeed = 20;
     [SerializeField] private LayerMask hitLayer;
-    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float homingSpeed = 3f;
     private Transform playerTransform;
     private PlayerSlots playerSlots;
@@ -46,12 +45,9 @@ public class EnemyMove : MonoBehaviour, IHittable
             playerSlots = player.GetComponent<PlayerSlots>();
         }
     }
-
     public void OnHit(Vector3 hitPosition, float power)
     {
-        print("player hit enemy!");
-        //bounce off player
-        GetHit(hitPosition);
+        GetHit(hitPosition, power);
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos,power/10);
         CameraShake.inst.Shake(0.15f, 1.5f);
@@ -92,25 +88,30 @@ public class EnemyMove : MonoBehaviour, IHittable
         }
     }
 
-    public void GetHit(Vector3 incomingVelocity)
+    void GetHit(Vector3 dir, float pwr)
     {
+        if (agent != null){agent.enabled = false;}
+        if (playerSlots != null){playerSlots.ReleaseSlot(gameObject);}
+
+        currentVelocity = dir.normalized * pwr;
+        isBouncing = true;
+    }
+
+    public void GetHitByOtherEnemy(Vector3 incomingVelocity)
+    {
+        print("enemy hit by other enemy");
         if (agent != null)
         {
             agent.enabled = false;
         }
-
-        currentVelocity = incomingVelocity*2; //bounciness
+        currentVelocity= incomingVelocity*2;
         isBouncing = true;
-
-        float bounceDamage = Mathf.Floor(currentVelocity.magnitude/10);
-        combat.TakeDamage(bounceDamage);
 
         if (playerSlots != null)
         {
             playerSlots.ReleaseSlot(gameObject);
         }
     }
-
     private void ExecuteMoveAndBounce()
     {
         Vector3 frameMovement = currentVelocity * Time.deltaTime;
@@ -145,17 +146,14 @@ public class EnemyMove : MonoBehaviour, IHittable
             }
 
             transform.position += directionThisFrame * Mathf.Max(0, hit.distance - 0.01f);
-
-            if ((enemyLayer.value & (1 << hit.collider.gameObject.layer)) > 0 && isBouncing)
-            {
-                if (hit.collider.gameObject.TryGetComponent<EnemyMove>(out EnemyMove otherEnemy))
-                {
-                    otherEnemy.GetHit(currentVelocity * 0.8f);
-                }
-            }
-
             currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * bounciness;
             currentVelocity.y = 0;
+
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                EnemyMove otherEnemy=hit.collider.gameObject.GetComponent<EnemyMove>();
+                otherEnemy.GetHitByOtherEnemy(currentVelocity);
+            }
         }
         else
         {
@@ -172,7 +170,6 @@ public class EnemyMove : MonoBehaviour, IHittable
         currentVelocity = Vector3.zero;
         StartCoroutine(DropDown());
     }
-
     private System.Collections.IEnumerator DropDown()
     {
         while (transform.position.y > -25f)

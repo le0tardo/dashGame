@@ -118,7 +118,7 @@ public class PlayerMove : MonoBehaviour
             if (hit.collider.TryGetComponent<IHittable>(out IHittable hittable))
             {
                 currentBounciness = hittable.hitBounce;
-                hittable.OnHit(hit.point, impactPower);
+                hittable.OnHit(hit.point, impactPower); 
 
                 //bounce on hittable
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
