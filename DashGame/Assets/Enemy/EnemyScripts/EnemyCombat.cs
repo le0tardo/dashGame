@@ -26,6 +26,9 @@ public class EnemyCombat : MonoBehaviour
     {
         health-=dmg;
         Mathf.Clamp(health, 0, maxHealth);
+
+        if(dmg>0)DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString());
+
         if (health <= 0)
         {
             isDead = true;
@@ -35,8 +38,6 @@ public class EnemyCombat : MonoBehaviour
 
     void DealDamage()
     {
-        // Cleaned up logic: Only attack if the enemy is alive AND the player isn't moving/falling
-        // (Grouping them with parentheses prevents C# from misinterpreting the OR '||' condition)
         if (!isDead && !move.isFalling)
         {
             if (player != null)

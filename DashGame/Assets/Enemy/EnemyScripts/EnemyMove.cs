@@ -22,6 +22,7 @@ public class EnemyMove : MonoBehaviour, IHittable
     [SerializeField] public bool isFalling=false;
 
     EnemyCombat combat;
+    [SerializeField] GameObject scatterCollider;
 
     void Start()
     {
@@ -52,6 +53,8 @@ public class EnemyMove : MonoBehaviour, IHittable
         HitFxManager.inst.HitFX1(fxPos,power/10);
         CameraShake.inst.Shake(0.15f, 1.5f);
         AudioManager.inst.PlayEnemyImpactSound(power/4);
+
+        if(scatterCollider!=null&&!scatterCollider.activeInHierarchy)scatterCollider.SetActive(true);
     }
     void Update()
     {
@@ -73,6 +76,7 @@ public class EnemyMove : MonoBehaviour, IHittable
                 {
                     agent.Warp(transform.position);
                     agent.enabled = true;
+                    //sometimes the agent is too far away from the navmesh if it clips through a wall...
                     //end poolBallMode
                 }
             }
@@ -95,22 +99,16 @@ public class EnemyMove : MonoBehaviour, IHittable
 
         currentVelocity = dir.normalized * pwr;
         isBouncing = true;
+
+        combat.TakeDamage(Mathf.Floor(pwr/10));
+        print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
     }
-
-    public void GetHitByOtherEnemy(Vector3 incomingVelocity)
+    public void GetHitByOtherEnemy(Vector3 dir, float pwr)
     {
-        print("enemy hit by other enemy");
-        if (agent != null)
-        {
-            agent.enabled = false;
-        }
-        currentVelocity= incomingVelocity*2;
+        if (agent != null) { agent.enabled = false; }
+        if (playerSlots != null) { playerSlots.ReleaseSlot(gameObject); }
+        currentVelocity = dir.normalized * pwr;
         isBouncing = true;
-
-        if (playerSlots != null)
-        {
-            playerSlots.ReleaseSlot(gameObject);
-        }
     }
     private void ExecuteMoveAndBounce()
     {
@@ -152,8 +150,10 @@ public class EnemyMove : MonoBehaviour, IHittable
             if (hit.collider.CompareTag("Enemy"))
             {
                 EnemyMove otherEnemy=hit.collider.gameObject.GetComponent<EnemyMove>();
-                otherEnemy.GetHitByOtherEnemy(currentVelocity);
+                otherEnemy.GetHitByOtherEnemy(hit.point,currentVelocity.magnitude);
             }
+
+            AudioManager.inst.PlayImpactSound(currentVelocity.magnitude/2);
         }
         else
         {
