@@ -4,6 +4,7 @@ using UnityEngine;
 public class RoomBehaviour : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] public Transform safeSpawn;
 
     private void Start()
     {

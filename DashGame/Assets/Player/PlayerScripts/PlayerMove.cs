@@ -240,34 +240,51 @@ public class PlayerMove : MonoBehaviour
         isKnockedBack = false;
     }
 
-    //Trigger colliders from pockets.
     public void Fall(Vector3 holePosition)
     {
         if (!isFalling)
         {
             isFalling = true;
             isMoving = false;
-            currentVelocity = Vector3.zero;
-            transform.position = new Vector3(holePosition.x, transform.position.y, holePosition.z);
 
-            StartCoroutine(DropDown());
+            float entrySpeed = currentVelocity.magnitude;
+            currentVelocity = Vector3.zero;
+
+            AudioManager.inst.PlayHeroFallSound();
+            StartCoroutine(DropDown(holePosition,entrySpeed));
         }
     }
-
-    private System.Collections.IEnumerator DropDown()
+    private System.Collections.IEnumerator DropDown(Vector3 holePos, float entrySpeed)
     {
-        while (transform.position.y > (-10f))
-        {   
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+        float centeringSpeed = Mathf.Max(entrySpeed * 1.5f, 5f);
+
+        while (transform.position.y > -10f)
+        {
+            float newY = transform.position.y - (fallSpeed * Time.deltaTime);
+
+            Vector3 targetXZ = new Vector3(holePos.x, transform.position.y, holePos.z);
+            Vector3 newXZ = Vector3.MoveTowards(
+                transform.position,
+                targetXZ,
+                centeringSpeed * Time.deltaTime
+            );
+
+            transform.position = new Vector3(newXZ.x, newY, newXZ.z);
             yield return null;
         }
+
         LevelManager.inst.ChangeHealth(-10);
+        CameraShake.inst.Shake(0.1f, 1f);
         RespawnPlayer();
     }
+
     void RespawnPlayer()
     {
         isFalling=false;
         currentVelocity = Vector3.zero;
-        transform.position=RoomManager.inst.currentRoom.transform.position;
+
+        RoomBehaviour currentRoomBehaviour=RoomManager.inst.currentRoom.GetComponent<RoomBehaviour>();
+        if (currentRoomBehaviour != null) transform.position = currentRoomBehaviour.safeSpawn.position;
+        else{ transform.position = RoomManager.inst.currentRoom.transform.position;}
     }
 }

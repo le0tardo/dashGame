@@ -34,14 +34,14 @@ public class TurretBullet : MonoBehaviour
 
             if (Physics.SphereCast(transform.position, transform.localScale.x, moveDirection, out RaycastHit pHit, 1, playerLayer))
             {
-                print("bullet hit player");
+                //print("bullet hit player");
                 LevelManager.inst.ChangeHealth(-1);
                 DisableBullet();
 
             }
             if (Physics.SphereCast(transform.position, transform.localScale.x, moveDirection, out RaycastHit wHit, 1, wallLayer))
             {
-                print("bullet hit wall");
+                //print("bullet hit wall");
                 DisableBullet();
             }
         }

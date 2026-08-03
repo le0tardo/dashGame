@@ -1,7 +1,8 @@
 using System.Diagnostics.Contracts;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretEnemy : MonoBehaviour
+public class TurretEnemy : MonoBehaviour, IHittable
 {
     public Transform playerTransform;
     [SerializeField] float turnSpeed = 90f;
@@ -10,6 +11,9 @@ public class TurretEnemy : MonoBehaviour
     [SerializeField] GameObject[] bullet;
     PlayerMove target;
     Vector3 targetDirection;
+
+    float bounce = 0.85f;
+    public float hitBounce =>bounce;
 
     [Header("CombatStats")]
     public float health = 10f;
@@ -25,6 +29,34 @@ public class TurretEnemy : MonoBehaviour
         maxHealth = health;
 
         InvokeRepeating("FireBullet", 0, attackSpeed);
+    }
+
+    public void OnHit(Vector3 hitPos, float pwr)
+    {
+        Vector3 hitDirection = (hitPos - transform.position);
+        hitDirection.y = 0f;
+        hitDirection.Normalize();
+
+        Vector3 enemyForward = transform.forward;
+        enemyForward.y = 0f;
+        enemyForward.Normalize();
+
+        float dot = Vector3.Dot(hitDirection, enemyForward);
+        dot=Mathf.Abs(dot);
+
+        float dotMod = 1f;
+        if (dot <= 0.8f)
+        {
+            dotMod = 2f;
+        }
+
+        float finalDamage = Mathf.Floor(pwr / 10) * dotMod;
+        GetHit(finalDamage);
+        
+        Vector3 fxPos = (transform.position + hitPos) / 2;
+        HitFxManager.inst.HitFX1(fxPos, pwr / 10);
+        CameraShake.inst.Shake(0.15f, 1.5f);
+        AudioManager.inst.PlayMetalImpactSound(pwr/2);
     }
     private void Update()
     {
@@ -68,6 +100,9 @@ public class TurretEnemy : MonoBehaviour
     public void GetHit(float dmg)
     {
         health -= dmg;
+
+        if (dmg > 0) DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString());
+
         if (health <= 0)
         {
             Die();
