@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
     }
     public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
 
-    PlayerMove move;
+    [SerializeField] public PlayerMove move;
     private void Start()
     {
         move=GetComponent<PlayerMove>();
@@ -39,5 +39,13 @@ public class PlayerStats : MonoBehaviour
     {
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg));
+    }
+    public void Heal(float heal)
+    {
+        AddHealth(heal);
+    }
+    void AddHealth(float heal)
+    {
+        LevelManager.inst.ChangeHealth(Mathf.RoundToInt(heal));
     }
 }

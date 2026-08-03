@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager inst { get; private set; }
 
+    [Header("Hero Stats")]
+    [SerializeField] public HeroStatsObject heroStats;
     [SerializeField] public PlayerMove playerMove;
     [SerializeField] public PlayerStats playerStats;
 
@@ -36,6 +38,17 @@ public class LevelManager : MonoBehaviour
 
         GameObject bulletPool = GameObject.Find("BulletPool");
         if (bulletPool == null) { new GameObject("BulletPool");}
+
+        SetHeroStats();
+    }
+
+    void SetHeroStats()
+    {
+        health = heroStats.heroHealth;
+        maxHealth = heroStats.heroHealth;
+        stamina = heroStats.heroStamina;
+        maxStamina = heroStats.heroStamina;
+        staminaRegenRate = heroStats.heroRegenRate;
     }
     private void Update()
     {

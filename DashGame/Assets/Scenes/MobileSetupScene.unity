@@ -90756,6 +90756,7 @@ Transform:
   - {fileID: 46247616}
   - {fileID: 1343974086}
   - {fileID: 95777991}
+  - {fileID: 1691655011}
   m_Father: {fileID: 21974268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &304978020
@@ -90859,6 +90860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d458a3249643d248a5328e812a3ca1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: {fileID: 304978020}
 --- !u!1 &305180444
 GameObject:
   m_ObjectHideFlags: 0
@@ -135082,12 +135084,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7760de866f6b9d47adf3e8369de39a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroStats: {fileID: 11400000, guid: 13758df0a2e6504489132a58566f62a3, type: 2}
   playerMove: {fileID: 304978020}
   playerStats: {fileID: 304978024}
-  health: 25
-  maxHealth: 25
-  stamina: 25
-  maxStamina: 25
+  health: 1
+  maxHealth: 1
+  stamina: 1
+  maxStamina: 1
   staminaRegenTime: 0
   staminaRegenRate: 5
   staminaRegenDelay: 1
@@ -478142,6 +478145,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691283638}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1691655010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1691655011}
+  - component: {fileID: 1691655013}
+  - component: {fileID: 1691655012}
+  m_Layer: 2
+  m_Name: MeleeRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1691655011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691655010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 304978018}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1691655012
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691655010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1691655013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691655010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04dec2277f869c3479e793278c543a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesInRange: 0
 --- !u!1 &1691894989
 GameObject:
   m_ObjectHideFlags: 0
