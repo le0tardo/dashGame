@@ -20,8 +20,6 @@ public class HitFxManager : MonoBehaviour
                 hitFX1[i].gameObject.transform.localScale = Vector3.one*(scl/5); //just looked better...
 
                 hitFX1[i].gameObject.SetActive(true);
-                print("incoming impact scale: "+scl);
-                print("hit fx scale: "+hitFX1[i].gameObject.transform.localScale);
                 hitFX1[i].Play();
                 return;
             }

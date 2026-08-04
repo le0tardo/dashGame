@@ -4,6 +4,7 @@ using UnityEngine.EventSystems; // Required for UI drag interfaces!
 public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [Header("Launch Stats")]
+    [SerializeField] bool aiming;
     [SerializeField] private float maxDragDistance = 10f;
     [SerializeField] private float speedMultiplier = 3f;
     [SerializeField] private float maxSpeed = 20f;
@@ -12,7 +13,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     [SerializeField] private SpriteRenderer arrowSprite;
     [SerializeField] private float maxArrowLength;
 
+    [Header("Stamina")]
     [SerializeField] private bool staminaAfford = true;
+    [SerializeField] bool staminaAim = false;
+    [SerializeField] float staminaAimCost = 1f;
+    [SerializeField] float staminaAimTimer = 0f;
 
     [Header("References")]
     [SerializeField] private PlayerMove moveScript;
@@ -32,6 +37,24 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
 
         maxArrowLength = maxDragDistance;
+    }
+
+    private void Update()
+    {
+        aiming=isDragging;
+        if (staminaAim&&aiming)
+        {
+            staminaAimTimer += Time.unscaledDeltaTime;
+            if (staminaAimTimer >= 1.0f)
+            {
+                LevelManager.inst.UseStamina(staminaAimCost);
+                staminaAimTimer = 0f;
+            }
+        }
+        else
+        {
+            staminaAimTimer = 0f;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -70,6 +93,9 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!isDragging) return;
+
+        //TODO: aiming costs stamina!?
+
         isDragging = false;
 
         Vector2 dragEndScreenPos = eventData.position;
@@ -125,6 +151,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
 
         AudioManager.inst.StopAimSound();
+    }
+
+    void CostStamina()
+    {
+        
     }
 
     // -------------------------------------------------------------

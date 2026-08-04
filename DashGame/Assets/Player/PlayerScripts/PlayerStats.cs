@@ -39,6 +39,7 @@ public class PlayerStats : MonoBehaviour
     {
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg));
+        AudioManager.inst.PlayHeroHurtSound();
     }
     public void Heal(float heal)
     {

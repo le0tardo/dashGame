@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip heroFallSound;
     [SerializeField] AudioClip heroAimSound;
     [SerializeField] AudioClip heroReleaseSound;
+    [SerializeField] AudioClip[] heroHurts;
     AudioSource source;
     [SerializeField] AudioSource aimSource;
 
@@ -71,6 +72,12 @@ public class AudioManager : MonoBehaviour
 
         ResetSource();
     }
+
+    public void PlaySwoosh(float vol)
+    {
+        int r = Random.Range(0, swooshes.Length);
+        source.PlayOneShot(swooshes[r], vol);
+    }
     public void PlayHeroFallSound()
     {
         source.volume = 0.5f;
@@ -78,6 +85,11 @@ public class AudioManager : MonoBehaviour
         source.PlayOneShot(heroFallSound);
 
         ResetSource();
+    }
+    public void PlayHeroHurtSound()
+    {
+        int r = Random.Range(0, heroHurts.Length);
+        source.PlayOneShot(heroHurts[r],0.5f);
     }
 
     void ResetSource()
