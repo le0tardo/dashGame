@@ -141,6 +141,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             if (moveScript != null) moveScript.Launch(launchDirection, remainderStamina);
 
             CameraShake.inst.Shake(0.1f, 1f);
+            AudioManager.inst.PlayFailDashSound();
         }
 
         LevelManager.inst.ResetTime();

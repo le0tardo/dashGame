@@ -5,6 +5,7 @@ public class PlayerStats : MonoBehaviour
     public enum PlayerState
     {
         Idle,
+        Melee,
         Moving,
         Falling,
         Dead
@@ -12,6 +13,8 @@ public class PlayerStats : MonoBehaviour
     public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
 
     [SerializeField] public PlayerMove move;
+
+
     private void Start()
     {
         move=GetComponent<PlayerMove>();

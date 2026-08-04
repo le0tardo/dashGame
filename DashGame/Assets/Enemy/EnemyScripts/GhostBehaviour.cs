@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class GhostBehaviour : MonoBehaviour
 {
-    private enum ghostState {Turning, Charging }
+    private enum ghostState {Turning, Charging, Dying }
     [SerializeField] ghostState state;
     [SerializeField] Transform target;
     [SerializeField] Transform roomCentre;
+    [SerializeField] bool graveBound=true;
+    [SerializeField] GameObject grave;
     string roomTag = "Room";
 
     [Header("move stats")]
@@ -21,6 +23,7 @@ public class GhostBehaviour : MonoBehaviour
     [Header("Attack stats")]
     [SerializeField] bool canHit = true;
     [SerializeField] float damage = 1f;
+    bool dead=false;
 
     private void Start()
     {
@@ -33,6 +36,11 @@ public class GhostBehaviour : MonoBehaviour
     {
         if(target==null)return;
 
+        if (grave == null && graveBound)
+        {
+            state = ghostState.Dying;
+        }
+
         switch (state)
         {
             case ghostState.Turning:
@@ -41,6 +49,9 @@ public class GhostBehaviour : MonoBehaviour
 
             case ghostState.Charging:
                 Charge();
+                break;
+            case ghostState.Dying:
+                Die();
                 break;
         }
     }
@@ -97,6 +108,14 @@ public class GhostBehaviour : MonoBehaviour
         transform.position += chargeDirection * (chargeSpeed * Time.deltaTime);
     }
 
+    void Die()
+    {
+        if (!dead)
+        {
+            dead = true;
+            Destroy(this.gameObject);
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(roomTag))
@@ -107,7 +126,7 @@ public class GhostBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&canHit)
+        if (other.CompareTag("Player") && canHit && state==ghostState.Charging)
         {
             print("ghost on player");
             PlayerStats player=other.GetComponent<PlayerStats>();

@@ -104,6 +104,8 @@ public class EnemyMove : MonoBehaviour, IHittable
         currentVelocity = dir.normalized * pwr;
         isBouncing = true;
 
+        //calculate equipmentDamage
+
         combat.TakeDamage(Mathf.Floor(pwr/10));
         //print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
     }
@@ -176,6 +178,7 @@ public class EnemyMove : MonoBehaviour, IHittable
     }
     private System.Collections.IEnumerator DropDown()
     {
+        AudioManager.inst.PlayHeroFallSound();
         while (transform.position.y > -25f)
         {
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;

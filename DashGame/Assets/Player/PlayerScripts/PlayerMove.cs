@@ -132,7 +132,7 @@ public class PlayerMove : MonoBehaviour
                 currentVelocity.y = 0f;
                 currentVelocity = Vector3.ClampMagnitude(currentVelocity, maxVelocity);
 
-                //default wall feedback
+                //default feedback
                 Vector3 fxPos = (hit.point + transform.position) / 2;
                 HitFxManager.inst.HitFX1(fxPos, currentVelocity.magnitude / 10);
                 CameraShake.inst.Shake(0.1f, 1f);

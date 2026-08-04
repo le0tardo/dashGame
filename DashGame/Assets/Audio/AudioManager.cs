@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip heroFallSound;
     [SerializeField] AudioClip heroAimSound;
     [SerializeField] AudioClip heroReleaseSound;
+    [SerializeField] AudioClip heroFailDashSound;
     [SerializeField] AudioClip[] heroHurts;
     AudioSource source;
     [SerializeField] AudioSource aimSource;
@@ -71,6 +72,10 @@ public class AudioManager : MonoBehaviour
         source.PlayOneShot(swooshes[r],vol);
 
         ResetSource();
+    }
+    public void PlayFailDashSound()
+    {
+        source.PlayOneShot(heroFailDashSound,1f);
     }
 
     public void PlaySwoosh(float vol)
