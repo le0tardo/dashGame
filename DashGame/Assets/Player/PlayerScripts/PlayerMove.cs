@@ -138,8 +138,6 @@ public class PlayerMove : MonoBehaviour
                 CameraShake.inst.Shake(0.1f, 1f);
                 AudioManager.inst.PlayImpactSound(currentVelocity.magnitude);
             }
-
-
         }
         else
         {
@@ -282,6 +280,7 @@ public class PlayerMove : MonoBehaviour
     {
         isFalling=false;
         currentVelocity = Vector3.zero;
+        LevelManager.inst.stamina=LevelManager.inst.maxStamina;
 
         RoomBehaviour currentRoomBehaviour=RoomManager.inst.currentRoom.GetComponent<RoomBehaviour>();
         if (currentRoomBehaviour != null) transform.position = currentRoomBehaviour.safeSpawn.position;

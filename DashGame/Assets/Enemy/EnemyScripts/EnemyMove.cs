@@ -48,7 +48,11 @@ public class EnemyMove : MonoBehaviour, IHittable
     }
     public void OnHit(Vector3 hitPosition, float power)
     {
-        GetHit(hitPosition, power);
+        Vector3 hitDirection = (transform.position - hitPosition);
+        hitDirection.y = 0;
+
+        GetHit(hitDirection, power);
+
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos,power/10);
         CameraShake.inst.Shake(0.15f, 1.5f);

@@ -4,11 +4,18 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager inst;
 
+    [Header("Impacts")]
     [SerializeField] AudioClip[] impacts;
     [SerializeField] AudioClip[] enemyImpacts;
     [SerializeField] AudioClip[] mealImpacts;
+    [Header("Misc")]
+    [SerializeField] AudioClip[] swooshes;
+    [Header("Hero Sounds")]
     [SerializeField] AudioClip heroFallSound;
+    [SerializeField] AudioClip heroAimSound;
+    [SerializeField] AudioClip heroReleaseSound;
     AudioSource source;
+    [SerializeField] AudioSource aimSource;
 
     private void Start()
     {
@@ -42,11 +49,30 @@ public class AudioManager : MonoBehaviour
         source.PlayOneShot(mealImpacts[r]);
     }
 
-    public void PlayCustomSound(AudioClip clip)
+    public void PlayCustomSound(AudioClip clip, float vol)
     {
-        source.PlayOneShot(clip);
+        source.PlayOneShot(clip,vol);
     }
+    public void PlayAimSound()
+    {
+        aimSource.Play();
+    }
+    public void StopAimSound()
+    {
+        aimSource.Stop();
+    }
+    public void PlayReleaseSound(float vol)
+    {
+        vol=Mathf.Clamp(vol, 0, 1);
+        source.PlayOneShot(heroReleaseSound,(vol/4));
 
+        int r = Random.Range(0,swooshes.Length);
+        source.PlayOneShot(swooshes[r],vol);
+
+        print("release volume: " + vol);
+
+        ResetSource();
+    }
     public void PlayHeroFallSound()
     {
         source.volume = 0.5f;

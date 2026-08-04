@@ -41,6 +41,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             isDragging = true;
             dragStartScreenPos = eventData.position;
             LevelManager.inst.SlowDownTime();
+            AudioManager.inst.PlayAimSound();
         }
 
         if (playerAnimator != null)
@@ -101,6 +102,10 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         {
             LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
             if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
+
+            float soundVolume = launchSpeed / moveScript.maxVelocity;
+            print("release sound vol: "+soundVolume +". Math: "+launchSpeed+"/"+moveScript.maxVelocity);
+            AudioManager.inst.PlayReleaseSound(soundVolume);
         }
         else
         {
@@ -120,6 +125,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         {
             //playerAnimator.SetTrigger("dash");
         }
+
+        AudioManager.inst.StopAimSound();
     }
 
     // -------------------------------------------------------------
