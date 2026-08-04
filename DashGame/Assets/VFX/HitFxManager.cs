@@ -17,8 +17,11 @@ public class HitFxManager : MonoBehaviour
             if (!hitFX1[i].gameObject.activeInHierarchy)
             {
                 hitFX1[i].gameObject.transform.position = pos;
-                hitFX1[i].gameObject.transform.localScale = Vector3.one*(scl/10);
+                hitFX1[i].gameObject.transform.localScale = Vector3.one*(scl/5); //just looked better...
+
                 hitFX1[i].gameObject.SetActive(true);
+                print("incoming impact scale: "+scl);
+                print("hit fx scale: "+hitFX1[i].gameObject.transform.localScale);
                 hitFX1[i].Play();
                 return;
             }

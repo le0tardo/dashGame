@@ -69,8 +69,6 @@ public class AudioManager : MonoBehaviour
         int r = Random.Range(0,swooshes.Length);
         source.PlayOneShot(swooshes[r],vol);
 
-        print("release volume: " + vol);
-
         ResetSource();
     }
     public void PlayHeroFallSound()

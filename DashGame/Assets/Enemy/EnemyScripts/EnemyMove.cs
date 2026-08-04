@@ -105,7 +105,7 @@ public class EnemyMove : MonoBehaviour, IHittable
         isBouncing = true;
 
         combat.TakeDamage(Mathf.Floor(pwr/10));
-        print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
+        //print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
     }
     public void GetHitByOtherEnemy(Vector3 dir, float pwr)
     {

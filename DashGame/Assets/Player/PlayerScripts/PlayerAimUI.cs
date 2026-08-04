@@ -104,7 +104,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
 
             float soundVolume = launchSpeed / moveScript.maxVelocity;
-            print("release sound vol: "+soundVolume +". Math: "+launchSpeed+"/"+moveScript.maxVelocity);
             AudioManager.inst.PlayReleaseSound(soundVolume);
         }
         else
@@ -115,7 +114,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             LevelManager.inst.UseStamina(Mathf.Floor(remainderStamina));
             if (moveScript != null) moveScript.Launch(launchDirection, remainderStamina);
 
-            print("launch speed = stamina = " + remainderStamina);
             CameraShake.inst.Shake(0.1f, 1f);
         }
 
