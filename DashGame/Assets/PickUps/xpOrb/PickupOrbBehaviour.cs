@@ -1,17 +1,24 @@
 using UnityEngine;
 using System.Collections;
-public class XpOrbBehaviour : MonoBehaviour
+public class PickupOrbBehaviour : MonoBehaviour
 {
-    [SerializeField] float xp=1f;
+    enum PickupType
+    {
+        Stamina,
+        Health,
+        XP
+    }
+    [SerializeField] PickupType pickupType;
+    [SerializeField] float amount = 1f;
 
     [Header("Spawn")]
-    Vector3 targetSpawnPosition= Vector3.zero;
+    Vector3 targetSpawnPosition = Vector3.zero;
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     [SerializeField] private float minRadius = 1.5f;
     [SerializeField] private float maxRadius = 3f;
     [SerializeField] private float minMoveDuration = 0.5f;
     [SerializeField] private float maxMoveDuration = 1f;
-    [SerializeField] bool pickupReady=false;
+    [SerializeField] bool pickupReady = false;
     float moveDuration;
 
     [Header("Pickup")]
@@ -22,12 +29,12 @@ public class XpOrbBehaviour : MonoBehaviour
 
     private void Start()
     {
-        moveDuration=Random.Range(minMoveDuration,maxMoveDuration);
+        moveDuration = Random.Range(minMoveDuration, maxMoveDuration);
         float randomDistance = Random.Range(minRadius, maxRadius);
         Vector2 randomCircle = Random.insideUnitCircle.normalized * randomDistance;
         Vector3 targetPos = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
 
-        player=LevelManager.inst.playerMove.gameObject.transform;
+        player = LevelManager.inst.playerMove.gameObject.transform;
 
         StartCoroutine(MoveRoutine(targetPos));
     }
@@ -70,8 +77,8 @@ public class XpOrbBehaviour : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        float dist=Vector3.Distance(startPos, targetPos);
-        floatDuration += (dist/10);
+        float dist = Vector3.Distance(startPos, targetPos);
+        floatDuration += (dist / 10);
 
         while (elapsedTime < floatDuration)
         {
@@ -88,9 +95,23 @@ public class XpOrbBehaviour : MonoBehaviour
     }
     void PickUp()
     {
-        LevelManager.inst.GetXp(xp);
-        AudioManager.inst.PlayPickupXP();
-        HitFxManager.inst.PickupXpFx(player.position);
+        switch (pickupType)
+        {
+            case PickupType.Stamina:
+                LevelManager.inst.GetStamina(amount);
+                AudioManager.inst.PlayStaminaPickup();
+                break;
+
+            case PickupType.Health:
+                //comin soon
+            break;
+
+             case PickupType.XP:
+                LevelManager.inst.GetXp(amount);
+                AudioManager.inst.PlayPickupXP();
+                HitFxManager.inst.PickupXpFx(player.position);
+                break;
+        }
         Destroy(this.gameObject);
     }
 

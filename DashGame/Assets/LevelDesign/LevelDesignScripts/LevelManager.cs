@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public PlayerStats playerStats;
 
     [Header("Level Stats")]
+    [SerializeField] public float level;
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
     [SerializeField] public float stamina;
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     void SetHeroStats()
     {
+        level=heroStats.heroLevel;
         health = heroStats.heroHealth;
         maxHealth = heroStats.heroHealth;
         stamina = heroStats.heroStamina;
@@ -75,6 +77,7 @@ public class LevelManager : MonoBehaviour
     public void ChangeHealth(int _health) //for both + and - health
     {
         health += _health;
+        health=Mathf.Clamp(health, 0, maxHealth);
         canvas.UpdateHealth();
     }
     public void UseStamina(float amount)
@@ -98,6 +101,9 @@ public class LevelManager : MonoBehaviour
         {
             //Level up!
             maxXp = Mathf.Floor(maxXp * 1.5f);
+            level++;
+            xp = 0;
+            canvas.UpdateLevel();
         }
         canvas.UpdateXp();
     }

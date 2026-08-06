@@ -10,8 +10,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip[] mealImpacts;
     [Header("Pickups")]
     [SerializeField] AudioClip[] pickupXp;
+    [SerializeField] AudioClip pling;
     private float lastPickupSoundTime;
     private float soundCooldown = 0.05f;
+    [SerializeField] AudioSource pickupSource;
     [Header("Misc")]
     [SerializeField] AudioClip[] swooshes;
     [Header("Hero Sounds")]
@@ -39,11 +41,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayEnemyImpactSound(float vol)
     {
-        vol = (vol / 10);
-        source.volume = vol-0.5f;
-        vol = Mathf.Clamp(vol, 0, 1);
+        vol = Mathf.Clamp(vol, 0.15f, 0.75f);
         int r = Random.Range(0, enemyImpacts.Length);
-        source.PlayOneShot(enemyImpacts[r]);
+        source.PlayOneShot(enemyImpacts[r],vol);
     }
 
     public void PlayMetalImpactSound(float vol)
@@ -100,15 +100,29 @@ public class AudioManager : MonoBehaviour
         int r = Random.Range(0, heroHurts.Length);
         source.PlayOneShot(heroHurts[r],0.5f);
     }
-
     public void PlayPickupXP()
     {
+        /*
         if (Time.time - lastPickupSoundTime < soundCooldown) return;
         lastPickupSoundTime = Time.time;
 
         float vol = Random.Range(0.23f, 0.5f);
         int r = Random.Range(0,pickupXp.Length);
         source.PlayOneShot(pickupXp[r], vol);
+        */
+        pickupSource.volume = Random.Range(0.15f,0.25f);
+        pickupSource.pitch = Random.Range(0.75f,1f);
+        pickupSource.clip = pling;
+        pickupSource.Play();
+    }
+
+    public void PlayStaminaPickup()
+    {
+        pickupSource.volume = Random.Range(0.15f, 0.25f);
+        pickupSource.pitch = Random.Range(0.75f, 1f);
+        int r = Random.Range(0, pickupXp.Length);
+        pickupSource.clip = pickupXp[r];
+        pickupSource.Play();
     }
 
 

@@ -54,9 +54,12 @@ public class EnemyMove : MonoBehaviour, IHittable
         GetHit(hitDirection, power);
 
         Vector3 fxPos = (transform.position + hitPosition) / 2;
-        HitFxManager.inst.HitFX1(fxPos,power/10);
+        HitFxManager.inst.HitFX1(fxPos,0.1f+(power/10));
         CameraShake.inst.Shake(0.15f, 1.5f);
-        AudioManager.inst.PlayEnemyImpactSound(power/4);
+        float vol = (power / 33);
+        vol = Mathf.Clamp(vol,0.25f,1f);
+        print("hit power: "+power/33+". hit volume: " + vol);
+        AudioManager.inst.PlayEnemyImpactSound(1);
 
         if(scatterCollider!=null&&!scatterCollider.activeInHierarchy)scatterCollider.SetActive(true);
     }
@@ -104,7 +107,7 @@ public class EnemyMove : MonoBehaviour, IHittable
         currentVelocity = dir.normalized * pwr;
         isBouncing = true;
 
-        //calculate equipmentDamage
+        //calculate equipmentDamage here
 
         combat.TakeDamage(Mathf.Floor(pwr/10));
         //print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
@@ -113,6 +116,7 @@ public class EnemyMove : MonoBehaviour, IHittable
     {
         if (agent != null) { agent.enabled = false; }
         if (playerSlots != null) { playerSlots.ReleaseSlot(gameObject); }
+        dir.y = 0f;
         currentVelocity = dir.normalized * pwr;
         isBouncing = true;
     }

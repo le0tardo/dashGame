@@ -10,6 +10,8 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] float attackSpeed;
     [SerializeField]bool isDead=false;
 
+    [SerializeField] GameObject xpDrop;
+
     EnemyMove move;
     PlayerStats player;
 
@@ -31,6 +33,14 @@ public class EnemyCombat : MonoBehaviour
 
         if (health <= 0)
         {
+            GameObject pickupManager = GameObject.Find("PickupManager");
+
+            if (xpDrop != null && pickupManager != null)
+            {
+                xpDrop.SetActive(true);
+                xpDrop.transform.SetParent(pickupManager.transform);
+            }
+
             isDead = true;
             Destroy(this.gameObject);
         }

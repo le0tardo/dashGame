@@ -13,6 +13,7 @@ public class CanvasScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI keyText;
     [SerializeField] TextMeshProUGUI xpText;
     [SerializeField] Image xpBar;
+    [SerializeField] TextMeshProUGUI lvlText;
     float drawHealth;
     float drawStamina;
     float drawKey;
@@ -35,6 +36,7 @@ public class CanvasScript : MonoBehaviour
         UpdateHealth();
         UpdateStamina();
         UpdateXp();
+        UpdateLevel();
     }
 
     public void UpdateHealth()
@@ -65,5 +67,9 @@ public class CanvasScript : MonoBehaviour
         xpBar.transform.localScale = new Vector3(xp,1,1);
     }
 
+    public void UpdateLevel() //keep separate if i wanna add some flare here later..
+    {
+        lvlText.text = "lvl: " + LevelManager.inst.level.ToString();
+    }
 
 }

@@ -11,10 +11,11 @@ public class EnemyScatter : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            EnemyMove em=other.gameObject.GetComponent<EnemyMove>();
-            if (em != null)
+            if (other.TryGetComponent<EnemyMove>(out var hitEnemy))
             {
-                em.GetHitByOtherEnemy(transform.position,scatterPower);
+                Vector3 pushDirection = other.transform.position - transform.position;
+                hitEnemy.GetHitByOtherEnemy(pushDirection, scatterPower);
+                print("scattercollider activated + found and enemy to collide with! :))");
             }
         }
     }
