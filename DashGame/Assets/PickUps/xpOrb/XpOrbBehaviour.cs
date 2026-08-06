@@ -70,6 +70,9 @@ public class XpOrbBehaviour : MonoBehaviour
 
         float elapsedTime = 0f;
 
+        float dist=Vector3.Distance(startPos, targetPos);
+        floatDuration += (dist/10);
+
         while (elapsedTime < floatDuration)
         {
             elapsedTime += Time.deltaTime;
@@ -85,6 +88,9 @@ public class XpOrbBehaviour : MonoBehaviour
     }
     void PickUp()
     {
+        LevelManager.inst.GetXp(xp);
+        AudioManager.inst.PlayPickupXP();
+        HitFxManager.inst.PickupXpFx(player.position);
         Destroy(this.gameObject);
     }
 

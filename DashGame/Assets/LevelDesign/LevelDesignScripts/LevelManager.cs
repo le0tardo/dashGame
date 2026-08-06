@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public float staminaRegenTime=1f;
     [SerializeField] private float staminaRegenRate = 10f;
     [SerializeField] public float staminaRegenDelay=1f;
+    [SerializeField] public float xp;
+    [SerializeField] public float maxXp;
 
     [SerializeField] public float keys;
 
@@ -75,7 +77,6 @@ public class LevelManager : MonoBehaviour
         health += _health;
         canvas.UpdateHealth();
     }
-
     public void UseStamina(float amount)
     {
         stamina = Mathf.Clamp(stamina - amount, 0f, maxStamina);
@@ -83,6 +84,22 @@ public class LevelManager : MonoBehaviour
         canvas.UpdateStamina();
 
         staminaRegenTime = staminaRegenDelay;//pause before regenig
+    }
+    public void GetStamina(float amount)
+    {
+        stamina = Mathf.Clamp(stamina + amount, 0f, maxStamina);
+        canvas.UpdateStamina();
+    }
+
+    public void GetXp(float amount)
+    {
+        xp += amount;
+        if (xp >= maxXp)
+        {
+            //Level up!
+            maxXp = Mathf.Floor(maxXp * 1.5f);
+        }
+        canvas.UpdateXp();
     }
     void FillStamina()
     {
@@ -101,12 +118,6 @@ public class LevelManager : MonoBehaviour
             }
         }
         canvas.UpdateStamina();
-    }
-    public void AddScore(float scr)
-    {
-        score += Mathf.RoundToInt(scr);
-        canvas.UpdateScoreText(score);
-
     }
 
     public void AddKey()

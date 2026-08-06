@@ -184,7 +184,6 @@ public class EnemyMove : MonoBehaviour, IHittable
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;
             yield return null;
         }
-        LevelManager.inst.AddScore(combat.health*2);
         Destroy(this.gameObject);
     }
 }

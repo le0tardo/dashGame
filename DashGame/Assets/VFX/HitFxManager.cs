@@ -1,10 +1,12 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class HitFxManager : MonoBehaviour
 {
 
     public static HitFxManager inst;
     [SerializeField] ParticleSystem[] hitFX1;
+    [SerializeField] ParticleSystem[] pickupXpFx;
 
     private void Awake()
     {
@@ -21,6 +23,20 @@ public class HitFxManager : MonoBehaviour
 
                 hitFX1[i].gameObject.SetActive(true);
                 hitFX1[i].Play();
+                return;
+            }
+        }
+    }
+
+    public void PickupXpFx(Vector3 pos)
+    {
+        for (int i = 0; i < pickupXpFx.Length; i++)
+        {
+            if (!pickupXpFx[i].gameObject.activeInHierarchy)
+            {
+                pickupXpFx[i].gameObject.transform.position = pos;
+                pickupXpFx[i].gameObject.SetActive(true);
+                pickupXpFx[i].Play();
                 return;
             }
         }

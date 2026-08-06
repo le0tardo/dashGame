@@ -4,8 +4,6 @@ public class WallBehaviour : MonoBehaviour, IHittable
 {
     [SerializeField] float bounce=0.5f;//default
     public float hitBounce =>bounce;
-
-    [SerializeField] string customString;
     public void OnHit(Vector3 hitPosition, float power)
     {
         Vector3 fxPos = (transform.position + hitPosition) / 2;

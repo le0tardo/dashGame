@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour
 {
+    [Header("Fields")]
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] Image healthBar;
     [SerializeField] TextMeshProUGUI staminaText;
     [SerializeField] Image staminaBar;
     [SerializeField] TextMeshProUGUI keyText;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI xpText;
+    [SerializeField] Image xpBar;
     float drawHealth;
     float drawStamina;
     float drawKey;
-    float drawScore;
+    float drawXp;
     float t = 0.1f;
 
     Coroutine countRoutine;
@@ -27,8 +29,12 @@ public class CanvasScript : MonoBehaviour
         staminaText.text ="Stamina: "+drawStamina.ToString("F0")+"/"+LevelManager.inst.maxStamina.ToString("F0");
         drawKey = LevelManager.inst.keys;
         keyText.text = "Keys: "+LevelManager.inst.keys.ToString("F0");
-        drawScore=LevelManager.inst.score;
-        scoreText.text = "Score: "+drawScore.ToString("F0");
+        drawXp=LevelManager.inst.xp;
+        xpText.text = "XP: "+drawXp.ToString("F0");
+
+        UpdateHealth();
+        UpdateStamina();
+        UpdateXp();
     }
 
     public void UpdateHealth()
@@ -50,32 +56,14 @@ public class CanvasScript : MonoBehaviour
     {
         keyText.text = "Keys: "+ LevelManager.inst.keys.ToString("F0");
     }
-    public void UpdateScoreText(float scr)
+
+    public void UpdateXp()
     {
-        if (countRoutine != null)
-        {
-            StopCoroutine(countRoutine);
-        }
-        countRoutine = StartCoroutine(CountScore(scr));
+        drawXp=LevelManager.inst.xp;
+        xpText.text="XP: "+drawXp.ToString("F0")+"/"+LevelManager.inst.maxXp.ToString("F0");
+        float xp = LevelManager.inst.xp / LevelManager.inst.maxXp;
+        xpBar.transform.localScale = new Vector3(xp,1,1);
     }
 
-    IEnumerator CountScore(float scoreToAdd)
-    {
-        float startScore = drawScore;
-        float targetScore = drawScore + scoreToAdd;
-        float elapsedTime = 0f;
 
-        while (elapsedTime < t)
-        {
-            elapsedTime += Time.deltaTime;
-            float normalizedTime = elapsedTime / t;
-            float smoothTime = Mathf.SmoothStep(0f, 1f, normalizedTime);
-            drawScore = Mathf.Lerp(startScore, targetScore, smoothTime);
-            scoreText.text = "Score: "+drawScore.ToString("F0");
-            yield return null; 
-        }
-        drawScore = targetScore;
-        scoreText.text = "Score: "+drawScore.ToString("F0");
-        countRoutine = null;
-    }
 }

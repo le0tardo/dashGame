@@ -8,6 +8,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip[] impacts;
     [SerializeField] AudioClip[] enemyImpacts;
     [SerializeField] AudioClip[] mealImpacts;
+    [Header("Pickups")]
+    [SerializeField] AudioClip[] pickupXp;
+    private float lastPickupSoundTime;
+    private float soundCooldown = 0.05f;
     [Header("Misc")]
     [SerializeField] AudioClip[] swooshes;
     [Header("Hero Sounds")]
@@ -96,6 +100,17 @@ public class AudioManager : MonoBehaviour
         int r = Random.Range(0, heroHurts.Length);
         source.PlayOneShot(heroHurts[r],0.5f);
     }
+
+    public void PlayPickupXP()
+    {
+        if (Time.time - lastPickupSoundTime < soundCooldown) return;
+        lastPickupSoundTime = Time.time;
+
+        float vol = Random.Range(0.23f, 0.5f);
+        int r = Random.Range(0,pickupXp.Length);
+        source.PlayOneShot(pickupXp[r], vol);
+    }
+
 
     void ResetSource()
     {
