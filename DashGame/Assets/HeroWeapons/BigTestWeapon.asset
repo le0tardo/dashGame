@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: BigTestWeapon
   m_EditorClassIdentifier: 
   weaponName: Test Weapon
-  weaponDamageType: 0
-  weaponDamage: 100
-  weaponCritChance: 1
-  weaponCritRate: 10
+  weaponModel: {fileID: 6978453593109459989, guid: c694f9b3ece1a2c4c9743c029edd7d09, type: 3}
+  weaponPhysicalDamage: 10
+  weaponElementalDamage: 10
+  weaponElement: 4
+  weaponCritChance: 0.5
+  weaponCritRate: 2

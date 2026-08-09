@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public enum DamageType
+public enum ElementalType
 {
-    Physical,
+    None,
     Fire,
     Ice,
     Poison,
@@ -14,8 +14,11 @@ public enum DamageType
 public class HeroWeaponObject : ScriptableObject
 {
     public string weaponName;
-    public DamageType weaponDamageType;
-    public float weaponDamage;
+    public Sprite weaponIcon;
+    public GameObject weaponModel;
+    public float weaponPhysicalDamage;
+    public float weaponElementalDamage;
+    public ElementalType weaponElement;
     public float weaponCritChance;
     public float weaponCritRate;
 }

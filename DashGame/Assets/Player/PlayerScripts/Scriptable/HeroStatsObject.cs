@@ -9,7 +9,7 @@ public class HeroStatsObject : ScriptableObject
     public float heroHealth;
     public float heroStamina;
     public float heroRegenRate;
-    public float heroDamage;
+    public float heroImpactDamage;
     public float heroSpeed;
 
     [Header("Equipment")]
