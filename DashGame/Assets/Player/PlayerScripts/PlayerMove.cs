@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float ground_y;
 
     public Vector3 currentVelocity=Vector3.zero;
+    public float cvm;
     public float maxVelocity=50;
     private CapsuleCollider capsuleCollider;
     float playerRadius;
@@ -48,6 +49,9 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        //debug
+        cvm=currentVelocity.magnitude;
+
         if (isFalling) return;
 
         if (isMoving)
@@ -187,6 +191,7 @@ public class PlayerMove : MonoBehaviour
     public void StartKnockBack(Vector3 hitPos, float distance)
     {
         if (isKnockedBack || isFalling) return;
+        if (currentVelocity.magnitude < 10) return;
 
         // direction away from the hit
         Vector3 pushDirection = transform.position - hitPos;

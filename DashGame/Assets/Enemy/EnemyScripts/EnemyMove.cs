@@ -58,7 +58,6 @@ public class EnemyMove : MonoBehaviour, IHittable
         CameraShake.inst.Shake(0.15f, 1.5f);
         float vol = (power / 33);
         vol = Mathf.Clamp(vol,0.25f,1f);
-        print("hit power: "+power/33+". hit volume: " + vol);
         AudioManager.inst.PlayEnemyImpactSound(1);
 
         if(scatterCollider!=null&&!scatterCollider.activeInHierarchy)scatterCollider.SetActive(true);

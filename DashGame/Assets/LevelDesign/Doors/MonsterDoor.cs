@@ -1,10 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorEnemyCounter : MonoBehaviour
+public class MonsterDoor : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
     [SerializeField] bool locked = true;
+
+    [SerializeField] AudioClip slide;
+
+    [SerializeField] Animator anim;
+
+    [SerializeField] GameObject dust;
 
     private void Update()
     {
@@ -21,12 +27,14 @@ public class DoorEnemyCounter : MonoBehaviour
     void Unlock()
     {
         locked = false;
-        //TODO ofc a nice courutine or smth here
-        //or just an animation and kill the collider?
-        //for now:
+        anim.SetTrigger("open");
+        Invoke("Dust", 1f);
+        AudioManager.inst.PlayCustomSound(slide, 1f);
         BoxCollider bx=GetComponentInChildren<BoxCollider>();
         bx.enabled = false;
-        MeshRenderer rend=GetComponentInChildren<MeshRenderer>();
-        rend.enabled = false;
+    }
+     void Dust()
+    {
+        dust.SetActive(true);
     }
 }

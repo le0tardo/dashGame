@@ -11,8 +11,6 @@ public class AudioManager : MonoBehaviour
     [Header("Pickups")]
     [SerializeField] AudioClip[] pickupXp;
     [SerializeField] AudioClip pling;
-    private float lastPickupSoundTime;
-    private float soundCooldown = 0.05f;
     [SerializeField] AudioSource pickupSource;
     [Header("Misc")]
     [SerializeField] AudioClip[] swooshes;

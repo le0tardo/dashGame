@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroName: Test Hero
   heroLevel: 1
-  heroHealth: 25
-  heroStamina: 25
-  heroRegenRate: 1
-  heroDamage: 1
+  heroHealth: 50
+  heroStamina: 50
+  heroRegenRate: 2
+  heroImpactDamage: 1
   heroSpeed: 100
   heroWeapon: {fileID: 11400000, guid: bd99ad0a36b8e2e4cbbac62ae4ca9c45, type: 2}

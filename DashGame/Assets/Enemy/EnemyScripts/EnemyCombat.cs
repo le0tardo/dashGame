@@ -10,7 +10,7 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] float attackSpeed;
     [SerializeField]bool isDead=false;
 
-    [SerializeField] GameObject xpDrop;
+    [SerializeField] GameObject drop;
 
     EnemyMove move;
     PlayerStats player;
@@ -35,10 +35,10 @@ public class EnemyCombat : MonoBehaviour
         {
             GameObject pickupManager = GameObject.Find("PickupManager");
 
-            if (xpDrop != null && pickupManager != null)
+            if (drop != null && pickupManager != null)
             {
-                xpDrop.SetActive(true);
-                xpDrop.transform.SetParent(pickupManager.transform);
+                drop.SetActive(true);
+                drop.transform.SetParent(pickupManager.transform);
             }
 
             isDead = true;
