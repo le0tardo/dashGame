@@ -22,7 +22,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     [Header("References")]
     [SerializeField] private PlayerMove moveScript;
     [SerializeField] Animator playerAnimator;
-    [SerializeField] PlayerAnimations anim;
+    [SerializeField] public PlayerAnimations anim;
     private Camera mainCamera;
 
     private Vector2 dragStartScreenPos;
@@ -67,17 +67,17 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             dragStartScreenPos = eventData.position;
             LevelManager.inst.SlowDownTime();
             AudioManager.inst.PlayAimSound();
+            if (moveScript.moveState == PlayerMove.MoveState.Idle)
+            {
+                moveScript.moveState = PlayerMove.MoveState.Aiming;
+                if (anim != null) anim.AimAnim(); print("setting trigger in animator");
+            }
 
-            if (anim != null) anim.AimAnim();
         }
 
         if (playerAnimator != null)
         {
             playerAnimator.SetTrigger("aim");
-        }
-        else
-        {
-            print("animator is null??");
         }
     }
 
@@ -103,6 +103,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         if (!isDragging) return;
 
         //TODO: aiming costs stamina!?
+
+        moveScript.moveState = PlayerMove.MoveState.Dashing;
 
         isDragging = false;
 

@@ -1,8 +1,14 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public enum MoveState
+    {
+        Idle,
+        Aiming,
+        Dashing
+    }
+
     [Header("Move & Bounce")]
     [SerializeField] private float stopThreshold = 0.1f;
     [SerializeField] private float deceleration = 2f;
@@ -15,6 +21,7 @@ public class PlayerMove : MonoBehaviour
     private bool isJumping = false;
     private float jumpYOffset = 0f;
     [SerializeField] float ground_y;
+    [SerializeField] public MoveState moveState = MoveState.Idle;
 
     public Vector3 currentVelocity=Vector3.zero;
     public float cvm;
@@ -41,7 +48,11 @@ public class PlayerMove : MonoBehaviour
         playerRadius=capsuleCollider.radius;
         mouseCollider = GetComponent<SphereCollider>();
         playerStats = GetComponent<PlayerStats>();
-        if(playerAim==null)playerAim = GetComponent<PlayerAimUI>();
+
+        if (anim == null) { anim = GetComponentInChildren<PlayerAnimations>(); }
+
+        if (playerAim == null) playerAim = GetComponent<PlayerAimUI>(); playerAim.anim=anim;
+
         rb= GetComponent<Rigidbody>();
         rb.isKinematic = true;
 
@@ -93,6 +104,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             if (anim != null) anim.StopAnim();
+            moveState = MoveState.Idle;
             return;
         }
 
