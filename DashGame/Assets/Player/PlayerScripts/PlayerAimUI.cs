@@ -22,6 +22,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     [Header("References")]
     [SerializeField] private PlayerMove moveScript;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] PlayerAnimations anim;
     private Camera mainCamera;
 
     private Vector2 dragStartScreenPos;
@@ -34,6 +35,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         {
             var player = FindAnyObjectByType<PlayerMove>();
             if (player != null) moveScript = player;
+            if(anim==null)anim = player.anim;
         }
 
         maxArrowLength = maxDragDistance;
@@ -65,11 +67,17 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             dragStartScreenPos = eventData.position;
             LevelManager.inst.SlowDownTime();
             AudioManager.inst.PlayAimSound();
+
+            if (anim != null) anim.AimAnim();
         }
 
         if (playerAnimator != null)
         {
             playerAnimator.SetTrigger("aim");
+        }
+        else
+        {
+            print("animator is null??");
         }
     }
 

@@ -33,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     private PlayerStats playerStats;
     [SerializeField] private PlayerAimUI playerAim;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] public PlayerAnimations anim;
 
     void Start()
     {
@@ -72,6 +73,8 @@ public class PlayerMove : MonoBehaviour
         transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         currentVelocity.y = 0; // Lock perfectly flat to the table surface
         isMoving = true;
+
+        if (anim != null) anim.LaunchAnim();
     }
 
     private void MoveAndBounce()
@@ -88,6 +91,8 @@ public class PlayerMove : MonoBehaviour
             {
                 playerAnimator.SetTrigger("idle");
             }
+
+            if (anim != null) anim.StopAnim();
             return;
         }
 
