@@ -12,6 +12,9 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     [Header("Aim Arrow")]
     [SerializeField] private SpriteRenderer arrowSprite;
     [SerializeField] private float maxArrowLength;
+    [SerializeField] Color arrowGreen;
+    [SerializeField] Color arrowRed;
+    [SerializeField] Color arrowWhite;
 
     [Header("Stamina")]
     [SerializeField] private bool staminaAfford = true;
@@ -208,13 +211,15 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         arrowSprite.size = new Vector2(arrowSprite.size.x, targetLength);
 
         bool canAffordCurrentLaunch = dragDistance <= LevelManager.inst.stamina;
-        arrowSprite.color = canAffordCurrentLaunch ? Color.green : Color.red;
+        arrowSprite.color = canAffordCurrentLaunch ? arrowGreen : arrowRed;
+
+        anim.aimPower = currentPercentage;
     }
 
     private void ResetArrow()
     {
         arrowSprite.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         arrowSprite.size = new Vector2(2f, 2f);
-        arrowSprite.color = Color.white;
+        arrowSprite.color = arrowWhite;
     }
 }

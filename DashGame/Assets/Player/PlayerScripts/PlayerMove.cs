@@ -145,9 +145,16 @@ public class PlayerMove : MonoBehaviour
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
                 currentVelocity.y = 0f;
                 currentVelocity = Vector3.ClampMagnitude(currentVelocity, maxVelocity);
+
+                print("trying to cal bounce in anim script");
+                anim.BounceAnim();
+
             }
             else
             {
+                //this never happens?
+                print("IT HAPPENDED!");
+
                 //bounce on wall
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
                 currentVelocity.y = 0f;
@@ -158,6 +165,7 @@ public class PlayerMove : MonoBehaviour
                 HitFxManager.inst.HitFX1(fxPos, currentVelocity.magnitude / 10);
                 CameraShake.inst.Shake(0.1f, 1f);
                 AudioManager.inst.PlayImpactSound(currentVelocity.magnitude);
+
             }
         }
         else
@@ -208,7 +216,7 @@ public class PlayerMove : MonoBehaviour
     public void StartKnockBack(Vector3 hitPos, float distance)
     {
         if (isKnockedBack || isFalling) return;
-        if (currentVelocity.magnitude < 10) return;
+        if (currentVelocity.magnitude >= 10) return;
 
         // direction away from the hit
         Vector3 pushDirection = transform.position - hitPos;
