@@ -24,6 +24,8 @@ public class EnemyMove : MonoBehaviour, IHittable
     EnemyCombat combat;
     [SerializeField] GameObject scatterCollider;
 
+    bool canSeePlayer=false;
+
     public bool dead;
 
     void Start()
@@ -68,6 +70,8 @@ public class EnemyMove : MonoBehaviour, IHittable
     {
         if (playerTransform == null) return;
 
+        if(!canSeePlayer)canSeePlayer = CheckLineOfSight();
+
         if (isBouncing)
         {
             // pool ball mode
@@ -89,7 +93,7 @@ public class EnemyMove : MonoBehaviour, IHittable
         else
         {
             // zombie mode
-            if (playerSlots != null && agent != null && agent.enabled)
+            if (playerSlots != null && agent != null && agent.enabled && canSeePlayer)
             {
                 targetSlotPosition = playerSlots.ReserveSlot(gameObject, out bool success);
                 if(agent.isOnNavMesh)agent.SetDestination(targetSlotPosition);
@@ -168,6 +172,24 @@ public class EnemyMove : MonoBehaviour, IHittable
         {
             transform.position += frameMovement;
         }
+    }
+
+    private bool CheckLineOfSight()
+    {
+        if (playerTransform == null) return false;
+
+        Vector3 eyePosition = transform.position; // Add Vector3.up * offset if enemy origin is at feet
+        Vector3 targetPosition = playerTransform.position;
+
+        // 1. Quick distance check before casting
+        float distanceToPlayer = Vector3.Distance(eyePosition, targetPosition);
+        if (distanceToPlayer > 15f) return false;
+
+        // 2. Cheap Linecast: Returns TRUE if it hits an obstacle on obstacleMask
+        bool isBlocked = Physics.Linecast(eyePosition, targetPosition, hitLayer);
+
+        // If NOT blocked, enemy has clear line of sight
+        return !isBlocked;
     }
 
     public void Fall(Vector3 holePosition)
