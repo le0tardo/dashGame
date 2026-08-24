@@ -8,9 +8,13 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] float damage;
     [SerializeField] float attackRange;
     [SerializeField] float attackSpeed;
+    public bool inCombat = false;
     [SerializeField]bool isDead=false;
 
+    [Header("Kill drops")]
     [SerializeField] GameObject drop;
+    [SerializeField] GameObject shards;
+    [SerializeField] GameObject gfx;
 
     EnemyMove move;
     PlayerStats player;
@@ -22,6 +26,22 @@ public class EnemyCombat : MonoBehaviour
         player = FindFirstObjectByType<PlayerStats>();
 
         InvokeRepeating("DealDamage",0,attackSpeed);
+    }
+
+    private void Update()
+    {
+        if (player != null)
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist <= attackRange)
+            {
+                inCombat = true;
+            }
+            else
+            {
+                inCombat= false;
+            }
+        }
     }
 
     public void TakeDamage(float dmg)
@@ -42,7 +62,8 @@ public class EnemyCombat : MonoBehaviour
             }
 
             isDead = true;
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            Die();
         }
     }
 
@@ -50,16 +71,19 @@ public class EnemyCombat : MonoBehaviour
     {
         if (!isDead && !move.isFalling)
         {
-            if (player != null)
+            if (inCombat)
             {
-                float dist = Vector3.Distance(transform.position, player.transform.position);
-                if (dist <= attackRange)
-                {
-                    Vector3 halfwayPosition = (transform.position + player.transform.position) * 0.5f;
-                    player.TakeDamage(damage, halfwayPosition);
-                }
+                Vector3 halfwayPosition = (transform.position + player.transform.position) * 0.5f;
+                player.TakeDamage(damage, halfwayPosition);
             }
         }
     }
 
+    void Die()
+    {
+        move.agent.enabled = false;
+        move.enabled = false;
+        gfx.SetActive(false);
+        shards.SetActive(true);
+    }
 }

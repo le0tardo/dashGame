@@ -17,12 +17,14 @@ public class EnemyMove : MonoBehaviour, IHittable
 
     private Vector3 currentVelocity;
     private CapsuleCollider capsuleCollider;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     [SerializeField] public bool isBouncing = false;
     [SerializeField] public bool isFalling=false;
 
     EnemyCombat combat;
     [SerializeField] GameObject scatterCollider;
+
+    public bool dead;
 
     void Start()
     {
@@ -77,13 +79,10 @@ public class EnemyMove : MonoBehaviour, IHittable
                 currentVelocity = Vector3.zero;
                 isBouncing = false;
 
-                // snap navmesh agent
-                if (agent != null && !isFalling)
+                if (agent != null && !isFalling)                // snap navmesh agent
                 {
                     agent.Warp(transform.position);
                     agent.enabled = true;
-                    //sometimes the agent is too far away from the navmesh if it clips through a wall...
-                    //end poolBallMode
                 }
             }
         }
@@ -96,6 +95,7 @@ public class EnemyMove : MonoBehaviour, IHittable
                 if(agent.isOnNavMesh)agent.SetDestination(targetSlotPosition);
             }
         }
+
     }
 
     void GetHit(Vector3 dir, float pwr)
