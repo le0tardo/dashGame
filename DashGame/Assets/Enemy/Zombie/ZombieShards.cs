@@ -1,12 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class ZombieShards : MonoBehaviour
 {
     [SerializeField] Rigidbody[] rbs;
+    [SerializeField] GameObject[] chunks;
+    float shrink = 1f;
     Transform player;
 
-    private void Start()
+    [SerializeField] Coroutine sinkRoutine;
+    private void Awake()
     {
+        print("this scipt is running");
         player = LevelManager.inst.playerMove.gameObject.transform;
 
         foreach (var rb in rbs) 
@@ -15,15 +20,21 @@ public class ZombieShards : MonoBehaviour
             rb.AddForceAtPosition(playerVelocity,player.position,ForceMode.Impulse);
             print("added force: " + playerVelocity +". total: "+playerVelocity.magnitude);
         }
-
-        Invoke("DisableRB", 1.5f);
     }
 
-    void DisableRB()
+    private void Update()
     {
-        foreach (var rb in rbs)
+        shrink-=Time.deltaTime;
+        foreach (var chunk in chunks)
         {
-            rb.isKinematic = false;
+            chunk.transform.localScale = new Vector3(shrink, shrink, shrink);
+        }
+
+        if (shrink <= 0)
+        {
+            this.gameObject.SetActive(false);
         }
     }
+
+
 }

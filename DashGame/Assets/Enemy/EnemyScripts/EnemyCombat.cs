@@ -82,8 +82,20 @@ public class EnemyCombat : MonoBehaviour
     void Die()
     {
         move.agent.enabled = false;
+
+        CapsuleCollider cap = move.gameObject.GetComponent<CapsuleCollider>();
+        cap.enabled = false;
+
         move.enabled = false;
         gfx.SetActive(false);
         shards.SetActive(true);
+
+        Invoke("Kill", 1.5f);
+
+    }
+
+    void Kill()
+    {
+        Destroy(this.gameObject);
     }
 }
