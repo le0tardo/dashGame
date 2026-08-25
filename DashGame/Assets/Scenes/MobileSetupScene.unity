@@ -134106,7 +134106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!208 &846972785
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -356810,7 +356810,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2274237518446168955, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_Name
-      value: ZombieHittable+GFX
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -356826,19 +356826,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -356846,7 +356846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8601142125721140166, guid: 379db1d2758c6b8428f3d06150975a68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

@@ -183,7 +183,7 @@ public class EnemyMove : MonoBehaviour, IHittable
 
         // 1. Quick distance check before casting
         float distanceToPlayer = Vector3.Distance(eyePosition, targetPosition);
-        if (distanceToPlayer > 15f) return false;
+        if (distanceToPlayer > 25f) return false;
 
         // 2. Cheap Linecast: Returns TRUE if it hits an obstacle on obstacleMask
         bool isBlocked = Physics.Linecast(eyePosition, targetPosition, hitLayer);

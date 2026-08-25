@@ -11,14 +11,12 @@ public class ZombieShards : MonoBehaviour
     [SerializeField] Coroutine sinkRoutine;
     private void Awake()
     {
-        print("this scipt is running");
         player = LevelManager.inst.playerMove.gameObject.transform;
 
         foreach (var rb in rbs) 
         {
             Vector3 playerVelocity = LevelManager.inst.playerMove.currentVelocity;
             rb.AddForceAtPosition(playerVelocity,player.position,ForceMode.Impulse);
-            print("added force: " + playerVelocity +". total: "+playerVelocity.magnitude);
         }
     }
 
