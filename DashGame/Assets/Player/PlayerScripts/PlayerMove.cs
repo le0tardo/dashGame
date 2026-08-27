@@ -146,7 +146,6 @@ public class PlayerMove : MonoBehaviour
                 currentVelocity.y = 0f;
                 currentVelocity = Vector3.ClampMagnitude(currentVelocity, maxVelocity);
 
-                print("trying to cal bounce in anim script");
                 anim.BounceAnim();
 
             }

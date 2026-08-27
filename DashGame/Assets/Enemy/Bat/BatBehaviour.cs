@@ -10,6 +10,7 @@ public class BatBehaviour : MonoBehaviour
     Vector2 randomOffset;
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] GameObject drop;
+    [SerializeField] BatAnimations batAnim;
 
     [Header("State")]
     [SerializeField] private bool seesPlayer = false;
@@ -37,6 +38,9 @@ public class BatBehaviour : MonoBehaviour
         if (player == null) player = FindAnyObjectByType<PlayerStats>();
         playerMove=player.gameObject.GetComponent<PlayerMove>();
 
+        batAnim = GetComponentInChildren<BatAnimations>();
+        if (batAnim == null) { print("no anim scritp for bat!"); }
+
         if (attackSpeed < 0.1f) attackSpeed = 1f;
         float r=Random.value;
         InvokeRepeating(nameof(TryAttack), 1f+r, attackSpeed);
@@ -56,6 +60,10 @@ public class BatBehaviour : MonoBehaviour
         if (seesPlayer && !inRange && dist>3f)
         {
             MoveInSquigglyLine();
+        }
+        else
+        {
+            if(batAnim.moving)batAnim.moving = false;
         }
     }
 
@@ -83,6 +91,9 @@ public class BatBehaviour : MonoBehaviour
 
     private void MoveInSquigglyLine()
     {
+        //check anim bool here
+        if(!batAnim.moving)batAnim.moving = true;
+
         waveTimer += Time.deltaTime * waveFrequency;
 
         // 1. Calculate direction to player and lock Y to 0
@@ -115,6 +126,7 @@ public class BatBehaviour : MonoBehaviour
         {
             Vector3 knockbackpos = (transform.position - playerPosition) / 2;
             player.TakeLightDamage(damage, knockbackpos);
+            batAnim.BatAttack();
         }
     }
 
@@ -156,6 +168,9 @@ public class BatBehaviour : MonoBehaviour
                 Vector3 targetPosition = transform.position + (pushDir.normalized * knockbackDistance);
                 StopCoroutine(nameof(KnockbackRoutine));
                 StartCoroutine(KnockbackRoutine(targetPosition));
+
+                batAnim.BatHit();
+                print("bat hit by player! spin??");
             }
         }
     }

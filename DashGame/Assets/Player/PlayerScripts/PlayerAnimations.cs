@@ -101,7 +101,6 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void BounceAnim()
     {
-        print("bounce");
         anim.SetTrigger("bounce");
     }
 
