@@ -23,8 +23,8 @@ public class PickupOrbBehaviour : MonoBehaviour
 
     [Header("Pickup")]
     [SerializeField] Transform player;
-    [SerializeField] private AnimationCurve floatSpeedCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-    [SerializeField] private float pickupRadius = 1.0f;
+    [SerializeField] private AnimationCurve floatSpeedCurve;// = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    [SerializeField] private float pickupRadius = 1.5f;
     [SerializeField] private float floatDuration = 0.25f;
 
     private void Start()
