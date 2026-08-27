@@ -19,8 +19,6 @@ public class EnemyAnimations : MonoBehaviour
     //performace
     private static MaterialPropertyBlock sharedPropertyBlock;
     private static readonly int ColorPropertyID = Shader.PropertyToID("_BaseColor");
-
-    // Cache the yield instruction to prevent Garbage Collection allocations
     private readonly WaitForSeconds flashWait = new WaitForSeconds(0.25f);
 
     private void Awake()

@@ -153,6 +153,11 @@ public class BatBehaviour : MonoBehaviour
 
         AudioManager.inst.PlayEnemyImpactSound(0.1f+dmg/10);
 
+        if (dmg > 0) DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString());
+
+        Vector3 hitPos=(transform.position + playerPosition)/2;
+        HitFxManager.inst.HitFX1(hitPos,dmg/2);
+
         if (health <= 0)
         {
             Die();
@@ -170,7 +175,6 @@ public class BatBehaviour : MonoBehaviour
                 StartCoroutine(KnockbackRoutine(targetPosition));
 
                 batAnim.BatHit();
-                print("bat hit by player! spin??");
             }
         }
     }
