@@ -4,6 +4,7 @@ public class EnemyShatter : MonoBehaviour
 {
     [SerializeField] private Rigidbody[] rbs;
     [SerializeField] private GameObject[] shards;
+    [SerializeField] AudioClip shatterSound;
 
     [Header("Shrink & Lifetime")]
     [SerializeField] private float shrinkDuration = 1f;
@@ -49,6 +50,7 @@ public class EnemyShatter : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+        if (shatterSound != null) AudioManager.inst.PlayCustomSound(shatterSound,1f);
     }
 
     private void Update()

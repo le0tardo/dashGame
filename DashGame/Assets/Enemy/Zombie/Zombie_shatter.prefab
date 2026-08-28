@@ -1199,6 +1199,7 @@ MonoBehaviour:
   - {fileID: 9221908752851286361}
   - {fileID: 7186761719398296730}
   - {fileID: 5210922580621508480}
+  shatterSound: {fileID: 8300000, guid: 21d7e868cf2caf346977cc7fdc5cbb9e, type: 3}
   shrinkDuration: 1
 --- !u!1 &6498910085261342416
 GameObject:
