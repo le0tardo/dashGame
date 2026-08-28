@@ -2,40 +2,68 @@ using UnityEngine;
 
 public class EnemyShatter : MonoBehaviour
 {
-    [SerializeField] Rigidbody[] rbs;
-    [SerializeField] GameObject[] shards;
+    [SerializeField] private Rigidbody[] rbs;
+    [SerializeField] private GameObject[] shards;
 
-    [SerializeField] float shrink = 1f;
+    [Header("Shrink & Lifetime")]
+    [SerializeField] private float shrinkDuration = 1f;
+    private float shrinkTimer = 1f;
+    private bool isShattered = false;
 
+    // Cache local start transforms so shards snap back perfectly
+    private Vector3[] initialLocalPositions;
+    private Quaternion[] initialLocalRotations;
 
     private void Awake()
     {
-        //debug
-        //Vector3 testForce =new Vector3 (5, 5, 5);
-        //Shatter(transform.position, testForce);
+        // 1. Cache starting positions & rotations relative to the parent container
+        initialLocalPositions = new Vector3[shards.Length];
+        initialLocalRotations = new Quaternion[shards.Length];
+
+        for (int i = 0; i < shards.Length; i++)
+        {
+            if (shards[i] == null) continue;
+            initialLocalPositions[i] = shards[i].transform.localPosition;
+            initialLocalRotations[i] = shards[i].transform.localRotation;
+        }
     }
 
-    public void Shatter(Vector3 impactPostion,Vector3 impactForce)
+    public void Shatter(Vector3 shatterPosition)
     {
-        transform.position = impactPostion; //move pooled obj to impact position
+        transform.position = shatterPosition;
+        shrinkTimer = 1f;
+        isShattered = true;
 
-        foreach (var rb in rbs)
+        Vector3 playerVelocity = LevelManager.inst.playerMove.currentVelocity;
+
+        for (int i = 0; i < rbs.Length; i++)
         {
-            rb.AddForceAtPosition(impactForce, impactPostion, ForceMode.Impulse);
+            if (rbs[i] == null) continue;
+
+            // Enable physics on active explosion
+            rbs[i].isKinematic = false;
+            rbs[i].linearVelocity = Vector3.zero;
+            rbs[i].angularVelocity = Vector3.zero;
+
+            rbs[i].AddForceAtPosition(playerVelocity, shatterPosition, ForceMode.Impulse);
         }
 
-        Invoke("Freeze", 2f);
+        gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        if (shrink > 0)
+        if (!isShattered) return;
+
+        if (shrinkTimer > 0f)
         {
-            shrink -= Time.deltaTime/4;
+            shrinkTimer -= Time.deltaTime / shrinkDuration;
+            Vector3 currentScale = Vector3.one * Mathf.Clamp01(shrinkTimer);
 
             foreach (var shard in shards)
             {
-                shard.transform.localScale = new Vector3(shrink, shrink, shrink);
+                if (shard == null) continue;
+                shard.transform.localScale = currentScale;
             }
         }
         else
@@ -44,19 +72,30 @@ public class EnemyShatter : MonoBehaviour
         }
     }
 
-    void Freeze()
+    public void ResetShatter()
     {
-        foreach (var rb in rbs)
-        {
-            rb.isKinematic = true;
-        }
-    }
+        isShattered = false;
 
-    void ResetShatter()
-    {
-        transform.position = Vector3.zero;
-        //reset all shards in shard to their respective starting position and 1,1,1 scale.
-        shrink = 1f;
-        this.gameObject.SetActive(false);
+        // Reset all shards back to their saved local positions, rotations, and full scale
+        for (int i = 0; i < shards.Length; i++)
+        {
+            if (shards[i] == null) continue;
+
+            // 1. Reset Physics Body
+            if (rbs[i] != null)
+            {
+                rbs[i].linearVelocity = Vector3.zero;
+                rbs[i].angularVelocity = Vector3.zero;
+                rbs[i].isKinematic = true; // Freeze physics while sitting in pool
+            }
+
+            // 2. Reset Transforms
+            shards[i].transform.localPosition = initialLocalPositions[i];
+            shards[i].transform.localRotation = initialLocalRotations[i];
+            shards[i].transform.localScale = Vector3.one;
+        }
+
+        // Disable gameobject so the Object Pool knows it's available for reuse
+        gameObject.SetActive(false);
     }
 }

@@ -214,6 +214,8 @@ public class BatBehaviour : MonoBehaviour
             drop.SetActive(true);
             drop.transform.SetParent(pickupManager.transform);
         }
+
+        EnemyShatterManager.inst.ShatterBat(transform.position);
         Destroy(this.gameObject);
     }
 
