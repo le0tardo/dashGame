@@ -18,7 +18,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     [SerializeField] FlashRed flash;
     [SerializeField] AudioClip turretHit;
     [SerializeField] AudioClip turretDie;
-
+    [SerializeField] GameObject muzzleFlash;
     private void Awake()
     {
         ammoPool = FindObjectsByType<BulletVolley>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -30,7 +30,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     }
     void FireVolley()
     {
-        print("trying to fire volley");
+        muzzleFlash.SetActive(false);
         if (ammoPool.Length > 0)
         {
             for (int i = 0; i < ammoPool.Length; i++)
@@ -39,6 +39,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
                 {
                     ammoPool[i].gameObject.SetActive(true);
                     ammoPool[i].FireVolley(bulletAmount,this.gameObject.transform.position);
+                    muzzleFlash.SetActive(true);
 
                     if (anim != null) anim.SetTrigger("fire");
 
