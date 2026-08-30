@@ -1,9 +1,11 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class EnemyShatterManager : MonoBehaviour
 {
     [SerializeField] EnemyShatter[] batShatter;
     [SerializeField] EnemyShatter[] zombieShatter;
+    [SerializeField] EnemyShatter[] murret1Shatter;
 
     public static EnemyShatterManager inst;
     private void Awake()
@@ -31,6 +33,19 @@ public class EnemyShatterManager : MonoBehaviour
             {
                 zombieShatter[i].gameObject.SetActive(true);
                 zombieShatter[i].Shatter(pos);
+                return;
+            }
+        }
+    }
+
+    public void ShatterMurret1(Vector3 pos)
+    {
+        for (int i = 0; i < murret1Shatter.Length; i++)
+        {
+            if (!murret1Shatter[i].isActiveAndEnabled)
+            {
+                murret1Shatter[i].gameObject.SetActive(true);
+                murret1Shatter[i].Shatter(pos);
                 return;
             }
         }

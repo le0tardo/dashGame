@@ -14,9 +14,15 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     [SerializeField] float bounce = 0.5f;
     public float hitBounce => bounce;
 
+    [SerializeField] Animator anim;
+    [SerializeField] FlashRed flash;
+    [SerializeField] AudioClip turretHit;
+    [SerializeField] AudioClip turretDie;
+
     private void Awake()
     {
         ammoPool = FindObjectsByType<BulletVolley>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        flash=GetComponent<FlashRed>();
 
         InvokeRepeating("FireVolley",1f,repeatRate);
 
@@ -33,6 +39,9 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
                 {
                     ammoPool[i].gameObject.SetActive(true);
                     ammoPool[i].FireVolley(bulletAmount,this.gameObject.transform.position);
+
+                    if (anim != null) anim.SetTrigger("fire");
+
                     return;
                 }
             }
@@ -47,11 +56,16 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos, power / 10);
         CameraShake.inst.Shake(0.1f, 1f);
-        AudioManager.inst.PlayMetalImpactSound(power);
-        
+        AudioManager.inst.PlayCustomSound(turretHit, dmg/2);
+
+
+        if (anim != null) anim.SetTrigger("hurt");
+        if(flash!=null)flash.Flash();
 
         if (health <= 0)
         {
+            EnemyShatterManager.inst.ShatterMurret1(transform.position);
+            AudioManager.inst.PlayCustomSound(turretDie, 1);
             Die();
         }
     }
@@ -59,6 +73,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     void Die()
     {
         CancelInvoke();
+
         this.gameObject.SetActive(false);
     }
 }

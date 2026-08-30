@@ -10,7 +10,7 @@ public class FlashRed : MonoBehaviour
 
     private static MaterialPropertyBlock sharedPropertyBlock;
     private static readonly int ColorPropertyID = Shader.PropertyToID("_BaseColor");
-    private readonly WaitForSeconds flashWait = new WaitForSeconds(0.25f);
+    private readonly WaitForSeconds flashWait = new WaitForSeconds(0.2f);
 
     Coroutine flashRoutine;
 
