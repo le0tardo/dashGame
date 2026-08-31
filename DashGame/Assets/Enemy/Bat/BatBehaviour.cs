@@ -9,7 +9,6 @@ public class BatBehaviour : MonoBehaviour
     [SerializeField] float offsetRadius = 1f;
     Vector2 randomOffset;
     [SerializeField] private LayerMask obstacleMask;
-    [SerializeField] GameObject drop;
     [SerializeField] BatAnimations batAnim;
 
     [Header("State")]
@@ -23,6 +22,7 @@ public class BatBehaviour : MonoBehaviour
     [SerializeField] private float damage = 5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] int xp;
 
     [Header("Movement & Flight Settings")]
     [SerializeField] private float moveSpeed = 5f;
@@ -207,14 +207,7 @@ public class BatBehaviour : MonoBehaviour
 
     void Die()
     {
-        GameObject pickupManager = GameObject.Find("PickupManager");
-
-        if (drop != null && pickupManager != null)
-        {
-            drop.SetActive(true);
-            drop.transform.SetParent(pickupManager.transform);
-        }
-
+        OrbPool.inst.SpawnOrbs(xp,transform.position);
         EnemyShatterManager.inst.ShatterBat(transform.position);
         Destroy(this.gameObject);
     }

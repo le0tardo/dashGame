@@ -137,6 +137,7 @@ MonoBehaviour:
   bulletAmount: 8
   repeatRate: 2
   health: 15
+  xp: 10
   bounce: 0.5
   anim: {fileID: 2715220685566889935}
   flash: {fileID: 6959789062554214190}

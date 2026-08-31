@@ -10,9 +10,7 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] float attackSpeed;
     public bool inCombat = false;
     [SerializeField]bool isDead=false;
-
-    [Header("Kill drops")]
-    [SerializeField] GameObject drop;
+    [SerializeField] int xp;
 
     EnemyMove move;
     PlayerStats player;
@@ -26,22 +24,6 @@ public class EnemyCombat : MonoBehaviour
         InvokeRepeating("DealDamage",0,attackSpeed);
     }
 
-    private void Update()
-    {
-        if (player != null)
-        {
-            float dist = Vector3.Distance(transform.position, player.transform.position);
-            if (dist <= attackRange)
-            {
-                inCombat = true;
-            }
-            else
-            {
-                inCombat= false;
-            }
-        }
-    }
-
     public void TakeDamage(float dmg)
     {
         health-=dmg;
@@ -51,13 +33,7 @@ public class EnemyCombat : MonoBehaviour
 
         if (health <= 0)
         {
-            GameObject pickupManager = GameObject.Find("PickupManager");
-
-            if (drop != null && pickupManager != null)
-            {
-                drop.SetActive(true);
-                drop.transform.SetParent(pickupManager.transform);
-            }
+            OrbPool.inst.SpawnOrbs(xp,transform.position);
 
             isDead = true;
             EnemyShatterManager.inst.ShatterZombie(transform.position);

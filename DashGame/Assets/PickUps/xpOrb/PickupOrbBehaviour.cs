@@ -29,6 +29,11 @@ public class PickupOrbBehaviour : MonoBehaviour
 
     private void Start()
     {
+
+    }
+
+    private void OnEnable()
+    {
         moveDuration = Random.Range(minMoveDuration, maxMoveDuration);
         float randomDistance = Random.Range(minRadius, maxRadius);
         Vector2 randomCircle = Random.insideUnitCircle.normalized * randomDistance;
@@ -73,24 +78,28 @@ public class PickupOrbBehaviour : MonoBehaviour
     private IEnumerator FloatToPlayerRoutine()
     {
         Vector3 startPos = transform.position;
-        Vector3 targetPos = player.position; //inside while?
+
+        // Calculate total duration once based on initial distance
+        float initialDist = Vector3.Distance(startPos, player.position);
+        float totalDuration = floatDuration + (initialDist / 10f);
 
         float elapsedTime = 0f;
 
-        float dist = Vector3.Distance(startPos, targetPos);
-        floatDuration += (dist / 10);
-
-        while (elapsedTime < floatDuration)
+        while (elapsedTime < totalDuration)
         {
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / floatDuration;
+            float t = elapsedTime / totalDuration;
+
+            // Evaluate curve (e.g., goes down to -0.2 before curving up to 1.0)
             float curveT = floatSpeedCurve.Evaluate(t);
 
-            transform.position = Vector3.Lerp(startPos, player.transform.position, curveT);
+            // Vector3.LerpUnclamped allows curveT to go below 0 or above 1
+            transform.position = Vector3.LerpUnclamped(startPos, player.position, curveT);
+
             yield return null;
         }
 
-        transform.position = targetPos;
+        transform.position = player.position;
         PickUp();
     }
     void PickUp()
@@ -112,7 +121,8 @@ public class PickupOrbBehaviour : MonoBehaviour
                 HitFxManager.inst.PickupXpFx(player.position);
                 break;
         }
-        Destroy(this.gameObject);
+
+        this.gameObject.SetActive(false);
     }
 
 }

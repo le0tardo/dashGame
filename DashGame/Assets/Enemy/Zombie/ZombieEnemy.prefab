@@ -1255,7 +1255,7 @@ MonoBehaviour:
   attackSpeed: 1
   inCombat: 0
   isDead: 0
-  drop: {fileID: 2765901592551779179}
+  xp: 8
 --- !u!195 &4442788501860059443
 NavMeshAgent:
   m_ObjectHideFlags: 0

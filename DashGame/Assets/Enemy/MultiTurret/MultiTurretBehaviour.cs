@@ -10,6 +10,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     [Header("Health")]
     [SerializeField] float health;
     float maxHealth;
+    [SerializeField] int xp;
 
     [SerializeField] float bounce = 0.5f;
     public float hitBounce => bounce;
@@ -30,7 +31,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     }
     private void Start()
     {
-        AudioManager.inst.PlayCustomSound(turretAwake, 1f);
+       if(AudioManager.inst!=null) AudioManager.inst.PlayCustomSound(turretAwake, 1f);
     }
     void FireVolley()
     {
@@ -89,7 +90,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     void Die()
     {
         CancelInvoke();
-
+        OrbPool.inst.SpawnOrbs(xp,transform.position);
         this.gameObject.SetActive(false);
     }
 }

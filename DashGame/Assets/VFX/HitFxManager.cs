@@ -37,6 +37,17 @@ public class HitFxManager : MonoBehaviour
                 pickupXpFx[i].gameObject.transform.position = pos;
                 pickupXpFx[i].gameObject.SetActive(true);
                 pickupXpFx[i].Play();
+
+                ParticleSystem childFx = null;
+
+                foreach (Transform child in pickupXpFx[i].transform)
+                {
+                    childFx = child.GetComponentInChildren<ParticleSystem>();
+                    if (childFx != null) break;
+                }
+
+                if (childFx != null) childFx.Play();
+
                 return;
             }
         }

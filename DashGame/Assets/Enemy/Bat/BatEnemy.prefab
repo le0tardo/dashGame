@@ -615,7 +615,6 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8192
-  drop: {fileID: 1445743614566256165}
   batAnim: {fileID: 0}
   seesPlayer: 0
   inRange: 0
@@ -625,6 +624,7 @@ MonoBehaviour:
   damage: 1
   attackSpeed: 1
   attackRange: 1.5
+  xp: 5
   moveSpeed: 5
   visionRange: 30
   waveFrequency: 0.5

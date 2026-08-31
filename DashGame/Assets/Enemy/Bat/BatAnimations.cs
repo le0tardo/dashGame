@@ -10,6 +10,9 @@ public class BatAnimations : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         flash = GetComponent<FlashRed>();
+        float r=Random.value;
+        anim.Play(0, 0, r);
+
     }
 
     public void MoveBat(bool move)
