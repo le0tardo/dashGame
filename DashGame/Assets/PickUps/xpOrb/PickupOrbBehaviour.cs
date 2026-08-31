@@ -12,7 +12,6 @@ public class PickupOrbBehaviour : MonoBehaviour
     [SerializeField] float amount = 1f;
 
     [Header("Spawn")]
-    Vector3 targetSpawnPosition = Vector3.zero;
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     [SerializeField] private float minRadius = 1.5f;
     [SerializeField] private float maxRadius = 3f;
