@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class HitFxManager : MonoBehaviour
 {
@@ -7,6 +6,7 @@ public class HitFxManager : MonoBehaviour
     public static HitFxManager inst;
     [SerializeField] ParticleSystem[] hitFX1;
     [SerializeField] ParticleSystem[] pickupXpFx;
+    [SerializeField] ParticleSystem[] fireHitFx;
 
     private void Awake()
     {
@@ -37,6 +37,32 @@ public class HitFxManager : MonoBehaviour
                 pickupXpFx[i].gameObject.transform.position = pos;
                 pickupXpFx[i].gameObject.SetActive(true);
                 pickupXpFx[i].Play();
+                return;
+            }
+        }
+    }
+
+    public void FireHitFx(Vector3 pos, Quaternion rot)
+    {
+        for(int i = 0; i < fireHitFx.Length; i++)
+        {
+            if (!fireHitFx[i].gameObject.activeInHierarchy)
+            {
+                fireHitFx[i].gameObject.transform.position = pos;
+                fireHitFx[i].gameObject.transform.rotation = rot;
+                fireHitFx[i].gameObject.SetActive(true);
+                fireHitFx[i].Play();
+
+                ParticleSystem childFx = null;
+
+                foreach (Transform child in fireHitFx[i].transform)
+                {
+                    childFx = child.GetComponentInChildren<ParticleSystem>();
+                    if (childFx != null) break;
+                }
+
+                if (childFx != null) childFx.Play();
+
                 return;
             }
         }

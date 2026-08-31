@@ -18,15 +18,19 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     [SerializeField] FlashRed flash;
     [SerializeField] AudioClip turretHit;
     [SerializeField] AudioClip turretDie;
+    [SerializeField] AudioClip turretFire;
+    [SerializeField] AudioClip turretAwake;
     [SerializeField] GameObject muzzleFlash;
     private void Awake()
     {
         ammoPool = FindObjectsByType<BulletVolley>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         flash=GetComponent<FlashRed>();
 
-        InvokeRepeating("FireVolley",1f,repeatRate);
-
         maxHealth = health;
+    }
+    private void Start()
+    {
+        AudioManager.inst.PlayCustomSound(turretAwake, 1f);
     }
     void FireVolley()
     {
@@ -42,6 +46,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
                     muzzleFlash.SetActive(true);
 
                     if (anim != null) anim.SetTrigger("fire");
+                    AudioManager.inst.PlayCustomSound(turretFire, 1f);
 
                     return;
                 }
@@ -69,6 +74,16 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
             AudioManager.inst.PlayCustomSound(turretDie, 1);
             Die();
         }
+    }
+
+    private void OnEnable()
+    {
+        InvokeRepeating("FireVolley", 1f, repeatRate);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
     }
 
     void Die()

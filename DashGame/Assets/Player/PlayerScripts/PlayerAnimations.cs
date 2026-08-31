@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerAnimations : MonoBehaviour
 {
@@ -17,18 +15,14 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] float playbackSpeed = 1f;
     [SerializeField] public float aimPower=0f;
 
-    [Header("Flash Hurt")]
-    [SerializeField] Color flashColor;
-    [SerializeField] SkinnedMeshRenderer bodyMesh;
-    [SerializeField] List<MeshRenderer> propMeshes;
-    Coroutine hurtFlash;
+    [SerializeField]FlashRed flashScript;
   
     private void Awake()
     {
         if(anim==null) anim = GetComponentInChildren<Animator>();
 
-        bodyMesh=GetComponentInChildren<SkinnedMeshRenderer>();
-        propMeshes = new List<MeshRenderer>(GetComponentsInChildren<MeshRenderer>());
+        moveScript = GetComponentInParent<PlayerMove>();
+        if(flashScript==null)flashScript = GetComponent<FlashRed>();
     }
 
     private void Update()
@@ -94,35 +88,19 @@ public class PlayerAnimations : MonoBehaviour
     {
         anim.SetTrigger("hurt");
 
-        if (hurtFlash == null)
+        if (flashScript != null)
         {
-            hurtFlash = StartCoroutine(HurtFlash());
+            flashScript.Flash();
+            print("flash called");
+        }
+        else
+        {
+            print("null??");
         }
     }
     public void BounceAnim()
     {
         anim.SetTrigger("bounce");
-    }
-
-
-    IEnumerator HurtFlash() //TODO material property block?
-    {
-        bodyMesh.material.color = flashColor;
-
-        foreach(MeshRenderer ms in propMeshes)
-        {
-            ms.material.color = flashColor;
-        }
-
-            yield return new WaitForSeconds(0.25f);
-
-        bodyMesh.material.color = Color.white;
-
-        foreach (MeshRenderer ms in propMeshes)
-        {
-            ms.material.color = Color.white;
-        }
-        hurtFlash = null;
     }
 
 }

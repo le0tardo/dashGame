@@ -39,7 +39,7 @@ public class BulletVolley : MonoBehaviour
 
             currentAngle += angleStep;
 
-            Invoke("Sleep", 3.3f);
+            Invoke("Sleep", 5f);
         }
     }
 

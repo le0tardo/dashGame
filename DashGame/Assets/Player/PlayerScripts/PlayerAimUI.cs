@@ -73,7 +73,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             if (moveScript.moveState == PlayerMove.MoveState.Idle)
             {
                 moveScript.moveState = PlayerMove.MoveState.Aiming;
-                if (anim != null) anim.AimAnim(); print("setting trigger in animator");
             }
 
         }

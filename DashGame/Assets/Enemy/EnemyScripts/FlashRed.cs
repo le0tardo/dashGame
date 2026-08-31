@@ -48,7 +48,6 @@ public class FlashRed : MonoBehaviour
                 if (sm != null && sm.enabled)
                 {
                     sm.SetPropertyBlock(sharedPropertyBlock);
-                    print("flashed color on skinned mesh renderer");
                 }
             }
         }
@@ -60,7 +59,6 @@ public class FlashRed : MonoBehaviour
                 if (m != null && m.enabled)
                 {
                     m.SetPropertyBlock(sharedPropertyBlock);
-                    print("flashed color on mesh renderer");
                 }
             }
         }
