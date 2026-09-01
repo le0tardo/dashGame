@@ -92,12 +92,13 @@ public class EnemyShatter : MonoBehaviour
             }
 
             // 2. Reset Transforms
-            shards[i].transform.localPosition = initialLocalPositions[i];
-            shards[i].transform.localRotation = initialLocalRotations[i];
+            rbs[i].gameObject.transform.localPosition = initialLocalPositions[i];
+            rbs[i].gameObject.transform.localRotation = initialLocalRotations[i];
             shards[i].transform.localScale = Vector3.one;
         }
 
         // Disable gameobject so the Object Pool knows it's available for reuse
+        this.gameObject.transform.localPosition = Vector3.zero;
         gameObject.SetActive(false);
     }
 }
