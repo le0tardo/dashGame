@@ -38,7 +38,7 @@ public class PropBehaviour : MonoBehaviour,IHittable
         }
         else
         {
-            //EnemyShatterManager
+            //ShatterManager
             CameraShake.inst.Shake(0.1f, 1f);
             int r=Random.Range(0,shatterSounds.Length);
             AudioManager.inst.PlayCustomSound(shatterSounds[r], power / 100);
@@ -51,10 +51,13 @@ public class PropBehaviour : MonoBehaviour,IHittable
         switch (propType)
         {
             case PropType.Pot:
-                EnemyShatterManager.inst.ShatterPot(transform.position);
+                ShatterManager.inst.ShatterPot(transform.position);
                 break;
             case PropType.Crate:
-                EnemyShatterManager.inst.ShatterPot(transform.position);
+                ShatterManager.inst.ShatterCrate(transform.position);
+                break;
+            case PropType.Barrel:
+                ShatterManager.inst.ShatterBarrel(transform.position);
                 break;
         }
 

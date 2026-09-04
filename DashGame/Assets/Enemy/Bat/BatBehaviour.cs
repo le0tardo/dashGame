@@ -208,7 +208,7 @@ public class BatBehaviour : MonoBehaviour
     void Die()
     {
         OrbPool.inst.SpawnOrbs(xp,transform.position);
-        EnemyShatterManager.inst.ShatterBat(transform.position);
+        ShatterManager.inst.ShatterBat(transform.position);
         Destroy(this.gameObject);
     }
 

@@ -36,7 +36,7 @@ public class EnemyCombat : MonoBehaviour
             OrbPool.inst.SpawnOrbs(xp,transform.position);
 
             isDead = true;
-            EnemyShatterManager.inst.ShatterZombie(transform.position);
+            ShatterManager.inst.ShatterZombie(transform.position);
             Die();
 
         }

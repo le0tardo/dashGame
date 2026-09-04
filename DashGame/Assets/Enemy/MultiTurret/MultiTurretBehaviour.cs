@@ -71,7 +71,7 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
 
         if (health <= 0)
         {
-            EnemyShatterManager.inst.ShatterMurret1(transform.position);
+            ShatterManager.inst.ShatterMurret1(transform.position);
             AudioManager.inst.PlayCustomSound(turretDie, 1);
             Die();
         }
