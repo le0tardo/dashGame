@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 3216640186200252892}
   - component: {fileID: 345043263505912174}
   - component: {fileID: 1410174353243294005}
+  - component: {fileID: 3751258666896025640}
   m_Layer: 13
   m_Name: Pot3
   m_TagString: Untagged
@@ -112,7 +113,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8588619474387508065}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -132,11 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c473df7c0d1ce44294d80535420c0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potType: 0
-  shatterThreshold: 50
+  propType: 0
+  dropType: 0
+  dropAmount: 8
+  shatterThreshold: 33
   bounce: 0.1
-  hitSound: {fileID: 8300000, guid: 4eb0d6ea3a90f284cbf78af9f64a05f5, type: 3}
-  shatterSound:
+  hitSounds:
+  - {fileID: 8300000, guid: 4eb0d6ea3a90f284cbf78af9f64a05f5, type: 3}
+  shatterSounds:
   - {fileID: 8300000, guid: 101f820f279ba214f92328e126942137, type: 3}
   - {fileID: 8300000, guid: 640bf3587a2f09842a1e26d411e0f1eb, type: 3}
   - {fileID: 8300000, guid: 1537ef9694a5b4645b2fb4cd0686b876, type: 3}
@@ -163,3 +167,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3751258666896025640
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588619474387508065}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
