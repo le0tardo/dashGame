@@ -91,7 +91,6 @@ public class PlayerAnimations : MonoBehaviour
         if (flashScript != null)
         {
             flashScript.Flash();
-            print("flash called");
         }
         else
         {

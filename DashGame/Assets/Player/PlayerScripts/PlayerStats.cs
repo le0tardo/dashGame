@@ -40,6 +40,7 @@ public class PlayerStats : MonoBehaviour
         CameraShake.inst.Shake(0.05f, 0.5f);
     }
 
+
     public void Hurt(float dmg, Vector3 hitPos)
     {
         move.StartKnockBack(hitPos, 2.5f);
@@ -47,7 +48,7 @@ public class PlayerStats : MonoBehaviour
         SubtractHealth(dmg);
     }
 
-    void SubtractHealth(float dmg)
+    public void SubtractHealth(float dmg)
     {
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg)); //TODO: move to individual takeDamage for customsounds...
