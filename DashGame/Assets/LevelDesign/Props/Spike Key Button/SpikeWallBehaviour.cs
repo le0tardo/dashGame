@@ -21,6 +21,10 @@ public class SpikeWallBehaviour : MonoBehaviour,IHittable
 
         if (shankSound != null) AudioManager.inst.PlayCustomSound(shankSound,vol);
 
-        LevelManager.inst.playerStats.SubtractHealth(damage);
+        PlayerMove playerMove = LevelManager.inst.playerMove;
+        float dealtDamage = damage * (playerMove.currentVelocity.magnitude / 10);
+        dealtDamage = Mathf.Floor(dealtDamage);
+
+        LevelManager.inst.playerStats.SubtractHealth(dealtDamage);
     }
 }

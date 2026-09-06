@@ -23,7 +23,12 @@ public class SpikeBatBehaviour : MonoBehaviour, IHittable
     {
 
         PlayerStats player = LevelManager.inst.playerStats;
-        player.SubtractHealth(damage); //no knockback coroutine
+        PlayerMove playerMove = LevelManager.inst.playerMove;
+
+        float dealtDamage = damage * (playerMove.currentVelocity.magnitude/10);
+        dealtDamage= Mathf.Floor(dealtDamage);
+
+        player.SubtractHealth(dealtDamage); //no knockback coroutine
 
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos, power / 10);
