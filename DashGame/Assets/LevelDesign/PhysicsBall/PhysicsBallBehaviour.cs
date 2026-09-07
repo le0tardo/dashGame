@@ -22,9 +22,11 @@ public class PhysicsBallBehaviour : MonoBehaviour,IHittable
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        Vector3 powerVector = new Vector3(power,0,power);
-        Vector3 flatPosition=new Vector3(hitPosition.x,transform.position.y,hitPosition.z);
-        rb.AddForceAtPosition(powerVector,flatPosition,ForceMode.Impulse);
+        Vector3 pushDirection = transform.position - player.position;
+        pushDirection.y = 0f;
+        pushDirection = pushDirection.normalized;
+        float powerMultiplier = 4f;
+        rb.AddForce(pushDirection * (power*powerMultiplier), ForceMode.Impulse);
 
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos, power / 10);

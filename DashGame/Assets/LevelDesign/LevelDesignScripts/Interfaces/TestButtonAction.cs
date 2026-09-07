@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class TestButtonAction : MonoBehaviour, IButtonAction
 {
-    public void ButtonAction()
+    public void ButtonAction(bool pressed)
     {
-        transform.localScale = new Vector3(2, 2, 2);
+        if(pressed)transform.localScale = new Vector3(2, 2, 2);
+        else transform.localScale = new Vector3(1, 1, 1);
     }
 }

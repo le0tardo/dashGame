@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ButtonTileBehaviour : MonoBehaviour
 {
+    [SerializeField] bool toggleable;
     [SerializeField] bool isPressed=false;
     [SerializeField] float pressed_y = -1.15f;
     [SerializeField] AudioClip click;
@@ -27,22 +28,20 @@ public class ButtonTileBehaviour : MonoBehaviour
     {
         if (!isPressed)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player")||other.CompareTag("ButtonPresser"))
             {
                 SetButtonColor(pressedColor);
                 rend.gameObject.transform.position = new Vector3(transform.position.x, pressed_y, transform.position.z);
                 if (click != null) AudioManager.inst.PlayCustomSound(click, 0.5f);
                 if (ring != null) ring.Play();
 
-                //button affect??
                 if (getButtonInterface != null)
                 {
                     IButtonAction gottenButtonInterface=getButtonInterface.GetComponent<IButtonAction>();
                     if (gottenButtonInterface != null) 
                     {
-                        gottenButtonInterface.ButtonAction();
+                        gottenButtonInterface.ButtonAction(true);
                     }
-
                 }
 
                 isPressed = true;
@@ -50,6 +49,32 @@ public class ButtonTileBehaviour : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (!toggleable) return;
+        if (other.CompareTag("Player") || other.CompareTag("ButtonPresser"))
+        {
+            if (isPressed)
+            {
+                SetButtonColor(defaultColor);
+                rend.gameObject.transform.position = new Vector3(transform.position.x, -1f, transform.position.z);
+
+                if (click != null) AudioManager.inst.PlayCustomSound(click, 0.1f);
+                if (ring != null) ring.Play();
+
+                if (getButtonInterface != null)
+                {
+                    IButtonAction gottenButtonInterface = getButtonInterface.GetComponent<IButtonAction>();
+                    if (gottenButtonInterface != null)
+                    {
+                        gottenButtonInterface.ButtonAction(false);
+                    }
+                }
+
+                isPressed = false;
+            }
+        }
+    }
     private void SetButtonColor(Color color)
     {
         rend.GetPropertyBlock(propertyBlock);
