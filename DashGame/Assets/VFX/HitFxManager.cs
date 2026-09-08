@@ -6,6 +6,7 @@ public class HitFxManager : MonoBehaviour
     public static HitFxManager inst;
     [SerializeField] ParticleSystem[] hitFX1;
     [SerializeField] ParticleSystem[] pickupXpFx;
+    [SerializeField] ParticleSystem[] staminaPickupXpFx;
     [SerializeField] ParticleSystem[] fireHitFx;
 
     private void Awake()
@@ -41,6 +42,30 @@ public class HitFxManager : MonoBehaviour
                 ParticleSystem childFx = null;
 
                 foreach (Transform child in pickupXpFx[i].transform)
+                {
+                    childFx = child.GetComponentInChildren<ParticleSystem>();
+                    if (childFx != null) break;
+                }
+
+                if (childFx != null) childFx.Play();
+
+                return;
+            }
+        }
+    }
+    public void StaminaPickupXpFx(Vector3 pos)
+    {
+        for (int i = 0; i < staminaPickupXpFx.Length; i++)
+        {
+            if (!staminaPickupXpFx[i].gameObject.activeInHierarchy)
+            {
+                staminaPickupXpFx[i].gameObject.transform.position = pos;
+                staminaPickupXpFx[i].gameObject.SetActive(true);
+                staminaPickupXpFx[i].Play();
+
+                ParticleSystem childFx = null;
+
+                foreach (Transform child in staminaPickupXpFx[i].transform)
                 {
                     childFx = child.GetComponentInChildren<ParticleSystem>();
                     if (childFx != null) break;

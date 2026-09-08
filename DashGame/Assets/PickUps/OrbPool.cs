@@ -4,6 +4,7 @@ public class OrbPool : MonoBehaviour
 {
     public static OrbPool inst;
     [SerializeField] GameObject[] xpOrbs;
+    [SerializeField] GameObject[] staminaOrbs;
 
     private void Awake()
     {
@@ -20,6 +21,20 @@ public class OrbPool : MonoBehaviour
             {
                 xpOrbs[i].transform.position = pos;
                 xpOrbs[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void SpawnStaminaOrbs(int amount, Vector3 pos)
+    {
+        if (amount > staminaOrbs.Length) amount = staminaOrbs.Length;
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (!staminaOrbs[i].activeInHierarchy)
+            {
+                staminaOrbs[i].transform.position = pos;
+                staminaOrbs[i].gameObject.SetActive(true);
             }
         }
     }

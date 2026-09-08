@@ -108,6 +108,7 @@ public class PickupOrbBehaviour : MonoBehaviour
             case PickupType.Stamina:
                 LevelManager.inst.GetStamina(amount);
                 AudioManager.inst.PlayStaminaPickup();
+                HitFxManager.inst.StaminaPickupXpFx(player.position);
                 break;
 
             case PickupType.Health:

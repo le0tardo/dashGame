@@ -66,7 +66,7 @@ public class PropBehaviour : MonoBehaviour,IHittable
         switch (dropType)
         {
             case PropDrop.Stamina:
-                OrbPool.inst.SpawnOrbs(dropAmount, transform.position);
+                OrbPool.inst.SpawnStaminaOrbs(dropAmount, transform.position);
                 break;
             case PropDrop.Health:
                 OrbPool.inst.SpawnOrbs(dropAmount, transform.position);
