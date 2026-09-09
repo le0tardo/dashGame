@@ -25,6 +25,8 @@ public class EnemyMove : MonoBehaviour, IHittable
     [SerializeField] GameObject scatterCollider;
 
     bool canSeePlayer=false;
+    bool aggroed=false;
+    [SerializeField] AudioClip[] aggroSounds;
 
     public bool dead;
 
@@ -60,9 +62,9 @@ public class EnemyMove : MonoBehaviour, IHittable
         Vector3 fxPos = (transform.position + hitPosition) / 2;
         HitFxManager.inst.HitFX1(fxPos,0.1f+(power/10));
         CameraShake.inst.Shake(0.15f, 1.5f);
-        float vol = (power / 33);
+        float vol = (power / 100);
         vol = Mathf.Clamp(vol,0.25f,1f);
-        AudioManager.inst.PlayEnemyImpactSound(1);
+        AudioManager.inst.PlayEnemyImpactSound(vol);
 
         if(scatterCollider!=null&&!scatterCollider.activeInHierarchy)scatterCollider.SetActive(true);
     }
@@ -83,7 +85,7 @@ public class EnemyMove : MonoBehaviour, IHittable
                 currentVelocity = Vector3.zero;
                 isBouncing = false;
 
-                if (agent != null && !isFalling)                // snap navmesh agent
+                if (agent != null && !isFalling) // snap navmesh agent
                 {
                     agent.Warp(transform.position);
                     agent.enabled = true;
@@ -96,6 +98,14 @@ public class EnemyMove : MonoBehaviour, IHittable
             if (playerSlots != null && agent != null && agent.enabled && canSeePlayer)
             {
                 targetSlotPosition = playerSlots.ReserveSlot(gameObject, out bool success);
+
+                if (!aggroed && aggroSounds.Length>0)
+                {
+                    int r = Random.Range(0, aggroSounds.Length);
+                    AudioManager.inst.PlayCustomSound(aggroSounds[r],0.5f);
+                    aggroed = true;
+                }
+
                 if(agent.isOnNavMesh)agent.SetDestination(targetSlotPosition);
             }
         }
@@ -164,6 +174,17 @@ public class EnemyMove : MonoBehaviour, IHittable
             {
                 EnemyMove otherEnemy=hit.collider.gameObject.GetComponent<EnemyMove>();
                 otherEnemy.GetHitByOtherEnemy(hit.point,currentVelocity.magnitude);
+            }
+
+            if (hit.collider.CompareTag("Spikes"))
+            {
+                //TODO half velocity b4 or after damage calculations??
+                float spikeDamage = Mathf.Floor(1 * currentVelocity.magnitude);
+                combat.TakeDamage(spikeDamage);
+                print("enemy took " + spikeDamage + " damage from spikes");
+                currentVelocity = (currentVelocity / 2);
+
+                //TODO hurt sound here??
             }
 
             AudioManager.inst.PlayImpactSound(currentVelocity.magnitude/2);

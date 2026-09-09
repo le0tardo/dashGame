@@ -44,6 +44,9 @@ public class EnemyCombat : MonoBehaviour
 
     void DealDamage()
     {
+        float dist = Vector3.Distance(player.transform.position,transform.position);
+        if (dist <= attackRange) inCombat = true; else inCombat = false;
+
         if (!isDead && !move.isFalling)
         {
             if (inCombat)

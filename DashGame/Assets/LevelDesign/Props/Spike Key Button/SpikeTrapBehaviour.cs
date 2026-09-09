@@ -4,6 +4,7 @@ public class SpikeTrapBehaviour : MonoBehaviour
 {
 
     [SerializeField] float damage = 1f;
+    [SerializeField] float enemyDamage = 10f;
     [SerializeField] bool moving;
     [SerializeField] BoxCollider boxCollider;
     [SerializeField] AudioClip stab;
@@ -46,6 +47,15 @@ public class SpikeTrapBehaviour : MonoBehaviour
             }
             AudioManager.inst.PlayCustomSound(stab,0.33f);
             CameraShake.inst.Shake(0.1f, 2f);
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyCombat enemy = other.GetComponent<EnemyCombat>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(enemyDamage);
+            }
         }
     }
 

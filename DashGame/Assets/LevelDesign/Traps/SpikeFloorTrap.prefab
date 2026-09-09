@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4851325009366301806}
   m_Layer: 0
   m_Name: SpikeFloorTrap
-  m_TagString: Untagged
+  m_TagString: Spikes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6d10fa3277ecd41a32672ea94828ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 10
+  enemyDamage: 10
   moving: 1
   boxCollider: {fileID: 9170211603844406557}
   stab: {fileID: 8300000, guid: 8fc30ed598490e142b34075302d19478, type: 3}
@@ -156,7 +157,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!208 &4851325009366301806
 NavMeshObstacle:
@@ -168,7 +169,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_Extents: {x: 1.125, y: 1.125, z: 1.125}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
