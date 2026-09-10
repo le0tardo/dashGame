@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float timeScale=1f;
     [SerializeField] public float score=0f;
 
+    [SerializeField] public Vector3 checkPoint;
+
     [SerializeField] CanvasScript canvas;
 
 
@@ -43,6 +45,8 @@ public class LevelManager : MonoBehaviour
         if (bulletPool == null) { new GameObject("BulletPool");}
 
         SetHeroStats();
+
+        checkPoint=playerMove.gameObject.transform.position;
     }
 
     void SetHeroStats()
@@ -158,5 +162,10 @@ public class LevelManager : MonoBehaviour
         }
 
         timeScale = targetScale; //snap
+    }
+
+    public void SetCheckPoint(Vector3 point)
+    {
+        checkPoint = point;
     }
 }

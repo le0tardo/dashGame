@@ -279,6 +279,7 @@ public class PlayerMove : MonoBehaviour
 
             AudioManager.inst.PlayHeroFallSound();
             StartCoroutine(DropDown(holePosition,entrySpeed));
+            anim.FallAnim();
         }
     }
     private System.Collections.IEnumerator DropDown(Vector3 holePos, float entrySpeed)
@@ -309,10 +310,9 @@ public class PlayerMove : MonoBehaviour
     {
         isFalling=false;
         currentVelocity = Vector3.zero;
+        moveState=MoveState.Idle;
+        anim.IdleAnim();
         LevelManager.inst.stamina=LevelManager.inst.maxStamina;
-
-        RoomBehaviour currentRoomBehaviour=RoomManager.inst.currentRoom.GetComponent<RoomBehaviour>();
-        if (currentRoomBehaviour != null) transform.position = currentRoomBehaviour.safeSpawn.position;
-        else{ transform.position = RoomManager.inst.currentRoom.transform.position;}
+        transform.position = LevelManager.inst.checkPoint;
     }
 }

@@ -41,29 +41,16 @@ public class PlayerAnimations : MonoBehaviour
         {
             anim.Play("aim", 0, aimPower);
         }
-
-        //debug
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                HurtAnim();
-            }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                BounceAnim();
-            }
-        }
     }
 
     public void IdleAnim()
     {
         anim.SetTrigger(idle);
+        aiming = false;
     }
 
     public void AimAnim()
     {
-        //anim.SetTrigger(aim); //played in update instead.
         aiming = true;
     }
 
@@ -102,4 +89,8 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetTrigger("bounce");
     }
 
+    public void FallAnim()
+    {
+        anim.SetTrigger("fall");
+    }
 }

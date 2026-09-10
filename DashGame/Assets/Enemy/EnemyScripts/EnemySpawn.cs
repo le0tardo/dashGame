@@ -9,16 +9,25 @@ public class EnemySpawn : MonoBehaviour
     }
 
     [SerializeField] EnemyType enemyType;
+
+    bool failSafe=false;
     private void OnEnable()
     {
-        if (EnemyPool.inst == null) return;
+        if (EnemyPool.inst == null)
+        {
+            return;
+        }
+        else
+        {
+            Spawn();
+            failSafe = true;
+        }
 
-        Spawn();
     }
 
     private void Start()
     {
-        Spawn();
+       if(!failSafe) Spawn();
     }
 
     private void Spawn()
@@ -31,5 +40,7 @@ public class EnemySpawn : MonoBehaviour
                 case EnemyType.Bat:
                 break;
         }
+
+        this.gameObject.SetActive(false);
     }
 }
