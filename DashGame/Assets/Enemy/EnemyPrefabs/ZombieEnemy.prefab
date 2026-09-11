@@ -823,7 +823,7 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 8192
-  homingSpeed: 2
+  homingSpeed: 3.3
   agent: {fileID: 0}
   isBouncing: 0
   isFalling: 0

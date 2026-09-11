@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
+    enum EnemyType
+    {
+        Zombie,
+        Skeleton
+    }
+
+    [SerializeField] string enemyName;
+    [SerializeField] EnemyType enemyType;
+
     [Header("Combat Stats")]
     [SerializeField] public float health;
     float maxHealth;
@@ -36,9 +45,19 @@ public class EnemyCombat : MonoBehaviour
             OrbPool.inst.SpawnOrbs(xp,transform.position);
 
             isDead = true;
-            ShatterManager.inst.ShatterZombie(transform.position);
+            switch (enemyType)
+            {
+                case EnemyType.Zombie:
+                    ShatterManager.inst.ShatterZombie(transform.position);
+                    break;
+                case EnemyType.Skeleton:
+                    ShatterManager.inst.ShatterSkeleton(transform.position);
+                    break;
+                default :
+                    print("missing enum state");
+                    break;
+            }
             Die();
-
         }
     }
 

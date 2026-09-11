@@ -5,6 +5,7 @@ public class ShatterManager : MonoBehaviour
     [Header("Enemies")]
     [SerializeField] EnemyShatter[] batShatter;
     [SerializeField] EnemyShatter[] zombieShatter;
+    [SerializeField] EnemyShatter[] skeletonShatter;
     [SerializeField] EnemyShatter[] murret1Shatter;
 
     [Header("Props")]
@@ -38,6 +39,18 @@ public class ShatterManager : MonoBehaviour
             {
                 zombieShatter[i].gameObject.SetActive(true);
                 zombieShatter[i].Shatter(pos);
+                return;
+            }
+        }
+    }
+    public void ShatterSkeleton(Vector3 pos)
+    {
+        for (int i = 0; i < skeletonShatter.Length; i++)
+        {
+            if (!skeletonShatter[i].isActiveAndEnabled)
+            {
+                skeletonShatter[i].gameObject.SetActive(true);
+                skeletonShatter[i].Shatter(pos);
                 return;
             }
         }
