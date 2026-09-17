@@ -10,6 +10,8 @@ public class PhysicsBallBehaviour : MonoBehaviour,IHittable
     [SerializeField] Transform player;
 
     Rigidbody rb;
+
+    [SerializeField] BombBallBehaviour bomb;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,5 +35,7 @@ public class PhysicsBallBehaviour : MonoBehaviour,IHittable
         CameraShake.inst.Shake(0.1f, 1f);
 
        if(hitSound!=null) AudioManager.inst.PlayCustomSound(hitSound,power/50);
+
+       if(bomb!=null)bomb.Ignite();
     }
 }
