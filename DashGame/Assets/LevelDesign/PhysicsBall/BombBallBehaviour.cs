@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BombBallBehaviour : MonoBehaviour
 {
+    [SerializeField] float explosionPower = 1f;
     [SerializeField] float fuseTime;
     [SerializeField] GameObject fuseGfx;
     [SerializeField] Animator anim;
@@ -43,6 +44,7 @@ public class BombBallBehaviour : MonoBehaviour
     void Explode()
     {
         //activate explostion from pool
+        ExplosionPool.inst.SpawnExplosion(transform.position, explosionPower);
         this.gameObject.SetActive(false);
     }
 }
