@@ -112,7 +112,10 @@ public class PickupOrbBehaviour : MonoBehaviour
                 break;
 
             case PickupType.Health:
-                //comin soon
+                int heal = Mathf.RoundToInt(amount);
+                LevelManager.inst.ChangeHealth(heal);
+                AudioManager.inst.PlayStaminaPickup();//change to heal bubble ish?
+                HitFxManager.inst.HealPickupFx(player.position);
             break;
 
              case PickupType.XP:

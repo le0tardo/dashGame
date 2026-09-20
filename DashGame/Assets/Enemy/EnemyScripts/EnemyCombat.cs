@@ -35,6 +35,7 @@ public class EnemyCombat : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
+        dmg = Mathf.Round(dmg);
         health-=dmg;
         Mathf.Clamp(health, 0, maxHealth);
 

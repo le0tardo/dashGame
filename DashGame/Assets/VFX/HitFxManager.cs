@@ -7,6 +7,7 @@ public class HitFxManager : MonoBehaviour
     [SerializeField] ParticleSystem[] hitFX1;
     [SerializeField] ParticleSystem[] pickupXpFx;
     [SerializeField] ParticleSystem[] staminaPickupXpFx;
+    [SerializeField] ParticleSystem[] healthPickupXpFx;
     [SerializeField] ParticleSystem[] fireHitFx;
 
     private void Awake()
@@ -73,6 +74,20 @@ public class HitFxManager : MonoBehaviour
 
                 if (childFx != null) childFx.Play();
 
+                return;
+            }
+        }
+    }
+
+    public void HealPickupFx(Vector3 pos)
+    {
+        for(int i = 0; i < healthPickupXpFx.Length - 1; i++)
+        {
+            if (!healthPickupXpFx[i].gameObject.activeInHierarchy)
+            {
+                healthPickupXpFx[i].transform.position = pos;
+                healthPickupXpFx[i].gameObject.SetActive(true);
+                healthPickupXpFx[i].Play();
                 return;
             }
         }

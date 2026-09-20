@@ -40,7 +40,7 @@ public class ExplosionBehaviour : MonoBehaviour
         explosionCollider.enabled = true;
         explosionCollider.radius = 4 * power;
 
-       if(explosionSound!=null)AudioManager.inst.PlayCustomSound(explosionSound, explosionPower);
+       if(explosionSound!=null)AudioManager.inst.PlayCustomSound(explosionSound, explosionPower/2);
 
         Invoke("Sleep", 2.5f);
 
@@ -68,6 +68,8 @@ public class ExplosionBehaviour : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             print("explosion hit enemy");
+            EnemyCombat enemy = other.GetComponent<EnemyCombat>();
+            if (enemy != null) enemy.TakeDamage(explosionPower*10);
         }
     }
 

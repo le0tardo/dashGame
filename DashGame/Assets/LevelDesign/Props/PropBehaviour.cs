@@ -69,7 +69,7 @@ public class PropBehaviour : MonoBehaviour,IHittable
                 OrbPool.inst.SpawnStaminaOrbs(dropAmount, transform.position);
                 break;
             case PropDrop.Health:
-                OrbPool.inst.SpawnOrbs(dropAmount, transform.position);
+                OrbPool.inst.SpawnHealthOrbs(dropAmount, transform.position);
                 break;
             case PropDrop.Gold:
                 OrbPool.inst.SpawnOrbs(dropAmount, transform.position);
