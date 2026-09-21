@@ -46,6 +46,15 @@ public class PropBehaviour : MonoBehaviour,IHittable
 
         }
     }
+
+    public void MeeleBreak()
+    {
+        CameraShake.inst.Shake(0.1f, 1f);
+        int r = Random.Range(0, shatterSounds.Length);
+        AudioManager.inst.PlayCustomSound(shatterSounds[r], 1f);
+        Die();
+    }
+
     void Die()
     {
         switch (propType)

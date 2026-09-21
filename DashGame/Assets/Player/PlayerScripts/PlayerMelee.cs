@@ -3,31 +3,46 @@ using UnityEngine;
 
 public class PlayerMelee : MonoBehaviour
 {
-    [SerializeField] List<EnemyCombat> meleeTargets = new List<EnemyCombat>();
-    [SerializeField] EnemyCombat meleeTarget=null;
+    [SerializeField] public float meleeDamage;
+    [SerializeField] public float meleeDuration;
+    CapsuleCollider meleeCollider;
 
-    public bool meleeCombat=false;
+    private void Awake()
+    {
+        meleeCollider = GetComponent<CapsuleCollider>();
+        meleeCollider.enabled = false;
+    }
 
+    public void MeleeHit()
+    {
+        if(!meleeCollider.enabled) meleeCollider.enabled=true;
+        Invoke("EndMeleeHit",meleeDuration);
+    }
+
+    void EndMeleeHit()
+    {
+        if(meleeCollider.enabled)meleeCollider.enabled=false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            meleeTargets.Add(other.gameObject.GetComponent<EnemyCombat>());
-            meleeCombat = true;
-            meleeTarget = meleeTargets[0];
+            EnemyCombat enemy=other.GetComponent<EnemyCombat>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(meleeDamage);
+                print(other.name + " took " + meleeDamage + " melee damage");
+            }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("BreakableProp"))
         {
-            meleeTargets.Remove(other.gameObject.GetComponent<EnemyCombat>());
-        }
-        if (meleeTargets.Count <= 0)
-        {
-            meleeCombat=false;
+            PropBehaviour prop=other.GetComponent<PropBehaviour>();
+            if (prop != null)
+            {
+                prop.MeeleBreak();
+            }
         }
     }
 

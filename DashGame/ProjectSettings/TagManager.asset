@@ -8,6 +8,7 @@ TagManager:
   - Room
   - ButtonPresser
   - Spikes
+  - BreakableProp
   layers:
   - Default
   - TransparentFX

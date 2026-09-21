@@ -36,11 +36,12 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField] private float knockbackDuration = 0.2f;
     private bool isKnockedBack = false;
-
+    [Header("References")]
     private PlayerStats playerStats;
     [SerializeField] private PlayerAimUI playerAim;
     [SerializeField] Animator playerAnimator;
     [SerializeField] public PlayerAnimations anim;
+    [SerializeField] PlayerMelee playerMelee;
 
     void Start()
     {
@@ -86,6 +87,12 @@ public class PlayerMove : MonoBehaviour
         isMoving = true;
 
         if (anim != null) anim.LaunchAnim();
+
+        if (playerMelee != null)
+        {
+            playerMelee.MeleeHit();
+        }
+
     }
 
     private void MoveAndBounce()
@@ -151,8 +158,6 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                //this never happens?
-                print("IT HAPPENDED!");
 
                 //bounce on wall
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
