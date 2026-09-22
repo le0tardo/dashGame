@@ -90,7 +90,7 @@ public class PlayerMove : MonoBehaviour
 
         if (playerMelee != null)
         {
-            playerMelee.MeleeHit();
+            //playerMelee.MeleeHit(); //TODO melee?
         }
 
     }

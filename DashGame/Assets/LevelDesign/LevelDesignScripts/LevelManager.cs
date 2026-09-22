@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
         maxHealth = heroStats.heroHealth;
         stamina = heroStats.heroStamina;
         maxStamina = heroStats.heroStamina;
-        staminaRegenRate = heroStats.heroRegenRate;
+        staminaRegenRate = heroStats.heroStaminaRegenRate;
     }
     private void Update()
     {
