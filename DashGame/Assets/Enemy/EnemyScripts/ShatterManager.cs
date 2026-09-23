@@ -7,6 +7,7 @@ public class ShatterManager : MonoBehaviour
     [SerializeField] EnemyShatter[] zombieShatter;
     [SerializeField] EnemyShatter[] skeletonShatter;
     [SerializeField] EnemyShatter[] murret1Shatter;
+    [SerializeField] ParticleSystem[] slimeParticles;
 
     [Header("Props")]
     [SerializeField] EnemyShatter[] potShatter;
@@ -51,6 +52,19 @@ public class ShatterManager : MonoBehaviour
             {
                 skeletonShatter[i].gameObject.SetActive(true);
                 skeletonShatter[i].Shatter(pos);
+                return;
+            }
+        }
+    }
+
+    public void ShatterSlime(Vector3 pos)
+    {
+        for(int i = 0; i < slimeParticles.Length; i++)
+        {
+            if (!slimeParticles[i].gameObject.activeInHierarchy)
+            {
+                slimeParticles[i].gameObject.transform.position = pos;
+                slimeParticles[i].gameObject.SetActive(true);
                 return;
             }
         }

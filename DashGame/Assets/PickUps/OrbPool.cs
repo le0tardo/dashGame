@@ -7,6 +7,7 @@ public class OrbPool : MonoBehaviour
     [SerializeField] GameObject[] staminaOrbs;
     [SerializeField] GameObject[] healthOrbs;
 
+
     private void Awake()
     {
         inst = this;
@@ -14,41 +15,54 @@ public class OrbPool : MonoBehaviour
 
     public void SpawnOrbs(int amount, Vector3 pos)
     {
-        if(amount>xpOrbs.Length)amount= xpOrbs.Length;
+        int spawnedCount = 0;
 
-        for (int i = 0; i < amount; i++) 
+        for (int i = 0; i < xpOrbs.Length; i++)
         {
+            if (spawnedCount >= amount) break;
+
             if (!xpOrbs[i].activeInHierarchy)
             {
                 xpOrbs[i].transform.position = pos;
-                xpOrbs[i].gameObject.SetActive(true);
+                xpOrbs[i].SetActive(true);
+
+                spawnedCount++;
             }
         }
     }
 
     public void SpawnStaminaOrbs(int amount, Vector3 pos)
     {
-        if (amount > staminaOrbs.Length) amount = staminaOrbs.Length;
+        int spawnedCount = 0;
 
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < staminaOrbs.Length; i++)
         {
+            if (spawnedCount >= amount) break;
+
             if (!staminaOrbs[i].activeInHierarchy)
             {
                 staminaOrbs[i].transform.position = pos;
-                staminaOrbs[i].gameObject.SetActive(true);
+                staminaOrbs[i].SetActive(true);
+
+                spawnedCount++;
             }
         }
     }
 
     public void SpawnHealthOrbs(int amount, Vector3 pos)
     {
-        if(amount>healthOrbs.Length)amount = healthOrbs.Length;
-        for(int i = 0;i < amount; i++)
+        int spawnedCount = 0;
+
+        for (int i = 0; i < healthOrbs.Length; i++)
         {
+            if (spawnedCount >= amount) break;
+
             if (!healthOrbs[i].activeInHierarchy)
             {
                 healthOrbs[i].transform.position = pos;
                 healthOrbs[i].SetActive(true);
+
+                spawnedCount++;
             }
         }
     }

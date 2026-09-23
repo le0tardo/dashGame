@@ -5,7 +5,8 @@ public class EnemyCombat : MonoBehaviour
     enum EnemyType
     {
         Zombie,
-        Skeleton
+        Skeleton,
+        Slime
     }
 
     [SerializeField] string enemyName;
@@ -53,6 +54,9 @@ public class EnemyCombat : MonoBehaviour
                     break;
                 case EnemyType.Skeleton:
                     ShatterManager.inst.ShatterSkeleton(transform.position);
+                    break;
+                case EnemyType.Slime:
+                    ShatterManager.inst.ShatterSlime(transform.position);
                     break;
                 default :
                     print("missing enum state");
