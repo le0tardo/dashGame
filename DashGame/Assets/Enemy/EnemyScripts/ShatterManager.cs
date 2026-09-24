@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ShatterManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ShatterManager : MonoBehaviour
     [SerializeField] EnemyShatter[] skeletonShatter;
     [SerializeField] EnemyShatter[] murret1Shatter;
     [SerializeField] ParticleSystem[] slimeParticles;
+    [SerializeField] ParticleSystem[] ghostParticles;
 
     [Header("Props")]
     [SerializeField] EnemyShatter[] potShatter;
@@ -65,6 +67,19 @@ public class ShatterManager : MonoBehaviour
             {
                 slimeParticles[i].gameObject.transform.position = pos;
                 slimeParticles[i].gameObject.SetActive(true);
+                return;
+            }
+        }
+    }
+
+    public void shatterGhost(Vector3 pos)
+    {
+        for(int i = 0; i < ghostParticles.Length; i++)
+        {
+            if (!ghostParticles[i].gameObject.activeInHierarchy)
+            {
+                ghostParticles[i].gameObject.transform.position=pos;
+                ghostParticles[i].gameObject.SetActive(true);
                 return;
             }
         }
