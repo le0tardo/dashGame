@@ -17,7 +17,7 @@ MonoBehaviour:
   heroLevel: 1
   heroHealth: 50
   heroStamina: 50
-  heroStaminaRegenRate: 1
+  heroStaminaRegenRate: 2
   heroImpactDamage: 1
   heroWeaponDamage: 0
   heroMaxSpeed: 0

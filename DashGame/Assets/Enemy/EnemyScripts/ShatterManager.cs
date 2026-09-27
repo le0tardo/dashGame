@@ -10,6 +10,7 @@ public class ShatterManager : MonoBehaviour
     [SerializeField] EnemyShatter[] murret1Shatter;
     [SerializeField] ParticleSystem[] slimeParticles;
     [SerializeField] ParticleSystem[] ghostParticles;
+    [SerializeField] ParticleSystem[] spitterParticles;
 
     [Header("Props")]
     [SerializeField] EnemyShatter[] potShatter;
@@ -94,6 +95,21 @@ public class ShatterManager : MonoBehaviour
                 murret1Shatter[i].gameObject.SetActive(true);
                 murret1Shatter[i].Shatter(pos);
                 return;
+            }
+        }
+    }
+
+    public void ShatterSpitter(Vector3 pos)
+    {
+        for(int i = 0; i < spitterParticles.Length; i++)
+        {
+            if (!spitterParticles[i].gameObject.activeInHierarchy)
+            {
+                spitterParticles[i].gameObject.transform.position = pos;
+                spitterParticles[i].gameObject.SetActive(true);
+                spitterParticles[i].Play();
+                return;
+
             }
         }
     }
