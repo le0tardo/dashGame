@@ -181,7 +181,6 @@ public class EnemyMove : MonoBehaviour, IHittable
                 //TODO half velocity b4 or after damage calculations??
                 float spikeDamage = Mathf.Floor(1 * currentVelocity.magnitude);
                 combat.TakeDamage(spikeDamage);
-                print("enemy took " + spikeDamage + " damage from spikes");
                 currentVelocity = (currentVelocity / 2);
 
                 //TODO hurt sound here??
@@ -222,6 +221,20 @@ public class EnemyMove : MonoBehaviour, IHittable
         currentVelocity = Vector3.zero;
         StartCoroutine(DropDown());
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Room"))
+        {
+            //print("enemy tried to exit room.");
+            currentVelocity = Vector3.zero;
+            isBouncing = false;
+            agent.Warp(transform.position);
+            agent.enabled = true;
+
+        }
+    }
+
     private System.Collections.IEnumerator DropDown()
     {
         AudioManager.inst.PlayHeroFallSound();

@@ -83,8 +83,16 @@ public class EnemyCombat : MonoBehaviour
 
     void Die()
     {
-        Destroy(this.gameObject);
-        //this.gameObject.SetActive(false);
-        //TODO recycle in enemy pool
+        //Destroy(this.gameObject);
+
+        // Tell the room this enemy is dead so it won't be re-enabled
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+               if(room.enemies.Contains(gameObject)) room.enemies.Remove(gameObject);
+            }
+        }
+        this.gameObject.SetActive(false);
     }
 }

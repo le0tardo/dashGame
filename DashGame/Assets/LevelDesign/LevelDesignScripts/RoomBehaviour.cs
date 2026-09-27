@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RoomBehaviour : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemies = new List<GameObject>();
-    [SerializeField] public Transform safeSpawn;
+    [SerializeField] public List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] public List<GameObject> props = new List<GameObject>();
+    [SerializeField] NavMeshSurface navMesh;
 
     private void Start()
     {
-        PopulateEnemies(); //do this manually too, but keep if i forget someone...
         if (RoomManager.inst.currentRoom != this.transform)
         {
             DeactivateRoom();
@@ -18,18 +20,16 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //print("player entered:" + name);
-            RoomManager.inst.currentRoom = this.transform;
-            RoomManager.inst.ChangeRoom(this.transform);
-
-            ActivateRoom();
-        }
-
-        if (other.CompareTag("Enemy"))
-        {
-            if (!enemies.Contains(other.gameObject))
+            if (RoomManager.inst.currentRoom == this.transform)
             {
-                enemies.Add(other.gameObject);
+                return;
+            }
+            else
+            {
+                RoomManager.inst.currentRoom = this.transform;
+                RoomManager.inst.ChangeRoom(this.transform);
+
+                ActivateRoom();
             }
         }
     }
@@ -38,39 +38,36 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //print("player exited:" + name);
             DeactivateRoom();
         }
     }
 
-    void PopulateEnemies()
-    {
-        //enemies.Clear();
-        EnemyMove[] childEnemies = GetComponentsInChildren<EnemyMove>(true);
-
-        foreach (EnemyMove enemy in childEnemies)
-        {
-            if (!enemies.Contains(enemy.gameObject))
-            {
-                enemies.Add(enemy.gameObject);
-            }
-        }
-
-    }
     void ActivateRoom()
     {
+        int enemiesActivated = 0;
+        if (navMesh != null)
+        {
+            navMesh.enabled = true;
+        }
+
         foreach (GameObject enemy in enemies) 
         {
             if (enemy != null)
             {
                 enemy.SetActive(true);
+                enemiesActivated++;
             }
         }
-
+        foreach (GameObject prop in props)
+        {
+            if (prop != null)
+            {
+                prop.SetActive(true);
+            }
+        }
     }
     void DeactivateRoom()
     {
-        //print(name + " has been deactivated");
 
         foreach (GameObject enemy in enemies)
         {
@@ -78,6 +75,18 @@ public class RoomBehaviour : MonoBehaviour
             {
                 enemy.SetActive(false);
             }
+        }
+        foreach (GameObject prop in props)
+        {
+            if (prop != null)
+            {
+                prop.SetActive(false);
+            }
+        }
+
+        if (navMesh != null)
+        {
+            navMesh.enabled = false;
         }
     }
 }

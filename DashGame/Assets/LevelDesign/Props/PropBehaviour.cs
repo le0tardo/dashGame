@@ -85,6 +85,14 @@ public class PropBehaviour : MonoBehaviour,IHittable
                 break;
         }
 
+
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+                if(room.props.Contains(gameObject)) room.props.Remove(gameObject);
+            }
+        }
         this.gameObject.SetActive(false);
     }
 }

@@ -31,7 +31,10 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] public Vector3 checkPoint;
 
+    [Header("UI")]
     [SerializeField] CanvasScript canvas;
+    [SerializeField] GameObject gameOverScreen;
+
 
 
     private void Awake()
@@ -47,6 +50,8 @@ public class LevelManager : MonoBehaviour
         SetHeroStats();
 
         checkPoint=playerMove.gameObject.transform.position;
+
+        if(gameOverScreen.activeInHierarchy)gameOverScreen.SetActive(false);
     }
 
     void SetHeroStats()
@@ -83,6 +88,14 @@ public class LevelManager : MonoBehaviour
         health += _health;
         health=Mathf.Clamp(health, 0, maxHealth);
         canvas.UpdateHealth();
+
+        if (health <= 0)
+        {
+            //do the die thing
+            gameOverScreen.SetActive(true);
+            //timescale to 0, interrupt aim script? 
+        }
+
     }
     public void UseStamina(float amount)
     {

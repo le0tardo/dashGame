@@ -39,8 +39,6 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
     {
         if (player != null && playerTransform!=null)
         {
-            
-
             playerPosition = playerTransform.position;
 
             Vector3 targetDirection = playerPosition - maggot.transform.position;
@@ -71,7 +69,6 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
 
     public void Shoot()
     {
-        print("shooting at player");
         SpitPool.inst.Spit(projectileOrigin.position, projectileOrigin.transform.rotation);
     }
 
@@ -88,7 +85,6 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
 
         float dealtDamage = Mathf.Floor(power/10);
         health -= dealtDamage;
-        print("ranged enemy took " + dealtDamage + " damage");
 
         if (health <= 0)
         {
@@ -103,6 +99,16 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
 
         Vector3 spawnOrbPos = new Vector3(transform.position.x, -0.5f, transform.position.z);
         OrbPool.inst.SpawnOrbs(xp,spawnOrbPos);
+
+        // Tell the room this enemy is dead so it won't be re-enabled
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+               if(room.enemies.Contains(gameObject)) room.enemies.Remove(gameObject);
+            }
+        }
+
         this.gameObject.SetActive(false);
     }
 

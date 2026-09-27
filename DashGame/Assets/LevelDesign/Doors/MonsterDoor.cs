@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MonsterDoor : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] RoomBehaviour room;
     [SerializeField] bool locked = true;
 
     [SerializeField] AudioClip slide;
@@ -12,13 +12,15 @@ public class MonsterDoor : MonoBehaviour
 
     [SerializeField] GameObject dust;
 
+    private void Awake()
+    {
+        room = GetComponentInParent<RoomBehaviour>();
+    }
     private void Update()
     {
         if (locked)
         {
-            enemies.RemoveAll(enemy => enemy == null);
-
-            if (enemies.Count <= 0)
+            if (room.enemies.Count <= 0)
             {
                 Unlock();
             }

@@ -6,7 +6,6 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("Set player checkpoint");
             LevelManager.inst.SetCheckPoint(transform.position);
         }
     }
