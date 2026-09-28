@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float deceleration = 2f;
     [SerializeField] private float bounciness = 0.85f;
     [SerializeField] private LayerMask hitLayer;
-    [SerializeField] private float fallSpeed = 30f;
+    [SerializeField] private float fallSpeed = 15f;
     [Header("Jump")]
     [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float jumpDuration = 0.6f; // Snappy airtime
@@ -222,6 +222,8 @@ public class PlayerMove : MonoBehaviour
         if (isKnockedBack || isFalling) return;
         if (currentVelocity.magnitude >= 10) return;
 
+        print("knock back distance: "+distance);
+
         // direction away from the hit
         Vector3 pushDirection = transform.position - hitPos;
         pushDirection.y = 0f; // Keep the calculation on a flat horizontal plane
@@ -289,7 +291,7 @@ public class PlayerMove : MonoBehaviour
     }
     private System.Collections.IEnumerator DropDown(Vector3 holePos, float entrySpeed)
     {
-        float centeringSpeed = Mathf.Max(entrySpeed * 1.5f, 5f);
+        float centeringSpeed = Mathf.Max(entrySpeed, 5f);
 
         while (transform.position.y > -10f)
         {
@@ -308,6 +310,8 @@ public class PlayerMove : MonoBehaviour
 
         LevelManager.inst.ChangeHealth(-10);
         CameraShake.inst.Shake(0.1f, 1f);
+
+        yield return new WaitForSeconds(1f);
         RespawnPlayer();
     }
 

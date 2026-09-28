@@ -28,14 +28,14 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(float dmg, Vector3 hitPos)
     {
-        move.StartKnockBack(hitPos, dmg);
+        move.StartKnockBack(hitPos, dmg/10);
         SubtractHealth(dmg);
         CameraShake.inst.Shake(0.1f,dmg/4);
     }
 
     public void TakeLightDamage(float dmg, Vector3 hitPos)
     {
-        move.StartKnockBack(hitPos, dmg/2);
+        move.StartKnockBack(hitPos, dmg/20);
         SubtractHealth(dmg);
         CameraShake.inst.Shake(0.05f, 0.5f);
     }

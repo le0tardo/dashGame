@@ -30,6 +30,10 @@ public class EnemyMove : MonoBehaviour, IHittable
 
     public bool dead;
 
+    private void OnEnable()
+    {
+        if (isFalling) combat.Die();
+    }
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -243,6 +247,6 @@ public class EnemyMove : MonoBehaviour, IHittable
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;
             yield return null;
         }
-        Destroy(this.gameObject);
+        combat.Die();
     }
 }
