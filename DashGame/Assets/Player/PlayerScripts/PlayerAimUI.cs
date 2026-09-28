@@ -104,8 +104,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         if (!isDragging) return;
 
-        //TODO: aiming costs stamina!?
-
         moveScript.moveState = PlayerMove.MoveState.Dashing;
 
         isDragging = false;
@@ -115,9 +113,9 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         Vector3 dragVector = ConvertScreenVectorToWorldVector(screenDragVector);
 
-        // Invert direction
+        // invert direction
         Vector3 launchDirection = -dragVector.normalized;
-        //90 degree offset for UI aims.
+        //90 degree offset for UI aims for some reason.
         launchDirection = Quaternion.Euler(0f, -90f, 0f) * launchDirection;
 
         // Launch math...
@@ -126,44 +124,75 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         launchSpeed = Mathf.Min(launchSpeed, maxSpeed);
         ResetArrow();
 
-        if (launchSpeed < 10)
+        #region //Dash Region
+        if (dragDistance > 1)
         {
-            launchSpeed = 10;
+            if (launchSpeed < 10)
+            {
+                launchSpeed = 10;
+            }
+
+            staminaAfford = Mathf.Floor(launchSpeed / 10) <= LevelManager.inst.stamina;
+
+            //check if faster than current, dont want to be able to slow down? Felt good! keeping.
+            if (launchSpeed <= moveScript.currentVelocity.magnitude) return;
+
+            if (staminaAfford)
+            {
+                LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
+                if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
+
+                float soundVolume = launchSpeed / moveScript.maxVelocity;
+                AudioManager.inst.PlayReleaseSound(soundVolume);
+            }
+            else
+            {
+                float remainderStamina = LevelManager.inst.stamina;
+                float penalty = 5f;
+                remainderStamina *= penalty;
+                LevelManager.inst.UseStamina(Mathf.Floor(remainderStamina));
+                if (moveScript != null) moveScript.Launch(launchDirection, remainderStamina);
+
+                CameraShake.inst.Shake(0.1f, 1f);
+                AudioManager.inst.PlayFailDashSound();
+            }
+
         }
+        #endregion
 
-        staminaAfford = Mathf.Floor(launchSpeed / 10) <= LevelManager.inst.stamina;
+        #region //Melee region
 
-        //check if faster than current, dont want to be able to slow down? Felt good! keeping.
-        if (launchSpeed <= moveScript.currentVelocity.magnitude) return;
-
-        if (staminaAfford)
-        {
-            LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
-            if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
-
-            float soundVolume = launchSpeed / moveScript.maxVelocity;
-            AudioManager.inst.PlayReleaseSound(soundVolume);
-        }
         else
         {
-            float remainderStamina = LevelManager.inst.stamina;
-            float penalty = 5f;
-            remainderStamina *= penalty;
-            LevelManager.inst.UseStamina(Mathf.Floor(remainderStamina));
-            if (moveScript != null) moveScript.Launch(launchDirection, remainderStamina);
+            print("do melee logic here!");
+            // 1. Convert screen pixel position to World Space
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            mouseWorldPos.z = moveScript.gameObject.transform.position.z; // Keep Z on the same plane if 2D
 
-            CameraShake.inst.Shake(0.1f, 1f);
-            AudioManager.inst.PlayFailDashSound();
+            // 2. Vector pointing AWAY from the click (Opposite direction)
+            Vector3 oppositeDirection = moveScript.gameObject.transform.position - mouseWorldPos;
+
+            // 3. Apply rotation
+            if (oppositeDirection != Vector3.zero)
+            {
+                // Calculate the yaw angle (in degrees) around the Y-axis
+                float yawAngle = Mathf.Atan2(oppositeDirection.x, oppositeDirection.z) * Mathf.Rad2Deg;
+
+                // Apply rotation only on the Y-axis, keeping X and Z at 0
+                moveScript.gameObject.transform.rotation = Quaternion.Euler(0f, yawAngle, 0f);
+            }
+            else
+            {
+                print("direction is zero"); //why does this happen so often?
+            }
         }
+        #endregion
 
+        //reset for both dash and melee swing?
         LevelManager.inst.ResetTime();
-
-        if (playerAnimator != null)
-        {
-            //playerAnimator.SetTrigger("dash");
-        }
-
         AudioManager.inst.StopAimSound();
+
+
     }
 
     void CostStamina()
