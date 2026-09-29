@@ -10,7 +10,7 @@ public class PlayerAnimations : MonoBehaviour
     string dashHit = "hit";
     string stop = "stop";
 
-    [SerializeField] bool aiming=false;
+    [SerializeField] public bool aiming=false;
     [SerializeField] PlayerMove moveScript;
     [SerializeField] float playbackSpeed = 1f;
     [SerializeField] public float aimPower=0f;
@@ -26,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     private void Update()
-    {
+    {/*
         if (moveScript.moveState == PlayerMove.MoveState.Dashing)
         {
             playbackSpeed=1f+(moveScript.currentVelocity.magnitude/100);
@@ -40,7 +40,9 @@ public class PlayerAnimations : MonoBehaviour
         if (aiming)
         {
             anim.Play("aim", 0, aimPower);
+            print("shuld set aim in animator here");
         }
+        */
     }
 
     public void IdleAnim()
@@ -78,10 +80,6 @@ public class PlayerAnimations : MonoBehaviour
         if (flashScript != null)
         {
             flashScript.Flash();
-        }
-        else
-        {
-            print("null??");
         }
     }
     public void BounceAnim()

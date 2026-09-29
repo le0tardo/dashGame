@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public PlayerAnimations anim;
     [SerializeField] PlayerMelee playerMelee;
 
+    Coroutine turnRoutine=null;
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -251,7 +253,7 @@ public class PlayerMove : MonoBehaviour
         StartCoroutine(KnockbackRoutine(finalTargetPosition));
     }
 
-    private System.Collections.IEnumerator KnockbackRoutine(Vector3 targetPosition)
+    IEnumerator KnockbackRoutine(Vector3 targetPosition)
     {
         isKnockedBack = true;
 
@@ -273,6 +275,40 @@ public class PlayerMove : MonoBehaviour
         transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         isKnockedBack = false;
     }
+    public void FaceMeleeDirection(Quaternion targetRotation)
+    {
+        // Stop the active turn coroutine if one is already running
+        if (turnRoutine != null)
+        {
+            StopCoroutine(turnRoutine);
+        }
+
+        turnRoutine = StartCoroutine(TurnRoutine(targetRotation));
+    }
+    IEnumerator TurnRoutine(Quaternion targetRotation)
+    {
+        float turnDuration = 0.2f;
+        Quaternion startRotation = transform.rotation;
+        float elapsed = 0f;
+
+        while (elapsed < turnDuration)
+        {
+            // Use unscaledDeltaTime so slow-mo timeScale doesn't slow down the rotation
+            elapsed += Time.unscaledDeltaTime;
+
+            // Calculate 0.0 to 1.0 progression factor
+            float t = Mathf.Clamp01(elapsed / turnDuration);
+
+            // Smoothly spherical-interpolate (Slerp) toward target rotation
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+
+            yield return null;
+        }
+
+        // Ensure exact final rotation is set
+        transform.rotation = targetRotation;
+        turnRoutine = null;
+    }
 
     public void Fall(Vector3 holePosition)
     {
@@ -289,7 +325,7 @@ public class PlayerMove : MonoBehaviour
             anim.FallAnim();
         }
     }
-    private System.Collections.IEnumerator DropDown(Vector3 holePos, float entrySpeed)
+    IEnumerator DropDown(Vector3 holePos, float entrySpeed)
     {
         float centeringSpeed = Mathf.Max(entrySpeed, 5f);
 

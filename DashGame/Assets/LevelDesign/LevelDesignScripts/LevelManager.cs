@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] CanvasScript canvas;
     [SerializeField] GameObject gameOverScreen;
 
+    Coroutine slowDownTimeRoutine = null;
 
 
     private void Awake()
@@ -151,13 +152,18 @@ public class LevelManager : MonoBehaviour
     public void SlowDownTime()
     {
         StopAllCoroutines();
-        StartCoroutine(SlowDown());
+        if (slowDownTimeRoutine == null)
+        {
+            slowDownTimeRoutine = StartCoroutine(SlowDown());
+        }
+
     }
 
     public void ResetTime()
     {
         StopAllCoroutines();
         timeScale = 1f;
+        slowDownTimeRoutine = null;
     }
     private IEnumerator SlowDown()
     {

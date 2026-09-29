@@ -34,10 +34,12 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     void Start()
     {
         mainCamera = Camera.main;
+
         if (moveScript == null)
         {
             var player = FindAnyObjectByType<PlayerMove>();
             if (player != null) moveScript = player;
+            playerAnimator = player.gameObject.GetComponentInChildren<Animator>();
             if(anim==null)anim = player.anim;
         }
 
@@ -46,7 +48,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     private void Update()
     {
-        aiming=isDragging;
+        //aiming=isDragging;
         if (staminaAim&&aiming)
         {
             staminaAimTimer += Time.unscaledDeltaTime;
@@ -69,20 +71,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             isDragging = true;
             dragStartScreenPos = eventData.position;
 
-            //TODO
-            //THIS shuld only happen if dragDistance > 1, 
-            //DO this in OnDrag instead with a bool check...
-
-            LevelManager.inst.SlowDownTime();
-            AudioManager.inst.PlayAimSound();
-            if (moveScript.moveState == PlayerMove.MoveState.Idle)
-            {
-                moveScript.moveState = PlayerMove.MoveState.Aiming;
-            }
-            if (playerAnimator != null)
-            {
-                playerAnimator.SetTrigger("aim");
-            }
         }
     }
 
@@ -94,18 +82,42 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         Vector2 currentScreenPos = eventData.position;
         Vector2 screenDragVector = currentScreenPos - dragStartScreenPos;
 
+
         // scrren space conversion
         Vector3 dragVector = ConvertScreenVectorToWorldVector(screenDragVector);
 
         Vector3 launchDirection = -dragVector.normalized;
         float dragDistance = dragVector.magnitude;
 
-        AimArrow(launchDirection, dragDistance);
+        if (dragDistance > 1)
+        {
+            if (!aiming)
+            {
+                LevelManager.inst.SlowDownTime();
+                AudioManager.inst.PlayAimSound();
+
+                if (moveScript.moveState == PlayerMove.MoveState.Idle)
+                {
+                    moveScript.moveState = PlayerMove.MoveState.Aiming;
+                }
+                if (playerAnimator != null)
+                {
+                    playerAnimator.SetTrigger("aim");
+                    anim.aiming = true;
+                }
+
+                aiming = true;
+            }
+
+            AimArrow(launchDirection, dragDistance);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!isDragging) return;
+        aiming = false;
+        anim.aiming = false;
 
         moveScript.moveState = PlayerMove.MoveState.Dashing;
 
@@ -143,7 +155,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             if (staminaAfford)
             {
                 LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
-                if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed);
+                if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed); anim.aiming = false; //find aim bool set false here
 
                 float soundVolume = launchSpeed / moveScript.maxVelocity;
                 AudioManager.inst.PlayReleaseSound(soundVolume);
@@ -171,20 +183,24 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
             Vector3 playerPos = moveScript.gameObject.transform.position;
 
-            //overkill?? 
             Plane groundPlane = new Plane(Vector3.up, playerPos);
             Ray ray = Camera.main.ScreenPointToRay(eventData.position);
 
             if (groundPlane.Raycast(ray, out float enterDistance))
             {
                 Vector3 clickWorldPos = ray.GetPoint(enterDistance);
-                Vector3 oppositeDirection = playerPos - clickWorldPos;
-                oppositeDirection.y = 0f;
 
-                if (oppositeDirection.sqrMagnitude > 0.001f) // better than != Vector3.zero for floating point precision. or epsilon?
+                // Point TOWARD the click position (Destination - Origin)
+                Vector3 targetDirection = clickWorldPos - playerPos;
+                targetDirection.y = 0f;
+
+                if (targetDirection.sqrMagnitude > 0.001f)
                 {
-                    float yawAngle = Mathf.Atan2(oppositeDirection.x, oppositeDirection.z) * Mathf.Rad2Deg;
-                    moveScript.gameObject.transform.rotation = Quaternion.Euler(0f, yawAngle, 0f); //do a gradual turn over say .2 seconds here?
+                    float yawAngle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+                    moveScript.FaceMeleeDirection(Quaternion.Euler(0f, yawAngle, 0f));
+
+                    PlayerMelee melee = moveScript.gameObject.GetComponentInChildren<PlayerMelee>();
+                    melee.MeleeAnimation();
                 }
                 else
                 {
