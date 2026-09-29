@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // Required for UI drag interfaces!
+using UnityEngine.EventSystems; // Required for UI drag interfaces! 
 
 public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -68,18 +68,21 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         {
             isDragging = true;
             dragStartScreenPos = eventData.position;
+
+            //TODO
+            //THIS shuld only happen if dragDistance > 1, 
+            //DO this in OnDrag instead with a bool check...
+
             LevelManager.inst.SlowDownTime();
             AudioManager.inst.PlayAimSound();
             if (moveScript.moveState == PlayerMove.MoveState.Idle)
             {
                 moveScript.moveState = PlayerMove.MoveState.Aiming;
             }
-
-        }
-
-        if (playerAnimator != null)
-        {
-            playerAnimator.SetTrigger("aim");
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("aim");
+            }
         }
     }
 
@@ -87,11 +90,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         if (!isDragging) return;
 
-        // Screen space delta vector
+        // screen space delta vector
         Vector2 currentScreenPos = eventData.position;
         Vector2 screenDragVector = currentScreenPos - dragStartScreenPos;
 
-        // Convert 2D screen swipe vector into a 3D horizontal world vector (X, Z)
+        // scrren space conversion
         Vector3 dragVector = ConvertScreenVectorToWorldVector(screenDragVector);
 
         Vector3 launchDirection = -dragVector.normalized;
@@ -134,7 +137,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
             staminaAfford = Mathf.Floor(launchSpeed / 10) <= LevelManager.inst.stamina;
 
-            //check if faster than current, dont want to be able to slow down? Felt good! keeping.
+            //check if faster than current, dont want to be able to slow down?
             if (launchSpeed <= moveScript.currentVelocity.magnitude) return;
 
             if (staminaAfford)
@@ -165,25 +168,28 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         else
         {
             print("do melee logic here!");
-            // 1. Convert screen pixel position to World Space
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(eventData.position);
-            mouseWorldPos.z = moveScript.gameObject.transform.position.z; // Keep Z on the same plane if 2D
 
-            // 2. Vector pointing AWAY from the click (Opposite direction)
-            Vector3 oppositeDirection = moveScript.gameObject.transform.position - mouseWorldPos;
+            Vector3 playerPos = moveScript.gameObject.transform.position;
 
-            // 3. Apply rotation
-            if (oppositeDirection != Vector3.zero)
+            //overkill?? 
+            Plane groundPlane = new Plane(Vector3.up, playerPos);
+            Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+
+            if (groundPlane.Raycast(ray, out float enterDistance))
             {
-                // Calculate the yaw angle (in degrees) around the Y-axis
-                float yawAngle = Mathf.Atan2(oppositeDirection.x, oppositeDirection.z) * Mathf.Rad2Deg;
+                Vector3 clickWorldPos = ray.GetPoint(enterDistance);
+                Vector3 oppositeDirection = playerPos - clickWorldPos;
+                oppositeDirection.y = 0f;
 
-                // Apply rotation only on the Y-axis, keeping X and Z at 0
-                moveScript.gameObject.transform.rotation = Quaternion.Euler(0f, yawAngle, 0f);
-            }
-            else
-            {
-                print("direction is zero"); //why does this happen so often?
+                if (oppositeDirection.sqrMagnitude > 0.001f) // better than != Vector3.zero for floating point precision. or epsilon?
+                {
+                    float yawAngle = Mathf.Atan2(oppositeDirection.x, oppositeDirection.z) * Mathf.Rad2Deg;
+                    moveScript.gameObject.transform.rotation = Quaternion.Euler(0f, yawAngle, 0f); //do a gradual turn over say .2 seconds here?
+                }
+                else
+                {
+                    print("clicked exactly on player position");
+                }
             }
         }
         #endregion
@@ -195,14 +201,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     }
 
-    void CostStamina()
-    {
-        
-    }
-
-    // -------------------------------------------------------------
-    // Helper Methods
-    // -------------------------------------------------------------
 
     private Vector3 ConvertScreenVectorToWorldVector(Vector2 screenVector)
     {
