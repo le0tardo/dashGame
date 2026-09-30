@@ -15,6 +15,8 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] float playbackSpeed = 1f;
     [SerializeField] public float aimPower=0f;
 
+    [SerializeField] TrailRenderer trail;
+
     [SerializeField]FlashRed flashScript;
   
     private void Awake()
@@ -25,26 +27,6 @@ public class PlayerAnimations : MonoBehaviour
         if(flashScript==null)flashScript = GetComponent<FlashRed>();
     }
 
-    private void Update()
-    {/*
-        if (moveScript.moveState == PlayerMove.MoveState.Dashing)
-        {
-            playbackSpeed=1f+(moveScript.currentVelocity.magnitude/100);
-        }
-        else
-        {
-            playbackSpeed = 1f;
-        }
-        anim.speed = playbackSpeed;
-
-        if (aiming)
-        {
-            anim.Play("aim", 0, aimPower);
-            print("shuld set aim in animator here");
-        }
-        */
-    }
-
     public void IdleAnim()
     {
         anim.SetTrigger(idle);
@@ -53,6 +35,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void AimAnim()
     {
+        print("does this ever happen?");
         aiming = true;
     }
 
@@ -90,5 +73,19 @@ public class PlayerAnimations : MonoBehaviour
     public void FallAnim()
     {
         anim.SetTrigger("fall");
+    }
+
+    public void DeathAnim()
+    {
+        anim.SetTrigger("die");
+    }
+
+    public void ActivateTrail()
+    {
+        if(trail!=null)trail.emitting = true;
+    }
+    public void DeactivateTrail()
+    {
+        if (trail != null) trail.emitting = false;
     }
 }

@@ -23,15 +23,25 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] int xp;
 
     EnemyMove move;
+    EnemyAnimations animations;
     PlayerStats player;
 
     private void Start()
     {
         maxHealth = health;
         move = GetComponent<EnemyMove>();
+        animations = GetComponentInChildren<EnemyAnimations>();
         player = FindFirstObjectByType<PlayerStats>();
 
         InvokeRepeating("DealDamage",0,attackSpeed);
+    }
+
+    public void TakeMeleeDamage(float dmg)
+    {
+        animations.Flash();
+        animations.MeleeHitAnimation();
+        TakeDamage(dmg);
+        HitFxManager.inst.HitFX1(transform.position, 0.5f);
     }
 
     public void TakeDamage(float dmg)
@@ -69,7 +79,7 @@ public class EnemyCombat : MonoBehaviour
     void DealDamage()
     {
         float dist = Vector3.Distance(player.transform.position,transform.position);
-        if (dist <= attackRange) inCombat = true; else inCombat = false;
+        if (dist <= attackRange && LevelManager.inst.health>0) inCombat = true; else inCombat = false;
 
         if (!isDead && !move.isFalling)
         {

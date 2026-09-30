@@ -63,7 +63,7 @@ public class PlayerMelee : MonoBehaviour
             EnemyCombat enemy=other.GetComponent<EnemyCombat>();
             if (enemy != null)
             {
-                enemy.TakeDamage(meleeDamage);
+                enemy.TakeMeleeDamage(meleeDamage);
                 print(other.name + " took " + meleeDamage + " melee damage");
             }
         }

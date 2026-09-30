@@ -94,6 +94,11 @@ public class EnemyAnimations : MonoBehaviour
         flashRoutine = StartCoroutine(FlashRoutine());
     }
 
+    public void MeleeHitAnimation()
+    {
+        anim.SetTrigger("meleeHurt");
+    }
+
     private IEnumerator FlashRoutine()
     {
         SetRendererColor(hurtColor);

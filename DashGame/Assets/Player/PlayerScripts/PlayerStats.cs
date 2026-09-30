@@ -53,7 +53,15 @@ public class PlayerStats : MonoBehaviour
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg)); //TODO: move to individual takeDamage for customsounds...
         AudioManager.inst.PlayHeroHurtSound();
-        playerAnim.HurtAnim();
+        if (LevelManager.inst.health > 0)
+        {
+            playerAnim.HurtAnim();
+        }
+        else
+        {
+            playerAnim.DeathAnim();
+        }
+
     }
     public void Heal(float heal)
     {
