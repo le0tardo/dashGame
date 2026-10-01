@@ -854,6 +854,10 @@ MonoBehaviour:
   inCombat: 0
   isDead: 0
   xp: 8
+  meleeHitSounds:
+  - {fileID: 8300000, guid: 0730ba804458e06458b2ae0b8f3f43b1, type: 3}
+  - {fileID: 8300000, guid: 54be812366a2bd0439c09d1aa7f5f9f7, type: 3}
+  - {fileID: 8300000, guid: 993a5c503417a5c41ab3e38c99f6dc3b, type: 3}
 --- !u!195 &4442788501860059443
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class EnemyCombat : MonoBehaviour
     EnemyAnimations animations;
     PlayerStats player;
 
+    [SerializeField] AudioClip[] meleeHitSounds;
+
     private void Start()
     {
         maxHealth = health;
@@ -42,6 +44,14 @@ public class EnemyCombat : MonoBehaviour
         animations.MeleeHitAnimation();
         TakeDamage(dmg);
         HitFxManager.inst.HitFX1(transform.position, 0.5f);
+
+        if (meleeHitSounds.Length > 0)
+        {
+            int r = Random.Range(0, meleeHitSounds.Length);
+            AudioManager.inst.PlayCustomSound(meleeHitSounds[r], 0.25f);
+        }
+
+
     }
 
     public void TakeDamage(float dmg)

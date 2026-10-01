@@ -66,6 +66,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (LevelManager.inst.playerIsDead) return;
+
         if (moveScript != null && !isDragging)
         {
             isDragging = true;
@@ -77,6 +79,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
+        if (LevelManager.inst.playerIsDead) return;
 
         // screen space delta vector
         Vector2 currentScreenPos = eventData.position;
@@ -116,6 +119,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!isDragging) return;
+        if (LevelManager.inst.playerIsDead) return;
+
         aiming = false;
         anim.aiming = false;
 

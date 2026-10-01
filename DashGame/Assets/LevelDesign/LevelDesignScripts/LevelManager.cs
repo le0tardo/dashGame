@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public HeroStatsObject heroStats;
     [SerializeField] public PlayerMove playerMove;
     [SerializeField] public PlayerStats playerStats;
+    [SerializeField] public bool playerIsDead=false;
 
     [Header("Level Stats")]
     [SerializeField] public float level;
@@ -26,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] public float keys;
 
-    [SerializeField] float timeScale=1f;
+    [SerializeField] public float timeScale=1f;
     [SerializeField] public float score=0f;
 
     [SerializeField] public Vector3 checkPoint;
@@ -66,11 +67,6 @@ public class LevelManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ResetLevel();
-        }
-
         Time.timeScale = timeScale;
 
         if (stamina < maxStamina)
@@ -93,6 +89,7 @@ public class LevelManager : MonoBehaviour
         if (health <= 0)
         {
             //do the die thing
+            playerIsDead = true;
             gameOverScreen.SetActive(true);
             //timescale to 0, interrupt aim script? 
         }

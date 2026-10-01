@@ -16,6 +16,7 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] public float aimPower=0f;
 
     [SerializeField] TrailRenderer trail;
+    [SerializeField] AudioClip meleeSwingSound;
 
     [SerializeField]FlashRed flashScript;
   
@@ -83,6 +84,8 @@ public class PlayerAnimations : MonoBehaviour
     public void ActivateTrail()
     {
         if(trail!=null)trail.emitting = true;
+        if (meleeSwingSound != null) AudioManager.inst.PlayCustomSound(meleeSwingSound, 0.25f);
+
     }
     public void DeactivateTrail()
     {
