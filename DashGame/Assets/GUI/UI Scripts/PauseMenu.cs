@@ -3,10 +3,13 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
 
+    [SerializeField] CameraShake cam;
+
     private void OnEnable()
     {
         print("Pause menu enabled");
         LevelManager.inst.timeScale = 0;
+        if(cam!=null)cam.StopAllCoroutines();
     }
 
     private void OnDisable()

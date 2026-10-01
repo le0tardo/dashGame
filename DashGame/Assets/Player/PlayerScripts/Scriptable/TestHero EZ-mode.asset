@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734f7dbb062eb9d45810af69e693d580, type: 3}
+  m_Name: TestHero EZ-mode
+  m_EditorClassIdentifier: 
+  heroName: Test Hero
+  heroIcon: {fileID: 0}
+  heroLevel: 1
+  heroHealth: 100
+  heroStamina: 100
+  heroStaminaRegenRate: 4
+  heroImpactDamage: 2
+  heroWeaponDamage: 0
+  heroMaxSpeed: 100
+  heroWeapon: {fileID: 11400000, guid: bd99ad0a36b8e2e4cbbac62ae4ca9c45, type: 2}
+  heroPet: {fileID: 0}

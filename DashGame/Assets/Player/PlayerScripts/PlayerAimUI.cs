@@ -184,8 +184,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         else
         {
-            print("do melee logic here!");
-
             Vector3 playerPos = moveScript.gameObject.transform.position;
 
             Plane groundPlane = new Plane(Vector3.up, playerPos);

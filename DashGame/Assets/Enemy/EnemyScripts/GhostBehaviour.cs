@@ -162,6 +162,7 @@ public class GhostBehaviour : MonoBehaviour
             dead = true;
             anim.SetTrigger("die");
             Invoke("ReturnToPool", 0.66f);
+
         }
     }
 
@@ -189,6 +190,15 @@ public class GhostBehaviour : MonoBehaviour
     {
         ShatterManager.inst.shatterGhost(transform.position);
         OrbPool.inst.SpawnOrbs(xp, transform.position);
+
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+                if (room.enemies.Contains(gameObject)) room.enemies.Remove(gameObject);
+            }
+        }
+
         gameObject.SetActive(false);
     }
 }

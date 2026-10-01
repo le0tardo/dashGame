@@ -224,7 +224,7 @@ public class PlayerMove : MonoBehaviour
         if (isKnockedBack || isFalling) return;
         if (currentVelocity.magnitude >= 10) return;
 
-        print("knock back distance: "+distance);
+        //print("knock back distance: "+distance);
 
         // direction away from the hit
         Vector3 pushDirection = transform.position - hitPos;

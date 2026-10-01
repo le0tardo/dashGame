@@ -209,6 +209,16 @@ public class BatBehaviour : MonoBehaviour
     {
         OrbPool.inst.SpawnOrbs(xp,transform.position);
         ShatterManager.inst.ShatterBat(transform.position);
+
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+                if (room.enemies.Contains(gameObject)) room.enemies.Remove(gameObject);
+            }
+        }
+
+        //TODO Pool:
         Destroy(this.gameObject);
     }
 

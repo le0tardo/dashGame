@@ -14,7 +14,6 @@ public class KeyBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("player ociked up key");
 
             if (pickedUp) return;
             pickedUp = true;

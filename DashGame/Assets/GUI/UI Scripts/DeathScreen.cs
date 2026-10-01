@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class DeathScreen : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void ExitFromDeathScreen()
     {
-        
+        Application.Quit();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void RestartLevelFromDeathScreen()
     {
-        
+        LevelManager.inst.ResetLevel();
     }
 }
