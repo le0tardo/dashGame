@@ -34,7 +34,7 @@ public class KeyDoorBehaviour : MonoBehaviour,IHittable
 
     void Open()
     {
-        LevelManager.inst.keys--;
+        LevelManager.inst.UseKey();
         box.enabled = false;
         anim.SetTrigger("open");
         particle.SetActive(true);

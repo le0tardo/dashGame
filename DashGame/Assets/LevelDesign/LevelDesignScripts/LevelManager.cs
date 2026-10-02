@@ -146,6 +146,11 @@ public class LevelManager : MonoBehaviour
         keys++;
         canvas.UpdateKeys();
     }
+    public void UseKey()
+    {
+        keys--;
+        canvas.UpdateKeys();
+    }
     public void SlowDownTime()
     {
         StopAllCoroutines();

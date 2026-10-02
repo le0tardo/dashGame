@@ -4,6 +4,8 @@ public class GhostGrave : MonoBehaviour, IHittable
 {
     [SerializeField] float bounce = 1.1f;
     [SerializeField] float health=10;
+    [SerializeField] AudioClip graveHit;
+    [SerializeField] AudioClip graveBreak;
     public float hitBounce => bounce;
 
     public void OnHit(Vector3 hitPos, float power)
@@ -20,10 +22,13 @@ public class GhostGrave : MonoBehaviour, IHittable
         Vector3 fxPos = (hitPos + transform.position) / 2;
         HitFxManager.inst.HitFX1(fxPos, force);
         CameraShake.inst.Shake(0.1f, 1f);
-        AudioManager.inst.PlayImpactSound(force);
+        AudioManager.inst.PlayCustomSound(graveHit,5f);
     }
      void Kill()
     {
+        ShatterManager.inst.shatterTomb(transform.position);
+
+        AudioManager.inst.PlayCustomSound(graveBreak, 5f);
         Destroy(this.gameObject);
     }
 }

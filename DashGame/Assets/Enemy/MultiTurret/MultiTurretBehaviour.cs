@@ -91,6 +91,13 @@ public class MultiTurretBehaviour : MonoBehaviour, IHittable
     {
         CancelInvoke();
         OrbPool.inst.SpawnOrbs(xp,transform.position);
+        if (RoomManager.inst.currentRoom != null)
+        {
+            if (RoomManager.inst.currentRoom.TryGetComponent(out RoomBehaviour room))
+            {
+                if (room.enemies.Contains(gameObject)) room.enemies.Remove(gameObject);
+            }
+        }
         this.gameObject.SetActive(false);
     }
 }

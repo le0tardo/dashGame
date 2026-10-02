@@ -11,6 +11,7 @@ public class GhostBehaviour : MonoBehaviour
     [SerializeField] private GameObject grave;
     private string roomTag = "Room";
     [SerializeField] int xp;
+    [SerializeField] AudioClip ghostPoof;
 
     [Header("Move stats")]
     [SerializeField] private float turnSpeed = 1f;
@@ -199,6 +200,7 @@ public class GhostBehaviour : MonoBehaviour
             }
         }
 
+        AudioManager.inst.PlayCustomSound(ghostPoof,0.5f);
         gameObject.SetActive(false);
     }
 }

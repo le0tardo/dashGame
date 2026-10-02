@@ -37,7 +37,7 @@ public class CanvasScript : MonoBehaviour
         drawStamina=LevelManager.inst.stamina;
         staminaText.text ="Stamina: "+drawStamina.ToString("F0")+"/"+LevelManager.inst.maxStamina.ToString("F0");
         drawKey = LevelManager.inst.keys;
-        keyText.text = "Keys: "+LevelManager.inst.keys.ToString("F0");
+        keyText.text = LevelManager.inst.keys.ToString("F0");
         drawXp=LevelManager.inst.xp;
         xpText.text = "XP: "+drawXp.ToString("F0");
 
@@ -70,7 +70,7 @@ public class CanvasScript : MonoBehaviour
     }
     public void UpdateKeys()
     {
-        keyText.text = "Keys: "+ LevelManager.inst.keys.ToString("F0");
+        keyText.text = LevelManager.inst.keys.ToString("F0");
     }
 
     public void UpdateXp()

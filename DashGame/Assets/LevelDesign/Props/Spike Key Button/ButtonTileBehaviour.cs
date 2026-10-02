@@ -44,6 +44,13 @@ public class ButtonTileBehaviour : MonoBehaviour
                     }
                 }
 
+                PhysicsBallBehaviour pbb=other.GetComponent<PhysicsBallBehaviour>();
+                if (pbb != null)
+                {
+                    Rigidbody rb=pbb.GetComponent<Rigidbody>();
+                    if (rb != null) { rb.angularVelocity = Vector3.zero; rb.linearVelocity = Vector3.zero; }
+                }
+
                 isPressed = true;
             }
         }
