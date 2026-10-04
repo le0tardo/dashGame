@@ -5,6 +5,7 @@ public class RoomManager : MonoBehaviour
     public static RoomManager inst;
     [SerializeField] public Transform currentRoom;
     [SerializeField] GameObject cameraPivot;
+    [SerializeField] DoorwayLightScript doorwayLights;
 
     [SerializeField] float cameraLerpT = 0.25f;
     Coroutine activePan;
@@ -23,12 +24,17 @@ public class RoomManager : MonoBehaviour
                 cameraPivot.transform.position.y,
                 newRoom.transform.position.z
             );
+
+
+        doorwayLights.SnapLightsToNewRoom(newRoomPosition);
+
         //cameraPivot.transform.position = newRoomPosition; //snap to 
         if (activePan != null)
         {
             StopCoroutine(activePan);
         }
         activePan = StartCoroutine(PanToRoom(newRoomPosition));
+
     }
 
     private System.Collections.IEnumerator PanToRoom(Vector3 targetPosition)
@@ -49,6 +55,10 @@ public class RoomManager : MonoBehaviour
         }
 
         cameraPivot.transform.position = targetPosition;
+
+        doorwayLights.UpdateDoorwayLights();
+
         activePan = null;
+
     }
 }
