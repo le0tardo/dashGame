@@ -12,8 +12,8 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Move & Bounce")]
     [SerializeField] private float stopThreshold = 0.1f;
-    [SerializeField] private float deceleration = 2f;
-    [SerializeField] private float bounciness = 0.85f;
+    [SerializeField] public float deceleration = 2f;
+    [SerializeField] public float bounciness = 0.85f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private float fallSpeed = 15f;
     [Header("Jump")]
@@ -84,6 +84,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (isKnockedBack || isFalling || isJumping) return;
         currentVelocity = direction * speed;
+        //cap currentvelocity to maxVelocity. 
+        //reduce currentVelcoity.magnitude to maxVelocity;
         transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         currentVelocity.y = 0; // Lock perfectly flat to the table surface
         isMoving = true;
@@ -147,7 +149,7 @@ public class PlayerMove : MonoBehaviour
             // check interface
             if (hit.collider.TryGetComponent<IHittable>(out IHittable hittable))
             {
-                currentBounciness = hittable.hitBounce;
+                currentBounciness = hittable.hitBounce; //multiply in heroScriptableObject heroBounce here
                 hittable.OnHit(hit.point, impactPower); 
 
                 //bounce on hittable
@@ -224,9 +226,6 @@ public class PlayerMove : MonoBehaviour
         if (isKnockedBack || isFalling) return;
         if (currentVelocity.magnitude >= 10) return;
 
-        //print("knock back distance: "+distance);
-
-        // direction away from the hit
         Vector3 pushDirection = transform.position - hitPos;
         pushDirection.y = 0f; // Keep the calculation on a flat horizontal plane
 

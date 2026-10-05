@@ -64,6 +64,11 @@ public class LevelManager : MonoBehaviour
         stamina = heroStats.heroStamina;
         maxStamina = heroStats.heroStamina;
         staminaRegenRate = heroStats.heroStaminaRegenRate;
+
+        //set hero movement stats
+        playerMove.maxVelocity=heroStats.heroMaxSpeed;
+        playerMove.deceleration=heroStats.heroDeceleration;
+        playerMove.bounciness = heroStats.heroBounce;
     }
     private void Update()
     {

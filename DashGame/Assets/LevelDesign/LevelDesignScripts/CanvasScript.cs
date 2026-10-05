@@ -33,7 +33,7 @@ public class CanvasScript : MonoBehaviour
     private void Start()
     {
         drawHealth=LevelManager.inst.health;
-        healthText.text ="Health: "+drawHealth.ToString("F0")+"/"+LevelManager.inst.maxHealth.ToString("F0");
+        healthText.text = drawHealth.ToString("F0")+"/"+LevelManager.inst.maxHealth.ToString("F0");
         drawStamina=LevelManager.inst.stamina;
         staminaText.text ="Stamina: "+drawStamina.ToString("F0")+"/"+LevelManager.inst.maxStamina.ToString("F0");
         drawKey = LevelManager.inst.keys;
@@ -53,7 +53,7 @@ public class CanvasScript : MonoBehaviour
         float maxHP = LevelManager.inst.maxHealth;
         float targetFill = Mathf.Clamp01(currentHP / maxHP);
 
-        healthText.text = "Health: " + currentHP.ToString("F0") + "/" + maxHP.ToString("F0");;
+        healthText.text = currentHP.ToString("F0") + "/" + maxHP.ToString("F0");;
         healthBar.fillAmount = targetFill;
         trailRoutine = StartCoroutine(AnimateTrail(targetFill));
         if (heartAnim != null) heartAnim.SetTrigger("wobble");

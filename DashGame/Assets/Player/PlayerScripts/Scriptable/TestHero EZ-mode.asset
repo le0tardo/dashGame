@@ -16,10 +16,12 @@ MonoBehaviour:
   heroIcon: {fileID: 0}
   heroLevel: 1
   heroHealth: 100
-  heroStamina: 100
-  heroStaminaRegenRate: 4
   heroImpactDamage: 2
   heroWeaponDamage: 0
-  heroMaxSpeed: 100
+  heroStamina: 100
+  heroStaminaRegenRate: 4
+  heroMaxSpeed: 250
+  heroDeceleration: 10
+  heroBounce: 0.85
   heroWeapon: {fileID: 11400000, guid: bd99ad0a36b8e2e4cbbac62ae4ca9c45, type: 2}
   heroPet: {fileID: 0}
