@@ -105,8 +105,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
                 }
                 if (playerAnimator != null)
                 {
-                    playerAnimator.SetTrigger("aim");
-                    anim.aiming = true;
+                    //playerAnimator.SetTrigger("aim"); //move this to a bool check in animator script
+                    anim.SetAim();
                 }
 
                 aiming = true;
@@ -123,6 +123,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         aiming = false;
         anim.aiming = false;
+        playerAnimator.ResetTrigger("aim");
 
         moveScript.moveState = PlayerMove.MoveState.Dashing;
 

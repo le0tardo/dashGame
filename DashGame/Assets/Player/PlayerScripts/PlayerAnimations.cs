@@ -34,10 +34,15 @@ public class PlayerAnimations : MonoBehaviour
         aiming = false;
     }
 
-    public void AimAnim()
+    public void SetAim()
     {
-        print("does this ever happen?");
-        aiming = true;
+        if (!aiming)
+        {
+            aiming = true;
+            anim.SetTrigger(aim);
+        }
+        //else aiming=false?
+
     }
 
     public void LaunchAnim()
