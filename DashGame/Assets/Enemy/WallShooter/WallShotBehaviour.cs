@@ -19,7 +19,7 @@ public class WallShotBehaviour : MonoBehaviour
 
     void StopArrow()
     {
-        transform.position = restPosition;
+        transform.localPosition = restPosition;
     }
 
     private void Update()
@@ -35,6 +35,12 @@ public class WallShotBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             print("arrow hit player");
+            StopArrow();
+            fired = false;
+        }
+        if (other.CompareTag("Room"))
+        {
+            print("arrow hit wall");
             StopArrow();
             fired = false;
         }

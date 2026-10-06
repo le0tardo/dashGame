@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,15 +7,9 @@ public class WallShooterBehaviour : MonoBehaviour
     [SerializeField] LayerMask playerLayer;
     float rayDist = 10f;
 
-    private readonly RaycastHit[] hitResults = new RaycastHit[1];
     [SerializeField]bool playerInLOS;
-    [SerializeField] float coolDown=1f;
     [SerializeField] WallShotBehaviour arrow;
 
-    private void OnEnable()
-    {
-        InvokeRepeating(nameof(Shoot), 1f, coolDown);
-    }
     public bool SeesPlayer(Vector3 origin, Vector3 direction)
     {
         return Physics.Raycast(origin, direction, rayDist, playerLayer);
@@ -27,16 +22,25 @@ public class WallShooterBehaviour : MonoBehaviour
 
         playerInLOS = SeesPlayer(origin,direction);
 
-    }
+        if (playerInLOS) { StartCoroutine(ShootRoutine()); } //Only start if its not already started?
 
+    }
     void Shoot()
     {
         if (playerInLOS)
         {
-            if (arrow != null)
+            if (arrow != null && !arrow.fired)
             {
                 arrow.FireArrow();
             }
         }
+    }
+
+    IEnumerator ShootRoutine()
+    {
+        //if !playerInLOS, exit coroutine
+        Shoot();
+        yield return new WaitForSeconds(1f);
+
     }
 }
