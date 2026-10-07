@@ -1,15 +1,16 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WallShooterBehaviour : MonoBehaviour
 {
     [SerializeField] LayerMask playerLayer;
-    float rayDist = 10f;
+    [SerializeField] float rayDist = 10f;
+    [SerializeField] private float maxCoolDown = 1f;
+    float coolDown = 0f;
 
     [SerializeField]bool playerInLOS;
     [SerializeField] WallShotBehaviour arrow;
 
+    float nectFireTime;
     public bool SeesPlayer(Vector3 origin, Vector3 direction)
     {
         return Physics.Raycast(origin, direction, rayDist, playerLayer);
@@ -22,7 +23,21 @@ public class WallShooterBehaviour : MonoBehaviour
 
         playerInLOS = SeesPlayer(origin,direction);
 
-        if (playerInLOS) { StartCoroutine(ShootRoutine()); } //Only start if its not already started?
+        if (playerInLOS)
+        {
+            if (coolDown <= 0)
+            {
+                Shoot();
+            }
+            else
+            {
+                coolDown-=Time.deltaTime;
+            }
+        }
+        else
+        {
+            coolDown = 0;
+        }
 
     }
     void Shoot()
@@ -32,15 +47,9 @@ public class WallShooterBehaviour : MonoBehaviour
             if (arrow != null && !arrow.fired)
             {
                 arrow.FireArrow();
+                coolDown = maxCoolDown;
             }
         }
     }
 
-    IEnumerator ShootRoutine()
-    {
-        //if !playerInLOS, exit coroutine
-        Shoot();
-        yield return new WaitForSeconds(1f);
-
-    }
 }
