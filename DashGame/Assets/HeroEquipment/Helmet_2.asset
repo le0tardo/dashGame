@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5183d193ad2dd6249ba41cfdd3584878, type: 3}
+  m_Name: Helmet_2
+  m_EditorClassIdentifier: 
+  equipmentName: Rusty Knight
+  equipmentSlot: 0
+  equipmentIcon: {fileID: 21300000, guid: 77af132453bd4834e88e20f7309671bf, type: 3}
+  equipmentPrefab: {fileID: 5013687426528502590, guid: 566a1f8da57c12f44bf2bdf4316f3ca8, type: 3}
+  healthBonus: 5
+  staminaBonus: 0
+  staminaRegenBonus: 0
+  impactDamageBonus: 15
+  weaponDamageBonus: 0
+  maxSpeedBonus: 0
+  bounceBonus: 0
+  frictionBonus: 10
