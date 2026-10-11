@@ -12,6 +12,10 @@ public class LobbyEquipmentManager : MonoBehaviour
     [SerializeField] public HeroEquipmentObject currentMainHand;
     [SerializeField] public HeroEquipmentObject currentOffHand;
 
+    [SerializeField] GameObject EquipedHelmetPrefab;
+    [SerializeField] GameObject EquipedMainHandPrefab;
+    [SerializeField] GameObject EquipedOffHandPrefab;
+
     //a new scriptable object class here that tracks current bonuses and carries over to main scene
     //or use existing??
 
@@ -22,21 +26,21 @@ public class LobbyEquipmentManager : MonoBehaviour
 
     private void Start()
     {
-        Equip();
+        EquipAll();
     }
-    void Equip()
+    void EquipAll()
     {
         if (currentHelmet != null)
         {
-            GameObject newHelmet = Instantiate(currentHelmet.equipmentPrefab,helmetSlot);
+            EquipedHelmetPrefab = Instantiate(currentHelmet.equipmentPrefab,helmetSlot); //make this have all the transforms of the parent object?
         }
         if (currentMainHand != null)
         {
-            GameObject newMainHand = Instantiate(currentMainHand.equipmentPrefab, mainHandSlot);
+            EquipedMainHandPrefab = Instantiate(currentMainHand.equipmentPrefab, mainHandSlot);
         }
         if (currentOffHand != null)
         {
-            GameObject newOffHand = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
+            EquipedOffHandPrefab = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
         }
     }
 
@@ -44,6 +48,41 @@ public class LobbyEquipmentManager : MonoBehaviour
     {
         currentHelmet = helmet;
         
+    }
+
+    public void Equip(HeroEquipmentObject equipment)
+    {
+
+        switch (equipment.equipmentSlot)
+        {
+            case HeroEquipmentObject.EquipmentSlot.Helmet:
+
+                Destroy(EquipedHelmetPrefab);
+                EquipedHelmetPrefab = null;
+                currentHelmet = equipment;
+                EquipedHelmetPrefab = Instantiate(currentHelmet.equipmentPrefab, helmetSlot);
+
+            break;
+
+            case HeroEquipmentObject.EquipmentSlot.MainHand:
+                Destroy(EquipedMainHandPrefab);
+                EquipedMainHandPrefab= null;
+                currentMainHand = equipment;
+                EquipedMainHandPrefab = Instantiate(currentMainHand.equipmentPrefab, mainHandSlot);
+
+            break;
+
+            case HeroEquipmentObject.EquipmentSlot.OffHand:
+                Destroy(EquipedOffHandPrefab);
+                EquipedOffHandPrefab= null;
+                currentOffHand = equipment;
+                EquipedOffHandPrefab = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
+            break;
+
+            default:
+                print("Error assigning ENUM state on equipment");
+            break;
+        }
     }
 
 }

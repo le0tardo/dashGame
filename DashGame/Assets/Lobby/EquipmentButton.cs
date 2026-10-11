@@ -13,14 +13,17 @@ public class EquipmentButton : MonoBehaviour
 
     public void SetEquipment()
     {
+        LobbyEquipmentManager.inst.Equip(equipment);
+        /*
         switch (equipment.equipmentSlot)
         {
             case HeroEquipmentObject.EquipmentSlot.Helmet:
-                LobbyEquipmentManager.inst.currentHelmet = equipment;
+                LobbyEquipmentManager.inst.Equip(equipment);
+
             break;
 
             case HeroEquipmentObject.EquipmentSlot.MainHand:
-                LobbyEquipmentManager.inst.currentMainHand = equipment;
+                LobbyEquipmentManager.inst.Equip(equipment);
             break;
 
             case HeroEquipmentObject.EquipmentSlot.OffHand:
@@ -31,5 +34,6 @@ public class EquipmentButton : MonoBehaviour
                 print("invalid equipment slot");
             break;
         }
+        */
     }
 }
