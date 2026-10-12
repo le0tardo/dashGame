@@ -21,6 +21,7 @@ MonoBehaviour:
   staminaRegenBonus: 0
   impactDamageBonus: 0
   weaponDamageBonus: 0
+  defenceBonus: 5
   maxSpeedBonus: 0
   bounceBonus: 0
   frictionBonus: 0

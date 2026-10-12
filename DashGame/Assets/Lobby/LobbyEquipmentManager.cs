@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class LobbyEquipmentManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class LobbyEquipmentManager : MonoBehaviour
     {
         if (currentHelmet != null)
         {
-            EquipedHelmetPrefab = Instantiate(currentHelmet.equipmentPrefab,helmetSlot); //make this have all the transforms of the parent object?
+            EquipedHelmetPrefab = Instantiate(currentHelmet.equipmentPrefab,helmetSlot);
         }
         if (currentMainHand != null)
         {
@@ -44,11 +45,6 @@ public class LobbyEquipmentManager : MonoBehaviour
         }
     }
 
-    public void EquipHelmet(HeroEquipmentObject helmet)
-    {
-        currentHelmet = helmet;
-        
-    }
 
     public void Equip(HeroEquipmentObject equipment)
     {
@@ -57,14 +53,21 @@ public class LobbyEquipmentManager : MonoBehaviour
         {
             case HeroEquipmentObject.EquipmentSlot.Helmet:
 
+                LobbyStatManager.inst.UnequipItem(currentHelmet);
+
                 Destroy(EquipedHelmetPrefab);
                 EquipedHelmetPrefab = null;
                 currentHelmet = equipment;
                 EquipedHelmetPrefab = Instantiate(currentHelmet.equipmentPrefab, helmetSlot);
 
+                //add actual stats here?
+
             break;
 
             case HeroEquipmentObject.EquipmentSlot.MainHand:
+
+                LobbyStatManager.inst.UnequipItem(currentMainHand);
+
                 Destroy(EquipedMainHandPrefab);
                 EquipedMainHandPrefab= null;
                 currentMainHand = equipment;
@@ -73,16 +76,23 @@ public class LobbyEquipmentManager : MonoBehaviour
             break;
 
             case HeroEquipmentObject.EquipmentSlot.OffHand:
+
+                LobbyStatManager.inst.UnequipItem(currentOffHand);
+
                 Destroy(EquipedOffHandPrefab);
                 EquipedOffHandPrefab= null;
                 currentOffHand = equipment;
                 EquipedOffHandPrefab = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
+
             break;
 
             default:
                 print("Error assigning ENUM state on equipment");
             break;
         }
+
+        LobbyStatManager.inst.EquipItem(equipment);
     }
+
 
 }

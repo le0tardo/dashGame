@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroName: Good Hero
   heroIcon: {fileID: 0}
-  heroLevel: 99
+  heroLevel: 1
   heroHealth: 250
   heroImpactDamage: 20
   heroWeaponDamage: 10
   heroDefence: 50
   heroStamina: 50
   heroStaminaRegenRate: 3
+  heroStaminaRegenSpeed: 0
   heroMaxSpeed: 250
   heroDeceleration: 20
   heroBounce: 0.85
-  heroWeapon: {fileID: 0}
-  heroPet: {fileID: 0}
+  fireDamage: 0
+  frostDamage: 0
+  shockDamage: 0

@@ -17,16 +17,15 @@ public class HeroStatsObject : ScriptableObject
     [Header("Movement stats")]
     public float heroStamina;
     public float heroStaminaRegenRate;
+    public float heroStaminaRegenSpeed;
     public float heroMaxSpeed;
     public float heroDeceleration;
     public float heroBounce;
 
-    [Header("Equipment")]
-    public HeroWeaponObject heroWeapon;
-    // offhand
-    public PetObject heroPet;
-    //relic
-    //amulet
-    //ring
+    [Header("Elemental")]
+    public float fireDamage;
+    public float frostDamage;
+    public float shockDamage;
+
 
 }
