@@ -26,29 +26,31 @@ public class AsyncSceneLoader : MonoBehaviour
             loadingScreenCanvas.SetActive(true);
         }
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        yield return new WaitForSeconds(1f);
 
+        Application.backgroundLoadingPriority = ThreadPriority.Low;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
 
-        float targetProgress = 0f;
 
-        while (!asyncLoad.isDone)
+        while (asyncLoad.progress < 0.9f)
         {
-            // progress cap 90% in unity?
-            targetProgress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            float progress01 = Mathf.Clamp01(asyncLoad.progress / 0.9f);
 
             if (progressText != null)
             {
-                progressText.text = "Loading... " + ((asyncLoad.progress / 0.9f) * 100).ToString();
+                // Format text without string concatenation allocations
+                progressText.SetText("Loading... {0}%", Mathf.RoundToInt(progress01 * 100f));
             }
 
-            if (asyncLoad.progress >= 0.9f)
-            {
-                //yield return new WaitForSeconds(0.2f);
-
-                asyncLoad.allowSceneActivation = true;
-            }
-            yield return null; 
+            yield return null;
         }
+
+        if (progressText != null)
+        {
+            progressText.SetText("Loading... 100%");
+        }
+        yield return null;
+        asyncLoad.allowSceneActivation = true;
     }
 }
