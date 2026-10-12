@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class LobbyStatManager : MonoBehaviour
@@ -30,6 +31,14 @@ public class LobbyStatManager : MonoBehaviour
     public float heroFrostPower;
     public float heroShockPower;
 
+    //default stats
+    float defaultHealth;
+    float defaultDefence;
+    float defaultImpactDamage;
+    public float defaultWeaponDamage;
+    public float defaultStamina;
+    public float defaultMaxSpeed;
+    float defaultFriction;
 
     private void Awake()
     {
@@ -38,6 +47,14 @@ public class LobbyStatManager : MonoBehaviour
 
     private void Start()
     {
+        defaultHealth = currentHero.heroHealth;
+        defaultDefence = currentHero.heroDefence;
+        defaultImpactDamage = currentHero.heroImpactDamage;
+        defaultWeaponDamage= currentHero.heroWeaponDamage;
+        defaultStamina = currentHero.heroStamina;
+        defaultMaxSpeed = currentHero.heroMaxSpeed;
+        defaultFriction=currentHero.heroDeceleration;
+
         UpdateStats();
     }
 
@@ -89,5 +106,19 @@ public class LobbyStatManager : MonoBehaviour
         UpdateStats();
         LobbyStatsUI.inst.DrawStats();
 
+    }
+
+    private void OnApplicationQuit()
+    {
+#if UNITY_EDITOR
+        //only do thos if in unity editor:
+        currentHero.heroHealth = defaultHealth;
+        currentHero.heroDefence = defaultDefence;
+        currentHero.heroImpactDamage = defaultImpactDamage;
+        currentHero.heroWeaponDamage=defaultWeaponDamage;
+        currentHero.heroStamina = defaultStamina;
+        currentHero.heroMaxSpeed = defaultMaxSpeed;
+        currentHero.heroDeceleration = defaultFriction;
+#endif
     }
 }

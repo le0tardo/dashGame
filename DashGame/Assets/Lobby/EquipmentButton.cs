@@ -6,6 +6,8 @@ public class EquipmentButton : MonoBehaviour
     [SerializeField] HeroEquipmentObject equipment;
     [SerializeField] Image icon;
 
+    [SerializeField] RectTransform equippedMarker;
+
     private void Start()
     {
         icon.sprite = equipment.equipmentIcon;
@@ -14,5 +16,7 @@ public class EquipmentButton : MonoBehaviour
     public void SetEquipment()
     {
         LobbyEquipmentManager.inst.Equip(equipment);
+
+        equippedMarker.transform.position=transform.position;
     }
 }

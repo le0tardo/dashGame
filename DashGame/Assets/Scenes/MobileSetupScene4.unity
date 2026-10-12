@@ -266265,7 +266265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7760de866f6b9d47adf3e8369de39a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroStats: {fileID: 11400000, guid: ded2a9bb07daf4248b1148bc852e9f8a, type: 2}
+  heroStats: {fileID: 11400000, guid: 8cbb1cc910c758d4eb7c35bc0f5f51fa, type: 2}
   playerMove: {fileID: 304978020}
   playerStats: {fileID: 304978024}
   playerIsDead: 0
