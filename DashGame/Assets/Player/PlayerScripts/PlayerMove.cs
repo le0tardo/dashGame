@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Move & Bounce")]
     [SerializeField] private float stopThreshold = 0.1f;
-    [SerializeField] public float deceleration = 2f;
+    [SerializeField] public float drag = 2f;
     [SerializeField] public float bounciness = 0.85f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private float fallSpeed = 15f;
@@ -101,7 +101,7 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveAndBounce()
     {
-        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
+        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, drag * Time.deltaTime);
 
         // Stop check
         if (currentVelocity.magnitude <= stopThreshold)

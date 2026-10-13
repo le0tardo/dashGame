@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager inst { get; private set; }
 
+    [Header("Session Data")]
+    [SerializeField] SessionData sessionData;
+
     [Header("Hero Stats")]
     [SerializeField] public HeroStatsObject heroStats;
     [SerializeField] public PlayerMove playerMove;
@@ -49,13 +52,30 @@ public class LevelManager : MonoBehaviour
         GameObject bulletPool = GameObject.Find("BulletPool");
         if (bulletPool == null) { new GameObject("BulletPool");}
 
+
+        if (sessionData.hero != null) LoadStatsFromSessionData();
+
         SetHeroStats();
+        
+
+
 
         checkPoint=playerMove.gameObject.transform.position;
 
         if(gameOverScreen.activeInHierarchy)gameOverScreen.SetActive(false);
     }
 
+    void LoadStatsFromSessionData()
+    {
+        heroStats.heroHealth = sessionData.health;
+        heroStats.heroStamina = sessionData.stamina;
+        heroStats.heroImpactDamage = sessionData.impactDamage;
+        heroStats.heroWeaponDamage = sessionData.weaponDamage;
+        heroStats.heroDefence = sessionData.defence;
+        heroStats.heroMaxSpeed = sessionData.maxSpeed;
+        heroStats.heroDrag=sessionData.drag;
+        heroStats.heroBounce=sessionData.bounce;
+    }
     void SetHeroStats()
     {
         level=heroStats.heroLevel;
@@ -67,9 +87,10 @@ public class LevelManager : MonoBehaviour
 
         //set hero movement stats
         playerMove.maxVelocity=heroStats.heroMaxSpeed;
-        playerMove.deceleration=heroStats.heroDeceleration;
+        playerMove.drag=heroStats.heroDrag;
         playerMove.bounciness = heroStats.heroBounce;
     }
+
     private void Update()
     {
         Time.timeScale = timeScale;

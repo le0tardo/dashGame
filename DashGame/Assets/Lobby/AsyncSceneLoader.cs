@@ -26,7 +26,7 @@ public class AsyncSceneLoader : MonoBehaviour
             loadingScreenCanvas.SetActive(true);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         Application.backgroundLoadingPriority = ThreadPriority.Low;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);

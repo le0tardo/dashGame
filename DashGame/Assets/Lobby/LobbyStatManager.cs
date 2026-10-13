@@ -23,7 +23,7 @@ public class LobbyStatManager : MonoBehaviour
 
     [Header("Movement")]
     public float heroMaxSpeed;
-    public float heroFriction;
+    public float heroDrag;
     public float heroBounciness;
 
     [Header("Elemental")]
@@ -40,6 +40,9 @@ public class LobbyStatManager : MonoBehaviour
     public float defaultMaxSpeed;
     float defaultFriction;
 
+    [Header("Session Data")]
+    [SerializeField] SessionData sessionData;
+
     private void Awake()
     {
         inst = this;
@@ -53,7 +56,7 @@ public class LobbyStatManager : MonoBehaviour
         defaultWeaponDamage= currentHero.heroWeaponDamage;
         defaultStamina = currentHero.heroStamina;
         defaultMaxSpeed = currentHero.heroMaxSpeed;
-        defaultFriction=currentHero.heroDeceleration;
+        defaultFriction=currentHero.heroDrag;
 
         UpdateStats();
     }
@@ -73,7 +76,7 @@ public class LobbyStatManager : MonoBehaviour
         heroStaminaRecoverySpeed = currentHero.heroStaminaRegenSpeed + level;
 
         heroMaxSpeed = currentHero.heroMaxSpeed + levelMultiplier;
-        heroFriction = currentHero.heroDeceleration; //idk how i wanna tweak this... runtime only?
+        heroDrag = currentHero.heroDrag; //idk how i wanna tweak this... runtime only?
         heroBounciness = currentHero.heroBounce + (level / 10);
 
         LobbyStatsUI.inst.DrawStats();
@@ -89,7 +92,7 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroDefence -= oldEquipment.defenceBonus;
         currentHero.heroMaxSpeed -= oldEquipment.maxSpeedBonus;
         currentHero.heroBounce -= oldEquipment.bounceBonus;
-        currentHero.heroDeceleration -= oldEquipment.frictionBonus;
+        currentHero.heroDrag -= oldEquipment.frictionBonus;
     }
     public void EquipItem(HeroEquipmentObject equipment)
     {
@@ -101,11 +104,29 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroDefence += equipment.defenceBonus;
         currentHero.heroMaxSpeed += equipment.maxSpeedBonus;
         currentHero.heroBounce += equipment.bounceBonus;
-        currentHero.heroDeceleration += equipment.frictionBonus;
+        currentHero.heroDrag += equipment.frictionBonus;
 
         UpdateStats();
         LobbyStatsUI.inst.DrawStats();
 
+    }
+
+    public void PopulateSessionData()
+    {
+        sessionData.hero = currentHero;
+
+        sessionData.health = currentHero.heroHealth;
+        sessionData.stamina = currentHero.heroStamina;
+        sessionData.impactDamage = currentHero.heroImpactDamage;
+        sessionData.weaponDamage = currentHero.heroWeaponDamage;
+        sessionData.defence = currentHero.heroDefence;
+        sessionData.maxSpeed = currentHero.heroMaxSpeed;
+        sessionData.drag = currentHero.heroDrag;
+        sessionData.bounce = currentHero.heroBounce;
+
+        sessionData.helmet = LobbyEquipmentManager.inst.currentHelmet;
+        sessionData.mainHand = LobbyEquipmentManager.inst.currentMainHand;
+        sessionData.offHand = LobbyEquipmentManager.inst.currentOffHand;
     }
 
     private void OnApplicationQuit()
@@ -118,7 +139,15 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroWeaponDamage=defaultWeaponDamage;
         currentHero.heroStamina = defaultStamina;
         currentHero.heroMaxSpeed = defaultMaxSpeed;
-        currentHero.heroDeceleration = defaultFriction;
+        currentHero.heroDrag = defaultFriction;
+
+        //also clear session data here
+        sessionData.hero = null;
+        sessionData.health = 0; sessionData.stamina = 0;
+        sessionData.impactDamage = 0; sessionData.weaponDamage = 0; sessionData.defence = 0;
+        sessionData.maxSpeed = 0; sessionData.drag = 0; sessionData.bounce = 0;
+        sessionData.helmet = null;sessionData.mainHand = null;sessionData.offHand = null;
+
 #endif
     }
 }

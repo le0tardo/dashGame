@@ -9,7 +9,11 @@ public class LobbyStatsUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI stamina;
     [SerializeField] TextMeshProUGUI weapon;
     [SerializeField] TextMeshProUGUI impact;
+    [SerializeField] TextMeshProUGUI defence;
     [SerializeField] TextMeshProUGUI speed;
+    [SerializeField] TextMeshProUGUI drag;
+    [SerializeField] TextMeshProUGUI bounce;
+
 
     private void Awake()
     {
@@ -27,6 +31,9 @@ public class LobbyStatsUI : MonoBehaviour
         stamina.text=stats.heroStamina.ToString();
         weapon.text=stats.heroWeaponDamage.ToString();
         impact.text=stats.heroImpactDamage.ToString();
+        defence.text=stats.heroDefence.ToString();
         speed.text=stats.heroMaxSpeed.ToString();
+        drag.text=stats.heroDrag.ToString();
+        bounce.text=stats.heroBounciness.ToString();
     }
 }

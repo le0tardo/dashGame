@@ -19,7 +19,7 @@ public class HeroStatsObject : ScriptableObject
     public float heroStaminaRegenRate;
     public float heroStaminaRegenSpeed;
     public float heroMaxSpeed;
-    public float heroDeceleration;
+    public float heroDrag;
     public float heroBounce;
 
     [Header("Elemental")]
