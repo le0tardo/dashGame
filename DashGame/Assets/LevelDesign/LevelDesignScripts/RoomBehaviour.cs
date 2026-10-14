@@ -68,7 +68,6 @@ public class RoomBehaviour : MonoBehaviour
     }
     void DeactivateRoom()
     {
-
         foreach (GameObject enemy in enemies)
         {
             if (enemy != null)

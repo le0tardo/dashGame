@@ -20,8 +20,8 @@ MonoBehaviour:
   heroWeaponDamage: 10
   heroDefence: 10
   heroStamina: 40
-  heroStaminaRegenRate: 1
-  heroStaminaRegenSpeed: 1
+  heroStaminaRegenRate: 2
+  heroStaminaRegenSpeed: 2
   heroMaxSpeed: 40
   heroDrag: 25
   heroBounce: 0.5
