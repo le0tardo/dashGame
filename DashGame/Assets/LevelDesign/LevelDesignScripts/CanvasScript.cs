@@ -23,6 +23,9 @@ public class CanvasScript : MonoBehaviour
     float drawXp;
     float t = 0.1f;
 
+    [Header("Level Up")]
+    [SerializeField] GameObject levelUpBox;
+
     //trails
     float trailDelay = 0.25f;
     float trailDuration = 0.5f;
@@ -81,6 +84,22 @@ public class CanvasScript : MonoBehaviour
         //xpText.text="XP: "+drawXp.ToString("F0")+"/"+LevelManager.inst.maxXp.ToString("F0");
         float xp = LevelManager.inst.xp / LevelManager.inst.maxXp;
         xpBar.fillAmount = xpPercent;
+    }
+
+    public void OpenLevelUpBox()
+    {
+        if (levelUpBox != null)
+        {
+            levelUpBox.SetActive(true);
+        }
+    }
+    public void CloseLevelUpBox()
+    {
+        if (levelUpBox != null)
+        {
+            levelUpBox.SetActive(false);
+        }
+        LevelManager.inst.timeScale = 1.0f;
     }
 
     public void UpdateLevel() //keep separate if i wanna add some flare here later..

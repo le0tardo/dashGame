@@ -140,13 +140,22 @@ public class LevelManager : MonoBehaviour
         xp += amount;
         if (xp >= maxXp)
         {
-            //Level up!
-            maxXp = Mathf.Floor(maxXp * 1.5f);
-            level++;
-            xp = 0;
-            canvas.UpdateLevel();
+
+            LevelUp();
+
         }
         canvas.UpdateXp();
+    }
+
+    void LevelUp()
+    {
+        maxXp = Mathf.Floor(maxXp * 1.5f);
+        level++;
+        xp = 0;
+        canvas.UpdateLevel();
+        canvas.OpenLevelUpBox();
+        //freeze time
+        SlowDownTime();
     }
     void FillStamina()
     {
