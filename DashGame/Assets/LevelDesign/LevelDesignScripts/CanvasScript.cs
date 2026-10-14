@@ -14,6 +14,7 @@ public class CanvasScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI staminaText;
     [SerializeField] Image staminaBar;
     [SerializeField] TextMeshProUGUI keyText;
+    [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI xpText;
     [SerializeField] Image xpBar;
     [SerializeField] TextMeshProUGUI lvlText;
@@ -22,6 +23,7 @@ public class CanvasScript : MonoBehaviour
     float drawKey;
     float drawXp;
     float t = 0.1f;
+
 
     [Header("Level Up")]
     [SerializeField] GameObject levelUpBox;
@@ -74,6 +76,11 @@ public class CanvasScript : MonoBehaviour
     public void UpdateKeys()
     {
         keyText.text = LevelManager.inst.keys.ToString("F0");
+    }
+
+    public void UpdateGold()
+    {
+        goldText.text = LevelManager.inst.gold.ToString("F0");
     }
 
     public void UpdateXp()

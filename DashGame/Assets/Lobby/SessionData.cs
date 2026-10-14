@@ -23,4 +23,6 @@ public class SessionData : ScriptableObject
     public HeroRelicObject relic2;
     public HeroRelicObject relic3;
     */
+
+    public float gold;
 }

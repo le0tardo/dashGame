@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public float maxXp;
 
     [SerializeField] public float keys;
+    [SerializeField] public float gold;
 
     [SerializeField] public float timeScale=1f;
     [SerializeField] public float score=0f;
@@ -56,9 +57,6 @@ public class LevelManager : MonoBehaviour
         if (sessionData.hero != null) LoadStatsFromSessionData();
 
         SetHeroStats();
-        
-
-
 
         checkPoint=playerMove.gameObject.transform.position;
 
@@ -190,6 +188,13 @@ public class LevelManager : MonoBehaviour
         keys--;
         canvas.UpdateKeys();
     }
+
+    public void AddGold()
+    {
+        gold++;
+        canvas.UpdateGold();
+    }
+
     public void SlowDownTime()
     {
         StopAllCoroutines();

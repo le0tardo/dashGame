@@ -6,6 +6,7 @@ public class OrbPool : MonoBehaviour
     [SerializeField] GameObject[] xpOrbs;
     [SerializeField] GameObject[] staminaOrbs;
     [SerializeField] GameObject[] healthOrbs;
+    [SerializeField] GameObject[] goldCoins;
 
 
     private void Awake()
@@ -67,4 +68,21 @@ public class OrbPool : MonoBehaviour
         }
     }
 
+    public void SpawnGoldCoins(int amount, Vector3 pos)
+    {
+        int spawnedCount = 0;
+
+        for (int i = 0; i < goldCoins.Length; i++)
+        {
+            if (spawnedCount >= amount) break;
+
+            if (!goldCoins[i].activeInHierarchy)
+            {
+                goldCoins[i].transform.position = pos;
+                goldCoins[i].SetActive(true);
+
+                spawnedCount++;
+            }
+        }
+    }
 }

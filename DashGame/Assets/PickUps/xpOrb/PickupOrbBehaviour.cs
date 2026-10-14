@@ -6,7 +6,8 @@ public class PickupOrbBehaviour : MonoBehaviour
     {
         Stamina,
         Health,
-        XP
+        XP,
+        Gold
     }
     [SerializeField] PickupType pickupType;
     [SerializeField] float amount = 1f;
@@ -118,11 +119,18 @@ public class PickupOrbBehaviour : MonoBehaviour
                 HitFxManager.inst.HealPickupFx(player.position);
             break;
 
-             case PickupType.XP:
+            case PickupType.XP:
                 LevelManager.inst.GetXp(amount);
                 AudioManager.inst.PlayPickupXP();
                 HitFxManager.inst.PickupXpFx(player.position);
-                break;
+            break;
+
+            case PickupType.Gold:
+                LevelManager.inst.AddGold();
+                AudioManager.inst.PlayPickupGold();
+                HitFxManager.inst.GoldPickupFx(player.position);
+
+            break;
         }
 
         this.gameObject.SetActive(false);

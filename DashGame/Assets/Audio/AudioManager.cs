@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip[] mealImpacts;
     [Header("Pickups")]
     [SerializeField] AudioClip[] pickupXp;
+    [SerializeField] AudioClip[] pickupGold;
     [SerializeField] AudioClip pling;
     [SerializeField] AudioSource pickupSource;
     [Header("Misc")]
@@ -100,17 +101,19 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayPickupXP()
     {
-        /*
-        if (Time.time - lastPickupSoundTime < soundCooldown) return;
-        lastPickupSoundTime = Time.time;
-
-        float vol = Random.Range(0.23f, 0.5f);
-        int r = Random.Range(0,pickupXp.Length);
-        source.PlayOneShot(pickupXp[r], vol);
-        */
         pickupSource.volume = Random.Range(0.15f,0.25f);
         pickupSource.pitch = Random.Range(0.75f,1f);
         pickupSource.clip = pling;
+        pickupSource.Play();
+    }
+
+    public void PlayPickupGold()
+    {
+        pickupSource.volume = Random.Range(0.33f, 0.66f);
+        pickupSource.pitch = Random.Range(0.85f, 1f);
+
+        int r= Random.Range(0, pickupGold.Length);
+        pickupSource.clip = pickupGold[r];
         pickupSource.Play();
     }
 

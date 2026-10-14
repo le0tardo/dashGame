@@ -9,7 +9,6 @@ public class ExplosionBehaviour : MonoBehaviour
     [SerializeField] float explosionPower = 1f;
     SphereCollider explosionCollider;
 
-
     //private static readonly Collider[] hitBuffer = new Collider[32];
 
     private void OnEnable()
@@ -21,7 +20,7 @@ public class ExplosionBehaviour : MonoBehaviour
 
     private void Start() //debug test
     {
-        Explode(transform.position,explosionPower);
+       // Explode(transform.position,explosionPower);
     }
 
     public void Explode(Vector3 position, float power)
@@ -42,6 +41,7 @@ public class ExplosionBehaviour : MonoBehaviour
 
        if(explosionSound!=null)AudioManager.inst.PlayCustomSound(explosionSound, explosionPower/2);
 
+        Invoke(nameof(ColliderDisable), 0.5f);
         Invoke("Sleep", 2.5f);
 
     }
@@ -73,6 +73,10 @@ public class ExplosionBehaviour : MonoBehaviour
         }
     }
 
+    void ColliderDisable()
+    {
+        if(explosionCollider!=null)explosionCollider.enabled = false;
+    }
     void Sleep()
     {
         this.gameObject.SetActive(false);

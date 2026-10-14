@@ -8,6 +8,7 @@ public class HitFxManager : MonoBehaviour
     [SerializeField] ParticleSystem[] pickupXpFx;
     [SerializeField] ParticleSystem[] staminaPickupXpFx;
     [SerializeField] ParticleSystem[] healthPickupXpFx;
+    [SerializeField] ParticleSystem[] goldPickupXpFx;
     [SerializeField] ParticleSystem[] fireHitFx;
 
     private void Awake()
@@ -88,6 +89,20 @@ public class HitFxManager : MonoBehaviour
                 healthPickupXpFx[i].transform.position = pos;
                 healthPickupXpFx[i].gameObject.SetActive(true);
                 healthPickupXpFx[i].Play();
+                return;
+            }
+        }
+    }
+
+    public void GoldPickupFx(Vector3 pos)
+    {
+        for (int i = 0; i < goldPickupXpFx.Length - 1; i++)
+        {
+            if (!goldPickupXpFx[i].gameObject.activeInHierarchy)
+            {
+                goldPickupXpFx[i].transform.position = pos;
+                goldPickupXpFx[i].gameObject.SetActive(true);
+                goldPickupXpFx[i].Play();
                 return;
             }
         }
