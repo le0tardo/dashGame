@@ -29,10 +29,37 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
 
     private void OnEnable()
     {
-        if(player==null)player = LevelManager.inst.playerStats;
-        playerTransform = player.gameObject.transform;
-
+        // Re-verify or reset state when re-enabled
         aimed = false;
+        if (player == null) InitPlayerReference();
+    }
+
+    private void Start()
+    {
+        InitPlayerReference();
+    }
+
+    private void Awake()
+    {
+        aimed = false;
+    }
+
+    private void InitPlayerReference()
+    {
+        if (player == null && LevelManager.inst != null)
+        {
+            player = LevelManager.inst.playerStats;
+        }
+
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerStats>(FindObjectsInactive.Include);
+        }
+
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
     }
 
     private void Update()

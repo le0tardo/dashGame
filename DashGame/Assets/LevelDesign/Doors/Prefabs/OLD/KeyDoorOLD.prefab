@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3322122860491419932}
   - component: {fileID: 7483787402090468481}
   m_Layer: 10
-  m_Name: KeyDoor
+  m_Name: KeyDoorOLD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

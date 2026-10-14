@@ -75,6 +75,10 @@ public class LevelManager : MonoBehaviour
         heroStats.heroMaxSpeed = sessionData.maxSpeed;
         heroStats.heroDrag=sessionData.drag;
         heroStats.heroBounce=sessionData.bounce;
+
+        //also set from base hero stats...
+        staminaRegenRate = heroStats.heroStaminaRegenRate;
+        staminaRegenTime=heroStats.heroStaminaRegenSpeed;
     }
     void SetHeroStats()
     {
