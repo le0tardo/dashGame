@@ -64,7 +64,14 @@ public class PlayerMelee : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeMeleeDamage(meleeDamage);
-                print(other.name + " took " + meleeDamage + " melee damage");
+                AudioManager.inst.PlayMeleeSound();
+            }
+
+            EnemyRangedBehavour rangedEnemy = other.GetComponent<EnemyRangedBehavour>();
+            if (rangedEnemy != null)
+            {
+                rangedEnemy.MeleeHit(meleeDamage);
+                AudioManager.inst.PlayMeleeSound();
             }
         }
 

@@ -82,10 +82,12 @@ public class PlayerMove : MonoBehaviour
 
     public void Launch(Vector3 direction, float speed)
     {
-        if (isKnockedBack || isFalling || isJumping) return;
+        if (isFalling || isJumping) return; //removed  ||isKnockedBack so it does not interrupt dashing
+
+        if(speed>maxVelocity)speed = maxVelocity;
+
         currentVelocity = direction * speed;
-        //cap currentvelocity to maxVelocity. 
-        //reduce currentVelcoity.magnitude to maxVelocity;
+
         transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
         currentVelocity.y = 0; // Lock perfectly flat to the table surface
         isMoving = true;

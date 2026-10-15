@@ -120,6 +120,16 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable
 
     }
 
+    public void MeleeHit(float meleeDamage)
+    {
+        //hurt=true; ??
+        flash.Flash();
+        health-=meleeDamage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
     void Die()
     {
         ShatterManager.inst.ShatterSpitter(transform.position);

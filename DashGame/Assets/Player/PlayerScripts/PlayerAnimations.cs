@@ -88,6 +88,8 @@ public class PlayerAnimations : MonoBehaviour
 
     public void ActivateTrail()
     {
+        if(trail==null)trail=GetComponentInChildren<TrailRenderer>();
+
         if(trail!=null)trail.emitting = true;
         if (meleeSwingSound != null) AudioManager.inst.PlayCustomSound(meleeSwingSound, 0.25f);
 

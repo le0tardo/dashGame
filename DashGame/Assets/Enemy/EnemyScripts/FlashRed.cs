@@ -21,6 +21,14 @@ public class FlashRed : MonoBehaviour
             sharedPropertyBlock = new MaterialPropertyBlock();
         }
     }
+
+    private void OnEnable()
+    {
+        if (sharedPropertyBlock != null)
+        {
+            SetRendererColor(Color.white);
+        }
+    }
     public void Flash()
     {
         if (flashRoutine != null) StopCoroutine(flashRoutine);

@@ -42,7 +42,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             playerAnimator = player.gameObject.GetComponentInChildren<Animator>();
             if(anim==null)anim = player.anim;
         }
-
         maxArrowLength = maxDragDistance;
     }
 
@@ -92,7 +91,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         Vector3 launchDirection = -dragVector.normalized;
         float dragDistance = dragVector.magnitude;
 
-        if (dragDistance > 1)
+        if (dragDistance > 0.25)
         {
             if (!aiming)
             {
@@ -146,8 +145,10 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         ResetArrow();
 
         #region //Dash Region
-        if (dragDistance > 1)
+        if (dragDistance > 0.25)
         {
+            //TODO float maxLauchSpeed=
+
             if (launchSpeed < 10)
             {
                 launchSpeed = 10;
@@ -161,7 +162,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             if (staminaAfford)
             {
                 LevelManager.inst.UseStamina(Mathf.Floor(launchSpeed / 10));
-                if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed); anim.aiming = false; //find aim bool set false here
+                if (moveScript != null) moveScript.Launch(launchDirection, launchSpeed); anim.aiming = false;
 
                 float soundVolume = launchSpeed / moveScript.maxVelocity;
                 AudioManager.inst.PlayReleaseSound(soundVolume);

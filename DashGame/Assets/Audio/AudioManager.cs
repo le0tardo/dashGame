@@ -21,6 +21,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip heroReleaseSound;
     [SerializeField] AudioClip heroFailDashSound;
     [SerializeField] AudioClip[] heroHurts;
+    [SerializeField] AudioClip[] meleeSounds;
+
+    [Header("Audio Sources")]
     AudioSource source;
     [SerializeField] AudioSource aimSource;
 
@@ -52,6 +55,12 @@ public class AudioManager : MonoBehaviour
         vol = Mathf.Clamp(vol, 0, 1);
         int r = Random.Range(0, mealImpacts.Length);
         source.PlayOneShot(mealImpacts[r]);
+    }
+
+    public void PlayMeleeSound()
+    {
+        int r = Random.Range(0, meleeSounds.Length);
+        source.PlayOneShot(meleeSounds[r],0.66f);
     }
 
     public void PlayCustomSound(AudioClip clip, float vol)
