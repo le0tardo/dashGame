@@ -123,11 +123,6 @@ public class EnemyMove : MonoBehaviour, IHittable
 
         currentVelocity = dir.normalized * pwr;
         isBouncing = true;
-
-        //calculate equipmentDamage here
-
-        combat.TakeDamage(Mathf.Floor(pwr/10));
-        //print("enemy took: " + Mathf.Floor(pwr/10) + " damage");
     }
     public void GetHitByOtherEnemy(Vector3 dir, float pwr)
     {

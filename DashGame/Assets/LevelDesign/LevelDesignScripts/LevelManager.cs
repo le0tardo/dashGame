@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public float staminaRegenTime=1f;
     [SerializeField] private float staminaRegenRate = 10f;
     [SerializeField] public float staminaRegenDelay=1f;
+    [SerializeField] public float adrenaline = 1f;
     [SerializeField] public float xp;
     [SerializeField] public float maxXp;
 
@@ -97,7 +98,7 @@ public class LevelManager : MonoBehaviour
     {
         Time.timeScale = timeScale;
 
-        if (stamina < maxStamina)
+        if (stamina < maxStamina && timeScale>0)
         {
             FillStamina();
         }

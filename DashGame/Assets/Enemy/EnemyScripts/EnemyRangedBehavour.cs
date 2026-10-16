@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyRangedBehavour : MonoBehaviour, IHittable
+public class EnemyRangedBehavour : MonoBehaviour, IHittable //TODO IEnmy interface connect 
 {
     [Header("Refereces")]
     [SerializeField] PlayerStats player;

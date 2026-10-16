@@ -76,7 +76,6 @@ public class PhysicsBallBehaviour : MonoBehaviour, IHittable
 
        if (other.CompareTag("Hole"))
         {
-            print("ball hole");
             rb.isKinematic = true;
             rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
             Invoke(nameof(ResetBall), 2f);

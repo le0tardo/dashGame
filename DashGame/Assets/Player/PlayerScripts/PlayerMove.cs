@@ -25,7 +25,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public MoveState moveState = MoveState.Idle;
 
     public Vector3 currentVelocity=Vector3.zero;
-    public float cvm;
     public float maxVelocity=50;
     private CapsuleCollider capsuleCollider;
     float playerRadius;
@@ -64,9 +63,6 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        //debug
-        cvm=currentVelocity.magnitude;
-
         if (isFalling) return;
 
         if (isMoving)
@@ -93,11 +89,6 @@ public class PlayerMove : MonoBehaviour
         isMoving = true;
 
         if (anim != null) anim.LaunchAnim();
-
-        if (playerMelee != null)
-        {
-            //playerMelee.MeleeHit(); //TODO melee?
-        }
 
     }
 
@@ -161,10 +152,21 @@ public class PlayerMove : MonoBehaviour
 
                 anim.BounceAnim();
 
+                if (hit.collider.TryGetComponent<IEnemy>(out IEnemy enemy))
+                {
+                    print("player collided with an enemy");
+                    //calculate equipmentDamage here
+                    float baseImpactPower = (currentVelocity.magnitude / 10);
+                    var heroImpactDamage = LevelManager.inst.heroStats.heroImpactDamage;
+                    float impactDamage = Mathf.Round(heroImpactDamage * baseImpactPower);
+                    var weaponDamage = LevelManager.inst.heroStats.heroWeaponDamage;
+                    float finalDamage = impactDamage + weaponDamage;
+                    enemy.TakeDamage(finalDamage);
+                }
             }
+
             else
             {
-
                 //bounce on wall
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
                 currentVelocity.y = 0f;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyCombat : MonoBehaviour
+public class EnemyCombat : MonoBehaviour, IEnemy
 {
     enum EnemyType
     {
@@ -43,6 +43,7 @@ public class EnemyCombat : MonoBehaviour
         animations.Flash();
         animations.MeleeHitAnimation();
         TakeDamage(dmg);
+
         HitFxManager.inst.HitFX1(transform.position, 0.5f);
 
         if (meleeHitSounds.Length > 0)
@@ -61,6 +62,11 @@ public class EnemyCombat : MonoBehaviour
         Mathf.Clamp(health, 0, maxHealth);
 
         if(dmg>0)DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString());
+
+        float staminaRefund = Mathf.Floor(dmg/10);
+        if(staminaRefund<1)staminaRefund = 1;
+        LevelManager.inst.GetStamina(staminaRefund);
+        print("restored " + staminaRefund + " stamina on hit");
 
         if (health <= 0)
         {

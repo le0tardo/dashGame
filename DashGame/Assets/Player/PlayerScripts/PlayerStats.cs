@@ -50,6 +50,7 @@ public class PlayerStats : MonoBehaviour
 
     public void SubtractHealth(float dmg)
     {
+        if (dmg > 0) DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString()); //make red??
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg)); //TODO: move to individual takeDamage for customsounds...
         AudioManager.inst.PlayHeroHurtSound();
@@ -61,6 +62,7 @@ public class PlayerStats : MonoBehaviour
         {
             playerAnim.DeathAnim();
         }
+
 
     }
     public void Heal(float heal)

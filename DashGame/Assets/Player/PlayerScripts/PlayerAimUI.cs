@@ -140,7 +140,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         // Launch math...
         float dragDistance = Mathf.Min(dragVector.magnitude, maxDragDistance);
-        float launchSpeed = dragDistance * speedMultiplier;
+        float maxHeroSpeed = LevelManager.inst.heroStats.heroMaxSpeed;
+        //float launchSpeed = dragDistance * speedMultiplier; //TODO Percentage: I want launch speed to be a percent of maxHeroSpeed, the same percentage as dragDistance of maxDragDistance
+        float launchSpeed = Mathf.Clamp01(dragDistance / maxDragDistance) * maxHeroSpeed;
+
+
         launchSpeed = Mathf.Min(launchSpeed, maxSpeed);
         ResetArrow();
 
