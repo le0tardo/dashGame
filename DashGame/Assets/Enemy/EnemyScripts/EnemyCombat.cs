@@ -66,7 +66,6 @@ public class EnemyCombat : MonoBehaviour, IEnemy
         float staminaRefund = Mathf.Floor(dmg/10);
         if(staminaRefund<1)staminaRefund = 1;
         LevelManager.inst.GetStamina(staminaRefund);
-        print("restored " + staminaRefund + " stamina on hit");
 
         if (health <= 0)
         {

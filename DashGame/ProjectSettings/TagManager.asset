@@ -10,6 +10,7 @@ TagManager:
   - Spikes
   - BreakableProp
   - Hole
+  - Melee
   layers:
   - Default
   - TransparentFX

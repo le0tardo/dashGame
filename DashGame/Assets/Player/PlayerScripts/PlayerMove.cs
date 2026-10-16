@@ -154,7 +154,6 @@ public class PlayerMove : MonoBehaviour
 
                 if (hit.collider.TryGetComponent<IEnemy>(out IEnemy enemy))
                 {
-                    print("player collided with an enemy");
                     //calculate equipmentDamage here
                     float baseImpactPower = (currentVelocity.magnitude / 10);
                     var heroImpactDamage = LevelManager.inst.heroStats.heroImpactDamage;
@@ -362,5 +361,14 @@ public class PlayerMove : MonoBehaviour
         anim.IdleAnim();
         LevelManager.inst.stamina=LevelManager.inst.maxStamina;
         transform.position = LevelManager.inst.checkPoint;
+    }
+
+    public void WarpPlayer(Vector3 warpPoint)
+    {
+        isFalling = false;
+        currentVelocity = Vector3.zero;
+        moveState = MoveState.Idle;
+        anim.IdleAnim();
+        transform.position=warpPoint;
     }
 }
