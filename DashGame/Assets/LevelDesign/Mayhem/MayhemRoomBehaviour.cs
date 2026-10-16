@@ -24,7 +24,7 @@ public class MayhemRoomBehaviour : MonoBehaviour
             {
                 mayhem = true;
                 StartMayhem();
-                EnterPlayer();
+                //EnterPlayer();
             }
         }
     }

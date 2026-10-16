@@ -1,9 +1,12 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager inst;
     [SerializeField] public Transform currentRoom;
+    [SerializeField] public List<Transform> visitedRooms;
     [SerializeField] GameObject cameraPivot;
     [SerializeField] DoorwayLightScript doorwayLights;
 
@@ -35,6 +38,14 @@ public class RoomManager : MonoBehaviour
         }
         activePan = StartCoroutine(PanToRoom(newRoomPosition));
 
+    }
+
+    public void AddRoomToList(Transform room)
+    {
+        if (!visitedRooms.Contains(room))
+        {
+            visitedRooms.Add(room);
+        }
     }
 
     private System.Collections.IEnumerator PanToRoom(Vector3 targetPosition)
