@@ -5,6 +5,8 @@ public class MayhemRoomBehaviour : MonoBehaviour
     [SerializeField] bool mayhem=false;
     [SerializeField] bool cleared=false;
     [SerializeField] MayhemDoorBehaviour[] doors;
+    [SerializeField] AudioClip doorOpenSound;
+    [SerializeField] AudioClip doorCloseSound;
     [SerializeField] RoomBehaviour room;
     [SerializeField] int remainingEnemies;
 
@@ -24,7 +26,6 @@ public class MayhemRoomBehaviour : MonoBehaviour
             {
                 mayhem = true;
                 StartMayhem();
-                //EnterPlayer();
             }
         }
     }
@@ -48,9 +49,9 @@ public class MayhemRoomBehaviour : MonoBehaviour
         foreach (var door in doors)
         {
             door.CloseDoor();
+            AudioManager.inst.PlayCustomSound(doorCloseSound, 1f);
         }
 
-        //start mayhem spawners
     }
 
     void StopMayhem()
@@ -58,46 +59,7 @@ public class MayhemRoomBehaviour : MonoBehaviour
         foreach(var door in doors)
         {
             door.OpenDoor();
+            AudioManager.inst.PlayCustomSound(doorOpenSound, 1f);
         }
-    }
-
-    void EnterPlayer()
-    {
-        var player=LevelManager.inst.playerMove;
-
-        Vector3 closestPosition = GetClosestSafeSpace(player.transform.position);
-
-        print("player velocity magnitude on enter: "+player.currentVelocity.magnitude);
-
-        if (player.currentVelocity.magnitude < 10)
-        {
-            player.WarpPlayer(closestPosition);
-        }
-    }
-    Vector3 GetClosestSafeSpace(Vector3 entryPoint)
-    {
-        if (safeSpaces == null || safeSpaces.Length == 0)
-        {
-            Debug.LogWarning("Safe spaces array is empty or null!");
-            return entryPoint;
-        }
-
-        Transform closestTransform = safeSpaces[0];
-        float minSqDistance = (safeSpaces[0].position - entryPoint).sqrMagnitude;
-
-        for (int i = 1; i < safeSpaces.Length; i++)
-        {
-            if (safeSpaces[i] == null) continue;
-
-            // sqrMagnitude avoids the expensive square root calculation of Vector3.Distance
-            float sqDistance = (safeSpaces[i].position - entryPoint).sqrMagnitude;
-            if (sqDistance < minSqDistance)
-            {
-                minSqDistance = sqDistance;
-                closestTransform = safeSpaces[i];
-            }
-        }
-
-        return closestTransform.position;
     }
 }

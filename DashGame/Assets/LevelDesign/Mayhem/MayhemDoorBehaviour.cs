@@ -5,6 +5,7 @@ public class MayhemDoorBehaviour : MonoBehaviour
     Animator doorAnimator;
     BoxCollider doorCollider;
     [SerializeField] int remainingEnemies;
+    [SerializeField] ParticleSystem dust;
 
     private void Awake()
     {
@@ -24,5 +25,10 @@ public class MayhemDoorBehaviour : MonoBehaviour
     {
         doorCollider.enabled = false;
         doorAnimator.SetTrigger("open");
+    }
+
+    public void Dust()
+    {
+        if(dust!=null)dust.Play();
     }
 }

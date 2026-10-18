@@ -28,6 +28,18 @@ public class EnemyCombat : MonoBehaviour, IEnemy
 
     [SerializeField] AudioClip[] meleeHitSounds;
 
+    private void OnEnable()
+    {
+        if (RoomManager.inst!=null && RoomManager.inst.visitedRooms.Count > 1)
+        {
+            print("enemy stats BEFORE room Mod: Health: " + health + ". Damage: " + damage + ".");
+
+            health = health * (1 + (RoomManager.inst.visitedRooms.Count / 10f));
+            damage = damage * (1 + (RoomManager.inst.visitedRooms.Count / 10f));
+
+            print("enemy stats AFTER room Mod: Health: " + health + ". Damage: " + damage + ".");
+        }
+    }
     private void Start()
     {
         maxHealth = health;
