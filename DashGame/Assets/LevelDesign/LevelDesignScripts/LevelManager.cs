@@ -43,6 +43,16 @@ public class LevelManager : MonoBehaviour
 
     Coroutine slowDownTimeRoutine = null;
 
+    //default stats
+    float defaultHealth;
+    float defaultStamina;
+    float defaultRegen;
+    float defaultImpact;
+    float defaultWeapon;
+    float defaultDefence;
+    float defaultSpeed;
+    float defaulBounce;
+    float defaultDrag;
 
     private void Awake()
     {
@@ -62,6 +72,8 @@ public class LevelManager : MonoBehaviour
         checkPoint=playerMove.gameObject.transform.position;
 
         if(gameOverScreen.activeInHierarchy)gameOverScreen.SetActive(false);
+
+        SetDefaultStats();
     }
 
     void LoadStatsFromSessionData()
@@ -233,5 +245,38 @@ public class LevelManager : MonoBehaviour
     public void SetCheckPoint(Vector3 point)
     {
         checkPoint = point;
+    }
+
+    void SetDefaultStats()
+    {
+        defaultHealth = heroStats.heroHealth;
+        defaultStamina = heroStats.heroStamina;
+        defaultRegen = heroStats.heroStaminaRegenRate;
+        defaultImpact = heroStats.heroImpactDamage;
+        defaultWeapon = heroStats.heroWeaponDamage;
+        defaultDefence =heroStats.heroDefence;
+        defaultSpeed = heroStats.heroMaxSpeed;
+        defaulBounce = heroStats.heroBounce;
+        defaultDrag = heroStats.heroDrag;
+    }
+
+    private void OnApplicationQuit()
+    {
+#if UNITY_EDITOR
+        if (heroStats == null) return;
+
+        heroStats.heroHealth = defaultHealth;
+        heroStats.heroStamina = defaultStamina;
+        heroStats.heroStaminaRegenRate = defaultRegen;
+        heroStats.heroImpactDamage = defaultImpact;
+        heroStats.heroWeaponDamage = defaultWeapon;
+        heroStats.heroDefence = defaultDefence;
+        heroStats.heroMaxSpeed = defaultSpeed;
+        heroStats.heroBounce = defaulBounce;
+        heroStats.heroDrag = defaultDrag;
+
+        // Mark the object dirty so Unity Editor saves the reverted values cleanly
+        UnityEditor.EditorUtility.SetDirty(heroStats);
+#endif
     }
 }
