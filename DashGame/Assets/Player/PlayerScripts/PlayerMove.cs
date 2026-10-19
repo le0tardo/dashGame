@@ -31,6 +31,7 @@ public class PlayerMove : MonoBehaviour
     private SphereCollider mouseCollider;
     private Rigidbody rb;
 
+
     public bool isMoving { get; private set; } = false;
     public bool isFalling { get; private set; } = false;
 

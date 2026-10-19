@@ -5,7 +5,7 @@ public class ChestActivator : MonoBehaviour
     [SerializeField] private int n = -1;
     private RoomBehaviour myRoom = null;
     [SerializeField] private GameObject chest;
-
+    [SerializeField] ParticleSystem openParticles;
     private bool triggered = false;
 
     private void Awake()
@@ -34,6 +34,7 @@ public class ChestActivator : MonoBehaviour
         {
             chest.transform.SetParent(myRoom.transform, true);
             chest.SetActive(true);
+            openParticles.Play();
             triggered = true;
             this.gameObject.SetActive(false);
 

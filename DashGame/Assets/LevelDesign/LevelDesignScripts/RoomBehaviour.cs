@@ -103,7 +103,7 @@ public class RoomBehaviour : MonoBehaviour
 
         Vector3 closestPosition = GetClosestSafeSpace(player.transform.position);
 
-        if (player.currentVelocity.magnitude < 10)
+        if (player.currentVelocity.magnitude < 99999) //10 was prev Dennis + Hugo approved. OR just set slowDown time on enter
         {
             Vector3 warpTo = new Vector3(closestPosition.x, player.transform.position.y, closestPosition.z);
             player.WarpPlayer(warpTo);
