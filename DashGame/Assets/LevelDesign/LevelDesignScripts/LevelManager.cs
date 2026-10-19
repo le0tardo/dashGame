@@ -213,6 +213,7 @@ public class LevelManager : MonoBehaviour
 
     public void AddGold()
     {
+        LevelDeathStats.inst.goldCollected++;
         gold++;
         canvas.UpdateGold();
     }

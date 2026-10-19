@@ -15,14 +15,14 @@ MonoBehaviour:
   heroName: 'Dungeon Dasher '
   heroIcon: {fileID: 0}
   heroLevel: 1
-  heroHealth: 80
-  heroImpactDamage: 13
+  heroHealth: 40
+  heroImpactDamage: 10
   heroWeaponDamage: 10
-  heroDefence: 17
+  heroDefence: 23
   heroStamina: 40
   heroStaminaRegenRate: 5
   heroStaminaRegenSpeed: 0.25
-  heroMaxSpeed: 95
+  heroMaxSpeed: 85
   heroDrag: 40
   heroBounce: 0.85
   fireDamage: 0

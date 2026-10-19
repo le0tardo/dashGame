@@ -10,6 +10,7 @@ public class HitFxManager : MonoBehaviour
     [SerializeField] ParticleSystem[] healthPickupXpFx;
     [SerializeField] ParticleSystem[] goldPickupXpFx;
     [SerializeField] ParticleSystem[] fireHitFx;
+    [SerializeField] ParticleSystem chestSpawnFX;
 
     private void Awake()
     {
@@ -132,5 +133,12 @@ public class HitFxManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void SpawnChestFX(Vector3 position, Quaternion rotation)
+    {
+        chestSpawnFX.transform.position = position;
+        chestSpawnFX.transform.rotation = rotation;
+        chestSpawnFX.Play();
     }
 }

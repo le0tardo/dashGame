@@ -63,8 +63,6 @@ public class EnemyCombat : MonoBehaviour, IEnemy
             int r = Random.Range(0, meleeHitSounds.Length);
             AudioManager.inst.PlayCustomSound(meleeHitSounds[r], 0.25f);
         }
-
-
     }
 
     public void TakeDamage(float dmg)
@@ -101,6 +99,8 @@ public class EnemyCombat : MonoBehaviour, IEnemy
             }
             Die();
         }
+
+        LevelDeathStats.inst.damageDealt += dmg;
     }
 
     void DealDamage()

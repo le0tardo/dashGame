@@ -36,9 +36,8 @@ public class ChestActivator : MonoBehaviour
             chest.SetActive(true);
             openParticles.Play();
             triggered = true;
+            HitFxManager.inst.SpawnChestFX(transform.position, transform.rotation);
             this.gameObject.SetActive(false);
-
-            //make spawn animation for chest? trigger here.
         }
     }
 }

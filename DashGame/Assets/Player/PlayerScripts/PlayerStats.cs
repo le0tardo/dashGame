@@ -67,7 +67,9 @@ public class PlayerStats : MonoBehaviour
             playerAnim.DeathAnim();
         }
 
-
+        int drawDamage= Mathf.RoundToInt(dmg);
+        drawDamage=Mathf.Abs(drawDamage);
+        LevelDeathStats.inst.damageTaken += drawDamage;
     }
     public void Heal(float heal)
     {
