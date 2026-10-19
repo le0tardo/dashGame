@@ -16,13 +16,13 @@ MonoBehaviour:
   heroIcon: {fileID: 0}
   heroLevel: 1
   heroHealth: 80
-  heroImpactDamage: 10
+  heroImpactDamage: 13
   heroWeaponDamage: 10
-  heroDefence: 5
+  heroDefence: 8
   heroStamina: 40
   heroStaminaRegenRate: 5
   heroStaminaRegenSpeed: 0.25
-  heroMaxSpeed: 85
+  heroMaxSpeed: 95
   heroDrag: 40
   heroBounce: 0.85
   fireDamage: 0

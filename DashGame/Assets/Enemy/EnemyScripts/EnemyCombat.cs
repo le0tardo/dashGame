@@ -34,8 +34,8 @@ public class EnemyCombat : MonoBehaviour, IEnemy
         {
             print("enemy stats BEFORE room Mod: Health: " + health + ". Damage: " + damage + ".");
 
-            health = health * (1 + (RoomManager.inst.visitedRooms.Count / 10f));
-            damage = damage * (1 + (RoomManager.inst.visitedRooms.Count / 10f));
+            health = Mathf.Ceil(health * (1 + (RoomManager.inst.roomDifficulty / 10f)));
+            damage = Mathf.Ceil(damage * (1 + (RoomManager.inst.roomDifficulty / 10f)));
 
             print("enemy stats AFTER room Mod: Health: " + health + ". Damage: " + damage + ".");
         }

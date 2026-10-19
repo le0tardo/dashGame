@@ -7,6 +7,7 @@ public class RoomManager : MonoBehaviour
     public static RoomManager inst;
     [SerializeField] public Transform currentRoom;
     [SerializeField] public List<Transform> visitedRooms;
+    [SerializeField] public float roomDifficulty = 0;
     [SerializeField] GameObject cameraPivot;
     [SerializeField] DoorwayLightScript doorwayLights;
 
@@ -45,6 +46,8 @@ public class RoomManager : MonoBehaviour
         if (!visitedRooms.Contains(room))
         {
             visitedRooms.Add(room);
+            RoomBehaviour roomBehaviour = room.GetComponent<RoomBehaviour>();
+            if (roomBehaviour.enemies.Count > 0) roomDifficulty++;
         }
     }
 

@@ -46,6 +46,7 @@ public class PlayerMelee : MonoBehaviour
 
     public void MeleeHit()
     {
+        meleeDamage = LevelManager.inst.heroStats.heroWeaponDamage;
         if(!meleeCollider.enabled) meleeCollider.enabled=true;
         Invoke("EndMeleeHit",meleeDuration);
     }

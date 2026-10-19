@@ -76,9 +76,16 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void SetMoveStatsAfterLevelUp()
+    {
+        maxVelocity = LevelManager.inst.heroStats.heroMaxSpeed;
+        drag = LevelManager.inst.heroStats.heroDrag;
+        bounciness = LevelManager.inst.heroStats.heroBounce;
+    }
+
     public void Launch(Vector3 direction, float speed)
     {
-        if (isFalling || isJumping) return; //removed  ||isKnockedBack so it does not interrupt dashing
+        if (isFalling || isJumping) return; //removed  ||isKnockedBack so it does not interrupt dashing    
 
         if(speed>maxVelocity)speed = maxVelocity;
 
@@ -94,6 +101,7 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveAndBounce()
     {
+
         currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, drag * Time.deltaTime);
 
         // Stop check

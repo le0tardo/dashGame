@@ -106,6 +106,15 @@ public class LevelManager : MonoBehaviour
         playerMove.bounciness = heroStats.heroBounce;
     }
 
+    public void SetStatsAfterLevelUp()
+    {
+        playerMove.maxVelocity=heroStats.heroMaxSpeed;
+        playerMove.drag = heroStats.heroDrag;
+        playerMove.bounciness = heroStats.heroBounce;
+
+        playerMove.SetMoveStatsAfterLevelUp();
+    }
+
     private void Update()
     {
         Time.timeScale = timeScale;

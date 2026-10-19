@@ -51,9 +51,13 @@ public class PlayerStats : MonoBehaviour
     public void SubtractHealth(float dmg)
     {
         if (dmg > 0) DamagePopUpManager.inst.PopUp(transform.position, dmg.ToString()); //make red??
+
+        dmg = dmg * (100f / (100f + LevelManager.inst.heroStats.heroDefence)); //Smart formula! Never reaches 0 damage, only diminishes!
+
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg)); //TODO: move to individual takeDamage for customsounds...
         AudioManager.inst.PlayHeroHurtSound();
+
         if (LevelManager.inst.health > 0)
         {
             playerAnim.HurtAnim();
