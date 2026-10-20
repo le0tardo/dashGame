@@ -5,6 +5,7 @@ public class LobbyStatsUI : MonoBehaviour
 {
     public static LobbyStatsUI inst;
 
+    [SerializeField] TextMeshProUGUI levelString;
     [SerializeField] TextMeshProUGUI health;
     [SerializeField] TextMeshProUGUI stamina;
     [SerializeField] TextMeshProUGUI weapon;
@@ -27,6 +28,7 @@ public class LobbyStatsUI : MonoBehaviour
     public void DrawStats()
     {
         var stats = LobbyStatManager.inst;
+        levelString.text= stats.currentHero.heroLevel.ToString();
         health.text = stats.heroHealth.ToString();
         stamina.text=stats.heroStamina.ToString();
         weapon.text=stats.heroWeaponDamage.ToString();
@@ -34,6 +36,6 @@ public class LobbyStatsUI : MonoBehaviour
         defence.text=stats.heroDefence.ToString();
         speed.text=stats.heroMaxSpeed.ToString();
         drag.text=stats.heroDrag.ToString();
-        bounce.text=stats.heroBounciness.ToString();
+        bounce.text=(stats.heroBounciness*100).ToString();
     }
 }

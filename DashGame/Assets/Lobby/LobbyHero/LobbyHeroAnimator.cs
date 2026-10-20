@@ -12,6 +12,11 @@ public class LobbyHeroAnimator : MonoBehaviour
         if(fadeToBlack!=null)fadeToBlack.SetActive(true);
     }
 
+    public void LevelUpAnimation()
+    {
+        anim.SetTrigger("lvlUp");
+        AudioManager.inst.PlayCustomSound(clip, 1f);
+    }
     public void ActivateTrail()
     {
         //this just shuts the error off lol

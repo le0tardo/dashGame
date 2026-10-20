@@ -43,6 +43,9 @@ public class LobbyStatManager : MonoBehaviour
     [Header("Session Data")]
     [SerializeField] SessionData sessionData;
 
+    [Header("Level up Feedback")]
+    [SerializeField] ParticleSystem[] particles;
+
     private void Awake()
     {
         inst = this;
@@ -64,7 +67,7 @@ public class LobbyStatManager : MonoBehaviour
     public void UpdateStats()
     {
         level = currentHero.heroLevel;
-        levelMultiplier = currentHero.heroLevel * 10;
+        levelMultiplier = currentHero.heroLevel * 12;
 
         heroHealth = currentHero.heroHealth + levelMultiplier;
         heroDefence = currentHero.heroDefence + levelMultiplier;
@@ -109,6 +112,18 @@ public class LobbyStatManager : MonoBehaviour
         UpdateStats();
         LobbyStatsUI.inst.DrawStats();
 
+    }
+
+    public void LevelUp()
+    {
+        currentHero.heroLevel++;
+
+        UpdateStats();
+
+        foreach(ParticleSystem particle in particles)
+        {
+            particle.Play();
+        }
     }
 
     public void PopulateSessionData()
