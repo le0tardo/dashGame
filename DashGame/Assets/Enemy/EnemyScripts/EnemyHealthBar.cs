@@ -7,6 +7,7 @@ public class EnemyHealthBar : MonoBehaviour
     private Transform parentTransform;
 
     private EnemyCombat enemy;
+    private EnemyRangedBehavour rangedEnemy;
     private float hp;
     private float maxHp;
 
@@ -26,8 +27,15 @@ public class EnemyHealthBar : MonoBehaviour
         enemy = GetComponentInParent<EnemyCombat>();
         if (enemy != null)
         {
-            hp = enemy.health;
-            maxHp = hp;
+            hp = enemy.health; maxHp = hp;
+        }
+        else
+        {
+            rangedEnemy=GetComponentInParent<EnemyRangedBehavour>();
+            if (rangedEnemy != null)
+            {
+                hp=rangedEnemy.health; maxHp = hp;
+            }
         }
 
         foreach (SpriteRenderer r in renderers)
@@ -38,9 +46,13 @@ public class EnemyHealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (enemy == null) return;
+        if (enemy == null && rangedEnemy==null) return;
 
-        if(!showBar && hp < maxHp)
+        if(enemy!=null) hp = enemy.health;
+        if(rangedEnemy!=null)hp = rangedEnemy.health;
+
+
+        if (!showBar && hp < maxHp)
         {
             showBar = true;
             foreach(SpriteRenderer r in renderers)
@@ -65,8 +77,6 @@ public class EnemyHealthBar : MonoBehaviour
             }
         }
 
-        // 2. Health bar fill logic
-        hp = enemy.health;
         if (hp < maxHp)
         {
             float pc = Mathf.Clamp01(hp / maxHp);

@@ -1642,6 +1642,7 @@ Transform:
   m_Children:
   - {fileID: 8055248850877063425}
   - {fileID: 175687362394951321}
+  - {fileID: 1997994430096878633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1734970841921662661
@@ -1693,6 +1694,7 @@ MonoBehaviour:
   inCombat: 0
   isDead: 0
   xp: 8
+  meleeHitSounds: []
 --- !u!195 &2797979497329715486
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2124,3 +2126,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7529946742779107755}
   m_LocalEulerAnglesHint: {x: -3.1068633, y: -1.9640188, z: -69.39542}
+--- !u!1001 &1906729916220418442
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7971872194767907841}
+    m_Modifications:
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423125685692103536, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+      propertyPath: m_Name
+      value: EnemyHealthBar
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+--- !u!4 &1997994430096878633 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 129581398981838243, guid: 5d6abb0dd69e3da40b450fadce20bbee, type: 3}
+  m_PrefabInstance: {fileID: 1906729916220418442}
+  m_PrefabAsset: {fileID: 0}

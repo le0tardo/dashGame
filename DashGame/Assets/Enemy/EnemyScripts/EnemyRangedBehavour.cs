@@ -18,7 +18,7 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable //TODO IEnmy interfa
     [Header("Combat stats")]
     [SerializeField] float attackSpeed = 1f;
     [SerializeField] float attackPower = 1f;
-    [SerializeField] float health = 1f;
+    [SerializeField] public float health = 1f;
     [SerializeField] float attackRange=15f;
     [SerializeField] int xp = 5;
 
