@@ -1820,9 +1820,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b953d717f68d94b94985be8c2704e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 99
+  gold: 101
   goldAmount: {fileID: 931217030}
   goldCost: {fileID: 2096854682}
+  levelUpButton: {fileID: 668097111}
+  levelUpIcon: {fileID: 908622756}
+  plus:
+  - {fileID: 21300000, guid: 0d81290c892d7264c800ae72c5a93a9b, type: 3}
+  - {fileID: 21300000, guid: 5e227364531676b489651528ef8012b8, type: 3}
   currentLevel: 0
   levelUpCost: 0
 --- !u!4 &263314723
@@ -3429,8 +3434,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378727479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.019091409, y: 0.024070092, z: 0.023430714, w: 0.99925333}
-  m_LocalPosition: {x: 0.15667261, y: 1.6092412, z: -0.040842757}
+  m_LocalRotation: {x: 0.021015842, y: 0.012391257, z: 0.02836212, w: 0.9993}
+  m_LocalPosition: {x: 0.055979546, y: 1.6143434, z: -0.03749479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5239,8 +5244,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597526738}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08370804, y: 0.6288023, z: 0.77296436, w: -0.011262418}
-  m_LocalPosition: {x: 0.9419644, y: 0.81829596, z: 0.21245973}
+  m_LocalRotation: {x: -0.01309165, y: -0.03759174, z: -0.8612686, w: 0.5065885}
+  m_LocalPosition: {x: 1.2127327, y: 1.1286988, z: -0.019059312}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7139,7 +7144,6 @@ GameObject:
   - component: {fileID: 908622754}
   - component: {fileID: 908622757}
   - component: {fileID: 908622756}
-  - component: {fileID: 908622755}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -7163,24 +7167,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.8881}
-  m_SizeDelta: {x: 85, y: 75}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 66, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &908622755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908622753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 3, y: 3}
-  m_UseGraphicAlpha: 1
 --- !u!114 &908622756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7194,14 +7183,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8679245, g: 0.8309041, b: 0.79013884, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1118965046, guid: d02d503b39fe35d45972f8d5a8f00489, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d81290c892d7264c800ae72c5a93a9b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16866,8 +16855,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659278743}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000008344069, y: 0.060446415, z: 0.0047720564, w: 0.99816006}
-  m_LocalPosition: {x: 0.15059726, y: 0.9299024, z: 0.4289957}
+  m_LocalRotation: {x: 0.00000009362675, y: -0.0000001872535, z: 1.7531937e-14, w: 1}
+  m_LocalPosition: {x: -0.00000009771565, y: 0.934, z: 0.43199998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17144,6 +17133,7 @@ MonoBehaviour:
   speed: {fileID: 1371694483}
   drag: {fileID: 1000019052}
   bounce: {fileID: 19480691}
+  countDuration: 0.8
 --- !u!1 &1687683880
 GameObject:
   m_ObjectHideFlags: 0
@@ -18753,9 +18743,9 @@ ParentConstraint:
   m_TranslationAtRest: {x: -1.2131431, y: 1.1286988, z: -0.01905943}
   m_RotationAtRest: {x: -4.474603, y: 0.89291847, z: 119.03799}
   m_TranslationOffsets:
-  - {x: 0.4314474, y: -0.5461663, z: -0.43230692}
+  - {x: 0, y: 0, z: 0}
   m_RotationOffsets:
-  - {x: 3.9198537, y: 15.046859, z: -65.57441}
+  - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1

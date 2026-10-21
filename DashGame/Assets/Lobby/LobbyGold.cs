@@ -1,6 +1,6 @@
 using TMPro;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyGold : MonoBehaviour
 {
@@ -8,6 +8,9 @@ public class LobbyGold : MonoBehaviour
     [SerializeField] public int gold;
     [SerializeField] TextMeshProUGUI goldAmount;
     [SerializeField] TextMeshProUGUI goldCost;
+    [SerializeField] Button levelUpButton;
+    [SerializeField] Image levelUpIcon;
+    [SerializeField] Sprite[] plus;
 
     public int currentLevel;
     public int levelUpCost;
@@ -17,8 +20,6 @@ public class LobbyGold : MonoBehaviour
     private void Awake()
     {
         inst = this;
-
-
     }
 
     private void Start()
@@ -28,6 +29,11 @@ public class LobbyGold : MonoBehaviour
 
         goldAmount.text = gold.ToString();
         goldCost.text = levelUpCost.ToString();
+
+        levelUpButton.interactable = gold >= levelUpCost;
+
+        if (levelUpButton.interactable) levelUpIcon.sprite = plus[0];
+        else levelUpIcon.sprite = plus[1];
     }
 
     public void LevelUp()
@@ -38,10 +44,14 @@ public class LobbyGold : MonoBehaviour
 
         LobbyStatManager.inst.LevelUp();
 
-
-
         //draw new values
         goldAmount.text = gold.ToString();
         goldCost.text = levelUpCost.ToString();
+
+        levelUpButton.interactable = gold >= levelUpCost;
+
+        if (levelUpButton.interactable) levelUpIcon.sprite = plus[0];
+        else levelUpIcon.sprite = plus[1];
+
     }
 }

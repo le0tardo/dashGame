@@ -148,6 +148,7 @@ public class LobbyStatManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         //only do thos if in unity editor:
+        currentHero.heroLevel = 1;
         currentHero.heroHealth = defaultHealth;
         currentHero.heroDefence = defaultDefence;
         currentHero.heroImpactDamage = defaultImpactDamage;
@@ -158,6 +159,7 @@ public class LobbyStatManager : MonoBehaviour
 
         //also clear session data here
         sessionData.hero = null;
+        //TODO add level
         sessionData.health = 0; sessionData.stamina = 0;
         sessionData.impactDamage = 0; sessionData.weaponDamage = 0; sessionData.defence = 0;
         sessionData.maxSpeed = 0; sessionData.drag = 0; sessionData.bounce = 0;
