@@ -10,13 +10,23 @@ public class EquipmentButton : MonoBehaviour
     [SerializeField] RectTransform equippedMarker;
 
     [Header("unlock")]
+    [SerializeField] bool unlocked = false;
+    [SerializeField] GameObject lockedGfx;
     [SerializeField] int goldCost;
-    [SerializeField] bool unlocked=false;
-    [SerializeField] TextMeshProUGUI costText;
+    TextMeshProUGUI costText;
+
 
     private void Start()
     {
         icon.sprite = equipment.equipmentIcon;
+
+        costText=lockedGfx.GetComponentInChildren<TextMeshProUGUI>();
+        costText.text=goldCost.ToString();
+
+        if (unlocked)
+        {
+            lockedGfx.SetActive(false);
+        }
     }
 
     public void UnlockOrEquip()
@@ -40,7 +50,13 @@ public class EquipmentButton : MonoBehaviour
     public void Unlock()
     {
         if (!unlocked) { unlocked = true; }
+        lockedGfx.SetActive(false);
+
+        //make some GFX feedback here...
+
         LobbyGold.inst.gold -= goldCost;
+        LobbyGold.inst.SpendGoldVisuals(LobbyGold.inst.gold+goldCost,LobbyGold.inst.gold);
+        LobbyGold.inst.UnlockFX(transform.position);
 
     }
 
