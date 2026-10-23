@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SessionData
   m_EditorClassIdentifier: 
   hero: {fileID: 0}
+  level: 0
+  gold: 0
   health: 0
   stamina: 0
   impactDamage: 0
@@ -21,6 +23,6 @@ MonoBehaviour:
   maxSpeed: 0
   drag: 0
   bounce: 0
-  helmet: {fileID: 11400000, guid: b3afb69aeb87cdf45adea890e9d6982c, type: 2}
-  mainHand: {fileID: 11400000, guid: 293385c1e562bc24da4f3ddd848bc285, type: 2}
-  offHand: {fileID: 11400000, guid: fcc1b946834e1c641821f7ea9cac5b4f, type: 2}
+  helmet: {fileID: 0}
+  mainHand: {fileID: 0}
+  offHand: {fileID: 0}

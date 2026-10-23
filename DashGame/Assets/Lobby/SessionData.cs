@@ -5,6 +5,9 @@ public class SessionData : ScriptableObject
 {
     public HeroStatsObject hero; //for when there are multiple
 
+    public int level;
+    public int gold;
+
     public float health;
     public float stamina;
     public float impactDamage;
@@ -24,5 +27,5 @@ public class SessionData : ScriptableObject
     public HeroRelicObject relic3;
     */
 
-    public float gold;
+
 }

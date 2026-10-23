@@ -8,7 +8,6 @@ public class LobbyStatManager : MonoBehaviour
     public HeroStatsObject currentHero;
 
     float level;
-    float levelMultiplier;
 
     [Header("Combat")]
     public float heroHealth;
@@ -67,20 +66,23 @@ public class LobbyStatManager : MonoBehaviour
     public void UpdateStats()
     {
         level = currentHero.heroLevel;
-        levelMultiplier = currentHero.heroLevel * 12;
 
-        heroHealth = currentHero.heroHealth + levelMultiplier;
-        heroDefence = currentHero.heroDefence + levelMultiplier;
-        heroImpactDamage = currentHero.heroImpactDamage + levelMultiplier;
-        heroWeaponDamage = currentHero.heroWeaponDamage + levelMultiplier;
+        float levelOffset = Mathf.Max(0, level - 1);
+        float flatMultiplier = levelOffset * 12f;
+        float growthRate = 0.10f;
 
-        heroStamina = currentHero.heroStamina + levelMultiplier;
+        heroHealth = currentHero.heroHealth * Mathf.Pow(1f + growthRate, levelOffset);
+        heroDefence = currentHero.heroDefence * Mathf.Pow(1f + growthRate, levelOffset);
+        heroImpactDamage = currentHero.heroImpactDamage * Mathf.Pow(1f + growthRate, levelOffset);
+        heroWeaponDamage = currentHero.heroWeaponDamage * Mathf.Pow(1f + growthRate, levelOffset);  
+
+        heroStamina = currentHero.heroStamina * Mathf.Pow(1f + growthRate, levelOffset);
         heroStaminaRecoveryRate = currentHero.heroStaminaRegenRate + level;
-        heroStaminaRecoverySpeed = currentHero.heroStaminaRegenSpeed + level;
+        //heroStaminaRecoverySpeed = currentHero.heroStaminaRegenSpeed + level; //skip this stat... for now...
 
-        heroMaxSpeed = currentHero.heroMaxSpeed + levelMultiplier;
-        heroDrag = currentHero.heroDrag; //idk how i wanna tweak this... runtime only?
-        heroBounciness = currentHero.heroBounce + (level / 10);
+        heroMaxSpeed = currentHero.heroMaxSpeed * Mathf.Pow(1f + growthRate, levelOffset);
+        heroDrag = currentHero.heroDrag; 
+        heroBounciness = currentHero.heroBounce;
 
         LobbyStatsUI.inst.DrawStats();
     }
@@ -129,6 +131,7 @@ public class LobbyStatManager : MonoBehaviour
     public void PopulateSessionData()
     {
         sessionData.hero = currentHero;
+        sessionData.level = currentHero.heroLevel;
 
         sessionData.health = currentHero.heroHealth;
         sessionData.stamina = currentHero.heroStamina;

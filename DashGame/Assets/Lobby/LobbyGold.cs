@@ -26,10 +26,16 @@ public class LobbyGold : MonoBehaviour
     [SerializeField] GameObject unlockFX;
     Animator unlockFxAnimator;
     [SerializeField] AudioClip unlockSound;
+    [SerializeField] AudioClip tooPoorSound;
+
+
+    [SerializeField] SessionData sessionData;
 
     private void Awake()
     {
         inst = this;
+
+        gold = sessionData.gold;
     }
 
     private void Start()
@@ -108,4 +114,10 @@ public class LobbyGold : MonoBehaviour
         unlockFxAnimator.Play("unlock");
         AudioManager.inst.PlayCustomSound(unlockSound, 1f);
     }
+
+    public void TooPoor()
+    {
+        AudioManager.inst.PlayCustomSound(tooPoorSound, 0.85f);
+    }
+
 }

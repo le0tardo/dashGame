@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager inst { get; private set; }
 
     [Header("Session Data")]
-    [SerializeField] SessionData sessionData;
+    [SerializeField] public SessionData sessionData;
 
     [Header("Hero Stats")]
     [SerializeField] public HeroStatsObject heroStats;

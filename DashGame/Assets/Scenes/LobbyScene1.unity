@@ -2318,7 +2318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b953d717f68d94b94985be8c2704e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 101
+  gold: 151
   goldAmount: {fileID: 931217030}
   goldCost: {fileID: 2096854682}
   levelUpButton: {fileID: 668097111}
@@ -2331,6 +2331,8 @@ MonoBehaviour:
   goldCountSound: {fileID: 8300000, guid: 74cfeafe41242f240870cfacd62fec1c, type: 3}
   unlockFX: {fileID: 861800214}
   unlockSound: {fileID: 8300000, guid: a4791a471a3e360448ae6a0fef91a822, type: 3}
+  tooPoorSound: {fileID: 8300000, guid: 291aebea2cfaa99408f363b9c750ae7f, type: 3}
+  sessionData: {fileID: 11400000, guid: c8252f7fc8e9beb43a83da416058394d, type: 2}
 --- !u!4 &263314723
 Transform:
   m_ObjectHideFlags: 0
@@ -6374,8 +6376,8 @@ RectTransform:
   - {fileID: 83787974}
   - {fileID: 1816470489}
   - {fileID: 1684376741}
-  - {fileID: 668097109}
   - {fileID: 935896941}
+  - {fileID: 668097109}
   - {fileID: 1450703808}
   - {fileID: 1361998599}
   - {fileID: 1407889488}
@@ -21166,7 +21168,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1725989865}
         m_TargetAssemblyTypeName: EquipmentButton, Assembly-CSharp
-        m_MethodName: Unlock
+        m_MethodName: UnlockOrEquip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

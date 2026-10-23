@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class AsyncSceneLoader : MonoBehaviour
 {
     [SerializeField] string sceneToLoad;
+    [SerializeField] int sceneToLoadIndex=1;
 
     [Header("UI ref")]
     [SerializeField] private GameObject loadingScreenCanvas;
@@ -16,10 +17,10 @@ public class AsyncSceneLoader : MonoBehaviour
 
     public void LoadScene()
     {
-        StartCoroutine(LoadSceneAsyncRoutine(sceneToLoad));
+        StartCoroutine(LoadSceneAsyncRoutine(sceneToLoadIndex));
     }
 
-    private IEnumerator LoadSceneAsyncRoutine(string sceneName)
+    private IEnumerator LoadSceneAsyncRoutine(int sceneIndex)
     {
         if (loadingScreenCanvas != null)
         {
@@ -29,7 +30,7 @@ public class AsyncSceneLoader : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Application.backgroundLoadingPriority = ThreadPriority.Low;
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
         asyncLoad.allowSceneActivation = false;
 
 

@@ -1,12 +1,12 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class EquipmentButton : MonoBehaviour
 {
     [SerializeField] HeroEquipmentObject equipment;
     [SerializeField] Image icon;
-
     [SerializeField] RectTransform equippedMarker;
 
     [Header("unlock")]
@@ -15,6 +15,9 @@ public class EquipmentButton : MonoBehaviour
     [SerializeField] int goldCost;
     TextMeshProUGUI costText;
 
+    [Header("Too Poor")]
+    float flashDuration = 0.33f;
+    Coroutine flashRoutine = null;
 
     private void Start()
     {
@@ -39,7 +42,7 @@ public class EquipmentButton : MonoBehaviour
             }
             else
             {
-                //show some "NOT ENOUGH GOLD" gfx here...
+                TooPoor();
             }
         }
         else
@@ -65,5 +68,37 @@ public class EquipmentButton : MonoBehaviour
         LobbyEquipmentManager.inst.Equip(equipment);
 
         equippedMarker.transform.position=transform.position;
+    }
+
+    public void TooPoor()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashRoutine(Color.white, Color.red));
+
+        LobbyGold.inst.TooPoor();
+    }
+
+    IEnumerator FlashRoutine(Color defaultColor, Color flashColor)
+    {
+        float elapsed = 0;
+
+        while (elapsed <flashDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            float progress = Mathf.Clamp01(elapsed / flashDuration);
+
+            float pingPongProgress = Mathf.PingPong(progress * 4f, 1f);
+
+            costText.color = Color.Lerp(defaultColor, flashColor, pingPongProgress);
+
+            yield return null;
+        }
+
+        costText.color = defaultColor;
+        flashRoutine= null; 
     }
 }
