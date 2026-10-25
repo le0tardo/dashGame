@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ae771a2058014bb04e82ae909f161, type: 3}
+  m_Name: TinyDragon
+  m_EditorClassIdentifier: 
+  petName: Ember
+  petIcon: {fileID: 21300000, guid: bb8b0e08eb934654eb847df29c1d84bc, type: 3}
+  petAttackPower: 10
+  petAttackSpeed: 12
+  petPrefab: {fileID: 5885583095379383350, guid: abd72d0d5cc2710448762b94843e2bf5, type: 3}
+  petSound: {fileID: 8300000, guid: 6aa40ee28c26ff44b8030e45e2afa59b, type: 3}

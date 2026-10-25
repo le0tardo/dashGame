@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hero: {fileID: 0}
   level: 0
-  gold: 0
+  gold: 151
   health: 0
   stamina: 0
   impactDamage: 0
@@ -26,3 +26,4 @@ MonoBehaviour:
   helmet: {fileID: 0}
   mainHand: {fileID: 0}
   offHand: {fileID: 0}
+  pet: {fileID: 0}

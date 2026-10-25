@@ -11,4 +11,8 @@ public class PetObject : ScriptableObject
     [Header("Stats")]
     [SerializeField] public float petAttackPower;
     [SerializeField] public float petAttackSpeed;
+
+    [Header("Prefab")]
+    [SerializeField] public GameObject petPrefab;
+    [SerializeField] public AudioClip petSound;
 }

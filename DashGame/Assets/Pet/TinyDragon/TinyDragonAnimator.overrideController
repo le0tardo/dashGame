@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TinyDragonAnimator
+  m_Controller: {fileID: 9100000, guid: 96f7312482cc35246a3b257de94cd829, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0e5327b0db6fd2b46bdb6b96b55fcf31, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0e5327b0db6fd2b46bdb6b96b55fcf31, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ed55e8174fa834747af444b7a13346e0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed55e8174fa834747af444b7a13346e0, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 393c9dfdeebe27b4db123756c9977519, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 393c9dfdeebe27b4db123756c9977519, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4ce2358bb707c924582d959c6b9cbe98, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4ce2358bb707c924582d959c6b9cbe98, type: 2}

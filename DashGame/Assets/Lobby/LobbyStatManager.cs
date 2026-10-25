@@ -145,6 +145,8 @@ public class LobbyStatManager : MonoBehaviour
         sessionData.helmet = LobbyEquipmentManager.inst.currentHelmet;
         sessionData.mainHand = LobbyEquipmentManager.inst.currentMainHand;
         sessionData.offHand = LobbyEquipmentManager.inst.currentOffHand;
+
+        sessionData.pet=LobbyPetManager.inst.currentPet;
     }
 
     private void OnApplicationQuit()

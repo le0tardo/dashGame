@@ -21,6 +21,7 @@ public class SessionData : ScriptableObject
     public HeroEquipmentObject mainHand;
     public HeroEquipmentObject offHand;
 
+    public PetObject pet;
     /*
     public HeroRelicObject relic1;
     public HeroRelicObject relic2;

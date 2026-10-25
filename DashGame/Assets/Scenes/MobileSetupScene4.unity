@@ -70941,6 +70941,7 @@ Transform:
   - {fileID: 1538142710}
   - {fileID: 1247057529}
   - {fileID: 1330354404}
+  - {fileID: 1415516149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108204131
@@ -434697,7 +434698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &757035647
 Transform:
   m_ObjectHideFlags: 0
@@ -518104,7 +518105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &952496861
 Transform:
   m_ObjectHideFlags: 0
@@ -699038,6 +699039,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1351895380057814234, guid: 50caab990c9127e4aa9e80668a4f4e89, type: 3}
   m_PrefabInstance: {fileID: 1413904442}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1415516148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1415516149}
+  - component: {fileID: 1415516150}
+  m_Layer: 0
+  m_Name: PetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1415516149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415516148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 107020945}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1415516150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415516148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4426bbab8a6a5be4caaff1ef387e17fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pet: {fileID: 11400000, guid: 2d274ea845dcc724b945a8f1d27ac757, type: 2}
+  petTransform: {fileID: 757035647}
 --- !u!1 &1416487751
 GameObject:
   m_ObjectHideFlags: 0

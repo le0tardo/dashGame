@@ -55,8 +55,6 @@ public class EquipmentButton : MonoBehaviour
         if (!unlocked) { unlocked = true; }
         lockedGfx.SetActive(false);
 
-        //make some GFX feedback here...
-
         LobbyGold.inst.gold -= goldCost;
         LobbyGold.inst.SpendGoldVisuals(LobbyGold.inst.gold+goldCost,LobbyGold.inst.gold);
         LobbyGold.inst.UnlockFX(transform.position);
