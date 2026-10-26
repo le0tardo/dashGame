@@ -597,6 +597,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4494e3555baa1fa4ca1ac5fceacdaaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pet: {fileID: 11400000, guid: 2d274ea845dcc724b945a8f1d27ac757, type: 2}
+  target: {fileID: 0}
+  inCombat: 0
+  attackDamage: 0
+  attackSpeed: 0
+  baseAttackSpeed: 3
 --- !u!1 &6271414285424902397
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,6 @@ MonoBehaviour:
   petName: Ember
   petIcon: {fileID: 21300000, guid: bb8b0e08eb934654eb847df29c1d84bc, type: 3}
   petAttackPower: 10
-  petAttackSpeed: 12
+  petAttackSpeed: 10
   petPrefab: {fileID: 5885583095379383350, guid: abd72d0d5cc2710448762b94843e2bf5, type: 3}
   petSound: {fileID: 8300000, guid: 6aa40ee28c26ff44b8030e45e2afa59b, type: 3}

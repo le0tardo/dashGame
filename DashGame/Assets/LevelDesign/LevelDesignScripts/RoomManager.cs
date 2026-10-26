@@ -1,10 +1,14 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager inst;
+
+    public static event Action OnRoomChanged;
+
     [SerializeField] public Transform currentRoom;
     [SerializeField] public List<Transform> visitedRooms;
     [SerializeField] public float roomDifficulty = 0;
@@ -38,6 +42,8 @@ public class RoomManager : MonoBehaviour
             StopCoroutine(activePan);
         }
         activePan = StartCoroutine(PanToRoom(newRoomPosition));
+
+        OnRoomChanged?.Invoke(); //this triggers listeners? like petcombat 
 
     }
 

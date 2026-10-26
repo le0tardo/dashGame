@@ -16,7 +16,7 @@ MonoBehaviour:
   heroIcon: {fileID: 0}
   heroLevel: 1
   heroHealth: 40
-  heroImpactDamage: 8
+  heroImpactDamage: 11
   heroWeaponDamage: 25
   heroDefence: 6
   heroStamina: 40
