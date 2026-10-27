@@ -7,11 +7,14 @@ public class PetProjectile : MonoBehaviour
     [SerializeField] private float maxLifetime = 3f;
 
     [SerializeField] Vector3 targetPosition = Vector3.zero;
+    [SerializeField] PetCombat pet; //either interface or this reference...
 
     private Coroutine moveRoutine=null;
 
     public void FireProjectile(Vector3 _targetPosition)
     {
+        if(pet==null)pet=FindAnyObjectByType<PetCombat>();
+
         targetPosition= new Vector3 (_targetPosition.x,transform.position.y,_targetPosition.z);
 
         Vector3 direction = (targetPosition - transform.position).normalized;
@@ -43,6 +46,8 @@ public class PetProjectile : MonoBehaviour
             if (sqrDistanceToTarget <= hitThresholdSqr)
             {
                 Debug.Log("Hit target!");
+
+                if (pet != null) pet.DealDamage();
 
                 // Insert damage / visual hit impact logic here
                 //do i want the projectile to be able to miss?

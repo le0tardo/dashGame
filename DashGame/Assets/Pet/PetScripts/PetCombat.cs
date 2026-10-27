@@ -75,6 +75,17 @@ public class PetCombat : MonoBehaviour
         return null;
     }
 
+    public void DealDamage()
+    {
+        if (target != null)
+        {
+            IEnemy enemy = target.gameObject.GetComponent<IEnemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(attackDamage);
+            }
+        }
+    }
     private void StartAttackRoutine()
     {
         StopAttackRoutine();
