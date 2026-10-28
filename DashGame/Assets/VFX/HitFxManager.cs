@@ -10,6 +10,7 @@ public class HitFxManager : MonoBehaviour
     [SerializeField] ParticleSystem[] healthPickupXpFx;
     [SerializeField] ParticleSystem[] goldPickupXpFx;
     [SerializeField] ParticleSystem[] fireHitFx;
+    [SerializeField] ParticleSystem[] dragonFireHitFx;
     [SerializeField] ParticleSystem chestSpawnFX;
 
     private void Awake()
@@ -130,6 +131,20 @@ public class HitFxManager : MonoBehaviour
 
                 if (childFx != null) childFx.Play();
 
+                return;
+            }
+        }
+    }
+
+    public void DragonFireHit(Vector3 pos, Quaternion rot)
+    {
+        for (int i = 0; i < dragonFireHitFx.Length; i++)
+        {
+            if (!dragonFireHitFx[i].isPlaying)
+            {
+                dragonFireHitFx[i].gameObject.transform.position=pos;
+                //dragonFireHitFx[i].gameObject.transform.rotation = rot;
+                dragonFireHitFx[i].Play();
                 return;
             }
         }

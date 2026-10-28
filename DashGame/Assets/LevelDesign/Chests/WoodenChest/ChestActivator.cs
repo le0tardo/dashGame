@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class ChestActivator : MonoBehaviour
@@ -34,6 +35,10 @@ public class ChestActivator : MonoBehaviour
         {
             chest.transform.SetParent(myRoom.transform, true);
             chest.SetActive(true);
+
+            Animator chestAnim=chest.GetComponent<Animator>();
+            chestAnim.SetTrigger("spawn");
+
             openParticles.Play();
             triggered = true;
             HitFxManager.inst.SpawnChestFX(transform.position, transform.rotation);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PetCombat : MonoBehaviour
 {
     [SerializeField] private PetObject pet;
-    [SerializeField] private Transform target = null;
+    [SerializeField] public Transform target = null;
     [SerializeField] private bool inCombat = false;
     [SerializeField] private float attackDamage;
     [SerializeField] private float attackSpeed;

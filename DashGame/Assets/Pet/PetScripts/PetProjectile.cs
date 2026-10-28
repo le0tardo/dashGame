@@ -9,6 +9,9 @@ public class PetProjectile : MonoBehaviour
     [SerializeField] Vector3 targetPosition = Vector3.zero;
     [SerializeField] PetCombat pet; //either interface or this reference...
 
+    [SerializeField] AudioClip fireballSpawn;
+    [SerializeField] AudioClip fireballHit;
+
     private Coroutine moveRoutine=null;
 
     public void FireProjectile(Vector3 _targetPosition)
@@ -27,6 +30,7 @@ public class PetProjectile : MonoBehaviour
 
         if (moveRoutine != null) StopCoroutine(moveRoutine);
         moveRoutine = StartCoroutine(MoveRoutine(targetPosition));
+        AudioManager.inst.PlayCustomSound(fireballSpawn, 0.85f);
     }
     private IEnumerator MoveRoutine(Vector3 targetPosition)
     {
@@ -47,14 +51,14 @@ public class PetProjectile : MonoBehaviour
             {
                 Debug.Log("Hit target!");
 
-                if (pet != null) pet.DealDamage();
+                if (pet != null)
+                {
+                    pet.DealDamage();
+                    HitFxManager.inst.DragonFireHit(pet.target.position,transform.rotation);
+                    AudioManager.inst.PlayCustomSound(fireballHit,0.85f);
+                }
 
-                // Insert damage / visual hit impact logic here
-                //do i want the projectile to be able to miss?
-                //or is it more just a DOT to a random enemy in the room?
-                //DOT i think. spawn a collider that looks for IEnemy?
 
-                // Disable projectile and exit coroutine immediately
                 gameObject.SetActive(false);
                 moveRoutine = null;
                 yield break;

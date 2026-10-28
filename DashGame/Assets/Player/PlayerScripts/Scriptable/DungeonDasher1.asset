@@ -18,12 +18,12 @@ MonoBehaviour:
   heroHealth: 40
   heroImpactDamage: 11
   heroWeaponDamage: 25
-  heroDefence: 6
+  heroDefence: 9
   heroStamina: 40
   heroStaminaRegenRate: 5
   heroStaminaRegenSpeed: 0.25
   heroMaxSpeed: 85
-  heroDrag: 45
+  heroDrag: 85
   heroBounce: 0.85
   fireDamage: 0
   frostDamage: 0
