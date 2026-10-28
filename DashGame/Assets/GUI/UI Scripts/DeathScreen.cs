@@ -3,6 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class DeathScreen : MonoBehaviour
 {
+    [SerializeField] GameObject otherScreen;
+
+    private void OnEnable()
+    {
+        if(otherScreen!=null)otherScreen.SetActive(false);
+    }
+
     public void ExitFromDeathScreen()
     {
         Application.Quit();

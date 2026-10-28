@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,12 +23,21 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public float maxHealth;
     [SerializeField] public float stamina;
     [SerializeField] public float maxStamina;
-    [SerializeField] public float staminaRegenTime=1f;
-    [SerializeField] private float staminaRegenRate = 10f;
-    [SerializeField] public float staminaRegenDelay=1f;
-    [SerializeField] public float adrenaline = 1f;
+    [SerializeField] public float staminaRegenRate = 10f;
+    [SerializeField] public float impactDamage;
+    [SerializeField] public float weaponDamage;
+    [SerializeField] public float defence;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public float bounce;
+    [SerializeField] public float drag;
+
+
+    [Header("Other stats")]
     [SerializeField] public float xp;
     [SerializeField] public float maxXp;
+
+    [SerializeField] public float staminaRegenTime = 1f;
+    [SerializeField] public float staminaRegenDelay = 1f;
 
     [SerializeField] public float keys;
     [SerializeField] public float gold;
@@ -43,17 +53,6 @@ public class LevelManager : MonoBehaviour
 
     Coroutine slowDownTimeRoutine = null;
 
-    //default stats
-    float defaultHealth;
-    float defaultStamina;
-    float defaultRegen;
-    float defaultImpact;
-    float defaultWeapon;
-    float defaultDefence;
-    float defaultSpeed;
-    float defaulBounce;
-    float defaultDrag;
-
     private void Awake()
     {
         inst = this;
@@ -65,7 +64,10 @@ public class LevelManager : MonoBehaviour
         if (bulletPool == null) { new GameObject("BulletPool");}
 
 
-        if (sessionData.hero != null) LoadStatsFromSessionData();
+        if (sessionData.hero != null)
+        {
+            LoadStatsFromSessionData();
+        }
 
         SetHeroStats();
 
@@ -73,7 +75,6 @@ public class LevelManager : MonoBehaviour
 
         if(gameOverScreen.activeInHierarchy)gameOverScreen.SetActive(false);
 
-        SetDefaultStats();
     }
 
     void LoadStatsFromSessionData()
@@ -91,7 +92,8 @@ public class LevelManager : MonoBehaviour
         staminaRegenRate = heroStats.heroStaminaRegenRate;
         staminaRegenTime=heroStats.heroStaminaRegenSpeed;
     }
-    void SetHeroStats()
+
+    void SetHeroStats() //direcly from scriptable
     {
         level=heroStats.heroLevel;
         health = heroStats.heroHealth;
@@ -100,10 +102,18 @@ public class LevelManager : MonoBehaviour
         maxStamina = heroStats.heroStamina;
         staminaRegenRate = heroStats.heroStaminaRegenRate;
 
+        weaponDamage= heroStats.heroWeaponDamage;
+        impactDamage = heroStats.heroImpactDamage;
+        defence = heroStats.heroDefence;
+
+        maxSpeed = heroStats.heroMaxSpeed;
+        bounce = heroStats.heroBounce;
+        drag=heroStats.heroDrag;
+
         //set hero movement stats
-        playerMove.maxVelocity=heroStats.heroMaxSpeed;
-        playerMove.drag=heroStats.heroDrag;
-        playerMove.bounciness = heroStats.heroBounce;
+        playerMove.maxVelocity = maxSpeed;
+        playerMove.drag = drag;
+        playerMove.bounciness = bounce;
     }
 
     public void SetStatsAfterLevelUp()
@@ -141,6 +151,8 @@ public class LevelManager : MonoBehaviour
             //do the die thing
             playerIsDead = true;
             gameOverScreen.SetActive(true);
+            StopAllCoroutines();
+            FreezeTime();
             //timescale to 0, interrupt aim script? 
         }
 
@@ -176,10 +188,29 @@ public class LevelManager : MonoBehaviour
         maxXp = Mathf.Floor(maxXp * 1.5f);
         level++;
         xp = 0;
+
+
+        float levelOffset = Mathf.Max(0, level - 1);
+        float flatMultiplier = levelOffset * 12f;
+        float growthRate = 0.10f;
+
+        maxHealth =  MathF.Floor (maxHealth * Mathf.Pow(1f + growthRate, levelOffset));
+        defence = MathF.Floor (defence * Mathf.Pow(1f + growthRate, levelOffset));
+        impactDamage = MathF.Floor(impactDamage * Mathf.Pow(1f + growthRate, levelOffset));
+        weaponDamage = MathF.Floor(weaponDamage * Mathf.Pow(1f + growthRate, levelOffset));
+
+        maxStamina = MathF.Floor(maxStamina * Mathf.Pow(1f + growthRate, levelOffset));
+        staminaRegenRate = staminaRegenRate++;
+
+        maxSpeed = MathF.Floor(maxSpeed * Mathf.Pow(1f + growthRate, levelOffset));
+        drag = drag++;
+        bounce = MathF.Floor(bounce * Mathf.Pow(1f + growthRate, levelOffset));
+
         canvas.UpdateLevel();
         canvas.OpenLevelUpBox();
-        //freeze time
-        SlowDownTime();
+        canvas.UpdateHealth();
+
+        FreezeTime();
     }
     void FillStamina()
     {
@@ -228,6 +259,15 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public void FreezeTime()
+    {
+        StopAllCoroutines();
+        if (slowDownTimeRoutine == null)
+        {
+            slowDownTimeRoutine=StartCoroutine(FreezeTimeRoutine());
+        }
+    }
+
     public void ResetTime()
     {
         StopAllCoroutines();
@@ -252,41 +292,27 @@ public class LevelManager : MonoBehaviour
         timeScale = targetScale; //snap
     }
 
+    private IEnumerator FreezeTimeRoutine()
+    {
+        float startScale = timeScale;
+        float targetScale = 0f;
+        float duration = 0.25f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
+            timeScale = Mathf.Lerp(startScale, targetScale, normalizedTime);
+            yield return null;
+        }
+
+        timeScale = targetScale; //snap
+    }
+
     public void SetCheckPoint(Vector3 point)
     {
         checkPoint = point;
     }
 
-    void SetDefaultStats()
-    {
-        defaultHealth = heroStats.heroHealth;
-        defaultStamina = heroStats.heroStamina;
-        defaultRegen = heroStats.heroStaminaRegenRate;
-        defaultImpact = heroStats.heroImpactDamage;
-        defaultWeapon = heroStats.heroWeaponDamage;
-        defaultDefence =heroStats.heroDefence;
-        defaultSpeed = heroStats.heroMaxSpeed;
-        defaulBounce = heroStats.heroBounce;
-        defaultDrag = heroStats.heroDrag;
-    }
-
-    private void OnApplicationQuit()
-    {
-#if UNITY_EDITOR
-        if (heroStats == null) return;
-
-        heroStats.heroHealth = defaultHealth;
-        heroStats.heroStamina = defaultStamina;
-        heroStats.heroStaminaRegenRate = defaultRegen;
-        heroStats.heroImpactDamage = defaultImpact;
-        heroStats.heroWeaponDamage = defaultWeapon;
-        heroStats.heroDefence = defaultDefence;
-        heroStats.heroMaxSpeed = defaultSpeed;
-        heroStats.heroBounce = defaulBounce;
-        heroStats.heroDrag = defaultDrag;
-
-        // Mark the object dirty so Unity Editor saves the reverted values cleanly
-        UnityEditor.EditorUtility.SetDirty(heroStats);
-#endif
-    }
 }

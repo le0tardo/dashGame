@@ -48,14 +48,16 @@ public class PauseMenu : MonoBehaviour
     void SetStats()
     {
         var hero = LevelManager.inst.heroStats;
-        healthStat.text= hero.heroHealth.ToString();
-        staminaStat.text= hero.heroStamina.ToString();
-        weaponStat.text=hero.heroWeaponDamage.ToString();
-        impactStat.text=hero.heroImpactDamage.ToString();
-        defenceStat.text=hero.heroDefence.ToString();
-        regenStat.text=hero.heroStaminaRegenRate.ToString();
-        speedStat.text=hero.heroMaxSpeed.ToString();
-        bounceStat.text=(hero.heroBounce*100).ToString();
-        dragStat.text=hero.heroDrag.ToString();
+        var levelStats = LevelManager.inst;
+
+        healthStat.text= levelStats.maxHealth.ToString();
+        staminaStat.text= levelStats.maxStamina.ToString();
+        weaponStat.text=levelStats.weaponDamage.ToString();
+        impactStat.text=levelStats.impactDamage.ToString();
+        defenceStat.text=levelStats.defence.ToString();
+        regenStat.text= levelStats.staminaRegenRate.ToString();
+        speedStat.text=levelStats.maxSpeed.ToString();
+        bounceStat.text=(levelStats.bounce*100).ToString();
+        dragStat.text=levelStats.drag.ToString();
     }
 }

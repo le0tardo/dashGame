@@ -296024,16 +296024,21 @@ MonoBehaviour:
   maxHealth: 1
   stamina: 1
   maxStamina: 1
-  staminaRegenTime: 0
-  staminaRegenRate: 5
-  staminaRegenDelay: 1
-  adrenaline: 1
-  xp: 20
+  staminaRegenRate: 1
+  impactDamage: 1
+  weaponDamage: 1
+  defence: 1
+  maxSpeed: 1
+  bounce: 1
+  drag: 1
+  xp: 1
   maxXp: 25
-  keys: 0
-  gold: 0
+  staminaRegenTime: 1
+  staminaRegenDelay: 1
+  keys: 1
+  gold: 1
   timeScale: 1
-  score: 0
+  score: 1
   checkPoint: {x: 0, y: 0, z: 0}
   canvas: {fileID: 585281458}
   gameOverScreen: {fileID: 623428406}
@@ -397272,6 +397277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dcde68ba6e63a243bfa1b7a77486a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherScreen: {fileID: 945137904}
 --- !u!1 &624130567
 GameObject:
   m_ObjectHideFlags: 0

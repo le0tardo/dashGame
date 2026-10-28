@@ -37,47 +37,57 @@ public class UpgradeButton : MonoBehaviour
         }
 
         var stats = LevelManager.inst.heroStats;
+        var levelStats = LevelManager.inst;
 
         switch (upgrade.upgradeStat)
         {
             case UpgradeObject.UpgradeStat.HealthBonus:
-                stats.heroHealth += upgrade.upgradeAmount;
+                //stats.heroHealth += upgrade.upgradeAmount;
+                levelStats.maxHealth += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.StaminaBonus:
-                stats.heroStamina += upgrade.upgradeAmount;
+                //stats.heroStamina += upgrade.upgradeAmount;
+                levelStats.maxStamina+= upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.StaminaRegenRate:
-                stats.heroStaminaRegenRate += upgrade.upgradeAmount;
+                //stats.heroStaminaRegenRate += upgrade.upgradeAmount; 
+                levelStats.staminaRegenRate += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.StaminaRegenSpeed:
-                stats.heroStaminaRegenSpeed += upgrade.upgradeAmount;
+                //stats.heroStaminaRegenSpeed += upgrade.upgradeAmount; //dont use this
                 break;
 
             case UpgradeObject.UpgradeStat.ImpactDamageBonus:
-                stats.heroImpactDamage += upgrade.upgradeAmount;
+                //stats.heroImpactDamage += upgrade.upgradeAmount;
+                levelStats.impactDamage += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.WeaponDamageBonus:
-                stats.heroWeaponDamage += upgrade.upgradeAmount;
+                //stats.heroWeaponDamage += upgrade.upgradeAmount;
+                levelStats.weaponDamage += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.DefenceBonus:
-                stats.heroDefence += upgrade.upgradeAmount;
+                //stats.heroDefence += upgrade.upgradeAmount;
+                levelStats.defence += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.MaxSpeedBonus:
-                stats.heroMaxSpeed += upgrade.upgradeAmount;
+                //stats.heroMaxSpeed += upgrade.upgradeAmount;
+                levelStats.maxSpeed += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.DragBonus:
-                stats.heroDrag += upgrade.upgradeAmount;
+                //stats.heroDrag += upgrade.upgradeAmount;
+                levelStats.drag += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.BounceBonus:
-                stats.heroBounce += upgrade.upgradeAmount;
+                //stats.heroBounce += upgrade.upgradeAmount;
+                levelStats.bounce += upgrade.upgradeAmount;
                 break;
 
             default:
@@ -86,6 +96,7 @@ public class UpgradeButton : MonoBehaviour
         }
 
         choosenUpgrade.ChoosenUpgradeFX(transform.position,upgrade);
+        LevelManager.inst.ResetTime();
     }
 
     public static string GetStatName(UpgradeObject.UpgradeStat stat)

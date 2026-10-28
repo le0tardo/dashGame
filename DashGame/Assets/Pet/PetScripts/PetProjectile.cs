@@ -35,39 +35,38 @@ public class PetProjectile : MonoBehaviour
     private IEnumerator MoveRoutine(Vector3 targetPosition)
     {
         float elapsed = 0f;
-        float hitThresholdSqr = 0.1f * 0.1f; // 0.01f squared distance threshold
 
-        while (elapsed < maxLifetime)
+        while (transform.position != targetPosition && elapsed < maxLifetime)
         {
             elapsed += Time.deltaTime;
 
-            // Drive forward in 3D worldspace along local transform.forward
-            transform.position += transform.forward * (projectileSpeed * Time.deltaTime);
-
-            // Check squared distance to target position
-            float sqrDistanceToTarget = (targetPosition - transform.position).sqrMagnitude;
-
-            if (sqrDistanceToTarget <= hitThresholdSqr)
-            {
-                Debug.Log("Hit target!");
-
-                if (pet != null)
-                {
-                    pet.DealDamage();
-                    HitFxManager.inst.DragonFireHit(pet.target.position,transform.rotation);
-                    AudioManager.inst.PlayCustomSound(fireballHit,0.85f);
-                }
-
-
-                gameObject.SetActive(false);
-                moveRoutine = null;
-                yield break;
-            }
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                targetPosition,
+                projectileSpeed * Time.deltaTime
+            );
 
             yield return null;
         }
 
-        // Lifetime expired without hit (Miss)
+
+        if (pet != null)
+        {
+            pet.DealDamage();
+
+            if (pet.target != null)
+            {
+                HitFxManager.inst.DragonFireHit(pet.target.position, transform.rotation);
+            }
+            else
+            {
+
+                HitFxManager.inst.DragonFireHit(targetPosition, transform.rotation);
+            }
+
+            AudioManager.inst.PlayCustomSound(fireballHit, 0.85f);
+        }
+
         gameObject.SetActive(false);
         moveRoutine = null;
     }

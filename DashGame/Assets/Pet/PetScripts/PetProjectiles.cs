@@ -12,9 +12,6 @@ public class PetProjectiles : MonoBehaviour
     }
     public void SpawnDragonProjectile(Vector3 startPosition, Vector3 targetPosition)
     {
-        //activate first in array
-        print("attack from projectile pool");
-
         for (int i = 0; i < dragonFires.Length; i++)
         {
             if (!dragonFires[i].gameObject.activeInHierarchy)

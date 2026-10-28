@@ -105,32 +105,41 @@ public class PetCombat : MonoBehaviour
     {
         while (inCombat && target != null)
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-            if (direction != Vector3.zero)
+            // 1. Calculate overall attack delay base
+            float speedMultiplier = Mathf.Max(0.1f, attackSpeed);
+            float attackDelay = Mathf.Max(0.1f, baseAttackSpeed / speedMultiplier);
+
+            // 2. Define windup vs recovery split (e.g. 30% windup, 70% cooldown)
+            float windupTime = attackDelay * 0.3f;
+            float recoveryTime = attackDelay * 0.7f;
+
+            // --- WINDUP PHASE (Wait before spawning) ---
+            float elapsed = 0f;
+            while (elapsed < windupTime)
             {
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                if (target == null || !inCombat) yield break;
+
+                // Optional: Face target continuously during windup charge-up
+                Vector3 dir = (target.position - transform.position).normalized;
+                if (dir != Vector3.zero)
+                {
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                }
+
+                elapsed += Time.deltaTime;
+                yield return null;
             }
 
-            PetProjectiles.inst.SpawnDragonProjectile(transform.position,target.position);
+            // --- FIRE PROJECTILE ---
+            if (target != null)
+            {
+                PetProjectiles.inst.SpawnDragonProjectile(transform.position, target.position);
+            }
 
-            //float attackDelay = baseAttackSpeed / Mathf.Max(0.1f, attackSpeed);
-
-            float speedMultiplier = attackSpeed;
-
-            // 2. Prevent division by zero or negative values if stat drops low
-            speedMultiplier = Mathf.Max(0.1f, speedMultiplier);
-
-            // 3. Calculate delay (Base 3s divided by multiplier)
-            float attackDelay = baseAttackSpeed / speedMultiplier;
-
-            // 4. Clamp to a hard minimum delay limit (e.g., 0.1s minimum delay = max 10 attacks/sec)
-            attackDelay = Mathf.Max(0.1f, attackDelay);
-
-            print("pet attack delay: " + attackDelay);
-
-            float elapsed = 0f;
-            while (elapsed < attackDelay)
+            // --- RECOVERY PHASE (Wait after spawning before next attack) ---
+            elapsed = 0f;
+            while (elapsed < recoveryTime)
             {
                 elapsed += Time.deltaTime;
                 yield return null;
