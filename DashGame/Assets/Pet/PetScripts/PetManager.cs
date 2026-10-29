@@ -13,6 +13,6 @@ public class PetManager : MonoBehaviour
 
        if(pet==null) pet=sessionData.pet;
 
-        Instantiate(pet.petPrefab, petTransform);
+        if(pet!=null)Instantiate(pet.petPrefab, petTransform);
     }
 }

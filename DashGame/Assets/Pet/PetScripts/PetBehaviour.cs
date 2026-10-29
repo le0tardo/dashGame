@@ -38,7 +38,7 @@ public class PetBehaviour : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position,desiredPosition,ref currentVelocity, smoothTime, maxSpeed);
     }
 
-    public void NewRoom() //how to call this..?
+    public void NewRoom()
     {
         RoomBehaviour room = RoomManager.inst.currentRoom.GetComponent<RoomBehaviour>();
         if (room != null)
