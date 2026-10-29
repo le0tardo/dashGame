@@ -1687,8 +1687,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Skeleton 1
   enemyType: 1
-  health: 5
-  damage: 15
+  health: 33
+  damage: 10
   attackRange: 3
   attackSpeed: 1
   inCombat: 0

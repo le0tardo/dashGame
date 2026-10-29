@@ -135,4 +135,24 @@ public class RoomBehaviour : MonoBehaviour
 
         return closestTransform.position;
     }
+
+    private void HandleRoomChanged()
+    {
+        if (RoomManager.inst.currentRoom != this.transform)
+        {
+            DeactivateRoom();
+        }
+    }
+
+    #region Subscribe
+    private void OnEnable()
+    {
+        RoomManager.OnRoomChanged += HandleRoomChanged;
+    }
+
+    private void OnDisable()
+    {
+        RoomManager.OnRoomChanged -= HandleRoomChanged;
+    }
+    #endregion
 }

@@ -18,7 +18,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] TextMeshProUGUI dragStat;
     private void OnEnable()
     {
-        print("Pause menu enabled");
         LevelManager.inst.timeScale = 0;
         if(cam!=null)cam.StopAllCoroutines();
         SetStats();
@@ -26,7 +25,6 @@ public class PauseMenu : MonoBehaviour
 
     private void OnDisable()
     {
-        print("Pause menu disabled");
         LevelManager.inst.timeScale = 1;
     }
 

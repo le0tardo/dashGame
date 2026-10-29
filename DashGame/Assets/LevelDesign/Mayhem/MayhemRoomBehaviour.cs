@@ -58,7 +58,7 @@ public class MayhemRoomBehaviour : MonoBehaviour
     {
         foreach(var door in doors)
         {
-            door.OpenDoor();
+           if(door!=null) door.OpenDoor();
             AudioManager.inst.PlayCustomSound(doorOpenSound, 1f);
         }
     }

@@ -118,9 +118,9 @@ public class LevelManager : MonoBehaviour
 
     public void SetStatsAfterLevelUp()
     {
-        playerMove.maxVelocity=heroStats.heroMaxSpeed;
-        playerMove.drag = heroStats.heroDrag;
-        playerMove.bounciness = heroStats.heroBounce;
+        playerMove.maxVelocity = maxSpeed;
+        playerMove.drag = drag;
+        playerMove.bounciness = bounce;
 
         playerMove.SetMoveStatsAfterLevelUp();
     }
@@ -204,7 +204,8 @@ public class LevelManager : MonoBehaviour
 
         maxSpeed = MathF.Floor(maxSpeed * Mathf.Pow(1f + growthRate, levelOffset));
         drag = drag++;
-        bounce = MathF.Floor(bounce * Mathf.Pow(1f + growthRate, levelOffset));
+
+        bounce = MathF.Floor(bounce * Mathf.Pow(1f + growthRate, levelOffset) * 100f) / 100f; //to perserve decimal points...
 
         canvas.UpdateLevel();
         canvas.OpenLevelUpBox();

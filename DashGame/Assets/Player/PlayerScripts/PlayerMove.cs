@@ -151,7 +151,10 @@ public class PlayerMove : MonoBehaviour
             // check interface
             if (hit.collider.TryGetComponent<IHittable>(out IHittable hittable))
             {
-                currentBounciness = hittable.hitBounce; //multiply in heroScriptableObject heroBounce here
+                //currentBounciness = hittable.hitBounce; //multiply in heroScriptableObject heroBounce here
+
+                currentBounciness = (hittable.hitBounce + bounciness) / 2;
+
                 hittable.OnHit(hit.point, impactPower); 
 
                 //bounce on hittable

@@ -445,7 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopThreshold: 0.5
   deceleration: 85
-  bounciness: 0.15
+  bounciness: 0.1
   fallSpeed: 20
   hitLayer:
     serializedVersion: 2

@@ -1350,7 +1350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1837690454668788957}
   m_Layer: 0
-  m_Name: GhostGroup
+  m_Name: GhostEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

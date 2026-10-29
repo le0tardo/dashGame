@@ -138,7 +138,7 @@ MonoBehaviour:
   repeatRate: 2
   health: 15
   xp: 10
-  bounce: 0.5
+  bounce: 1
   anim: {fileID: 2715220685566889935}
   flash: {fileID: 6959789062554214190}
   turretHit: {fileID: 8300000, guid: b046e8693f5fab6439331a04be237986, type: 3}

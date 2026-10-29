@@ -54,6 +54,8 @@ public class PlayerStats : MonoBehaviour
 
         dmg = dmg * (100f / (100f + LevelManager.inst.defence)); //Smart formula! Never reaches 0 damage, only diminishes!
 
+        dmg=Mathf.Floor(dmg);
+
         dmg = -dmg;
         LevelManager.inst.ChangeHealth(Mathf.RoundToInt(dmg)); //TODO: move to individual takeDamage for customsounds...
         AudioManager.inst.PlayHeroHurtSound();
