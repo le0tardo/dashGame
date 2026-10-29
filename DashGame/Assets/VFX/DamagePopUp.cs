@@ -32,10 +32,28 @@ public class DamagePopUp : MonoBehaviour
 
     public void ShowDamage(string dmg, bool crit)
     {
+        text.color = Color.white;
         text.text = dmg;
         if (crit) //TODO
         {
             anim.SetTrigger("crit");
         }
     }
+
+    public void ShowDamageRed(string dmg, bool crit)
+    {
+        text.color = red;
+        text.text = dmg;
+        if (crit) //TODO
+        {
+            anim.SetTrigger("crit");
+        }
+    }
+
+    public void ShowHeal(string dmg)
+    {
+        text.color = green;
+        text.text = dmg;
+    }
+
 }

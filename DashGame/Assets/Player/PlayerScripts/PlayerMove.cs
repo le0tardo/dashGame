@@ -79,9 +79,9 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMoveStatsAfterLevelUp()
     {
-        maxVelocity = LevelManager.inst.heroStats.heroMaxSpeed;
-        drag = LevelManager.inst.heroStats.heroDrag;
-        bounciness = LevelManager.inst.heroStats.heroBounce;
+        maxVelocity = LevelManager.inst.maxSpeed;
+        drag = LevelManager.inst.drag;
+        bounciness = LevelManager.inst.bounce;
     }
 
     public void Launch(Vector3 direction, float speed)
@@ -165,10 +165,10 @@ public class PlayerMove : MonoBehaviour
                 {
                     //calculate equipmentDamage here
                     float baseImpactPower = (currentVelocity.magnitude / 10);
-                    var heroImpactDamage = LevelManager.inst.heroStats.heroImpactDamage;
+                    var heroImpactDamage = LevelManager.inst.impactDamage;
                     float impactDamage = Mathf.Round(heroImpactDamage * baseImpactPower);
-                    var weaponDamage = LevelManager.inst.heroStats.heroWeaponDamage;
-                    float finalDamage = impactDamage + weaponDamage;
+                    var weaponDamage = LevelManager.inst.weaponDamage;
+                    float finalDamage = Mathf.Round(impactDamage + weaponDamage);
                     enemy.TakeDamage(finalDamage);
                 }
             }

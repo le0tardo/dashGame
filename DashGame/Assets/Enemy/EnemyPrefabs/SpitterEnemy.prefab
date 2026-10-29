@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4473838706900070035}
   - component: {fileID: 6707376007935806596}
   m_Layer: 13
-  m_Name: Spitter
+  m_Name: SpitterEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

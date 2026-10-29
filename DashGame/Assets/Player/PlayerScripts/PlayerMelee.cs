@@ -46,7 +46,7 @@ public class PlayerMelee : MonoBehaviour
 
     public void MeleeHit()
     {
-        meleeDamage = LevelManager.inst.heroStats.heroWeaponDamage;
+        meleeDamage = LevelManager.inst.weaponDamage;
         if(!meleeCollider.enabled) meleeCollider.enabled=true;
         Invoke("EndMeleeHit",meleeDuration);
     }
@@ -61,19 +61,12 @@ public class PlayerMelee : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            EnemyCombat enemy=other.GetComponent<EnemyCombat>();
-            if (enemy != null)
+            if (other.TryGetComponent<IEnemy>(out IEnemy enemyInterface))
             {
-                enemy.TakeMeleeDamage(meleeDamage);
+                enemyInterface.TakeDamage(LevelManager.inst.weaponDamage);
                 AudioManager.inst.PlayMeleeSound();
             }
 
-            EnemyRangedBehavour rangedEnemy = other.GetComponent<EnemyRangedBehavour>();
-            if (rangedEnemy != null)
-            {
-                rangedEnemy.MeleeHit(meleeDamage);
-                AudioManager.inst.PlayMeleeSound();
-            }
         }
 
         if (other.CompareTag("BreakableProp"))

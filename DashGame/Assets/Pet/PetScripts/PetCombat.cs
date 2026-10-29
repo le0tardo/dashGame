@@ -14,14 +14,15 @@ public class PetCombat : MonoBehaviour
     private RoomBehaviour currentRoom;
     private Coroutine attackRoutine;
 
+    //for enemy in line of sight bool
+    [SerializeField] LayerMask petBlockLayer;
+
     private void Start()
     {
         if (pet != null)
         {
             attackDamage = pet.petAttackPower;
             attackSpeed = pet.petAttackSpeed / 10f;
-
-            print("read attack speed: "+ pet.petAttackSpeed+". modified attackSpeed: " + attackSpeed);
         }
     }
 
@@ -67,14 +68,31 @@ public class PetCombat : MonoBehaviour
     {
         for (int i = 0; i < currentRoom.enemies.Count; i++)
         {
-            if (currentRoom.enemies[i] != null && currentRoom.enemies[i].gameObject.activeInHierarchy)
+            var enemy = currentRoom.enemies[i];
+
+            if (enemy != null && enemy.gameObject.activeInHierarchy)
             {
-                return currentRoom.enemies[i].transform;
+                // Only select enemy if NOT blocked by a wall on petBlockLayer
+                if (!IsBlockedByWall(enemy.transform))
+                {
+                    return enemy.transform;
+                }
             }
         }
-        return null;
+        return null; // No valid, unblocked enemies found in the room
     }
 
+    private bool IsBlockedByWall(Transform enemyTarget)
+    {
+        if (enemyTarget == null) return false;
+
+        // Elevate start and end slightly off the floor (chest height) to avoid ground clipping
+        Vector3 start = transform.position + Vector3.up * 0.5f;
+        Vector3 end = enemyTarget.position + Vector3.up * 0.5f;
+
+        // Linecast returns true ONLY if a collider on petBlockLayer sits between start and end
+        return Physics.Linecast(start, end, petBlockLayer);
+    }
     public void DealDamage()
     {
         if (target != null)
@@ -149,6 +167,7 @@ public class PetCombat : MonoBehaviour
         inCombat = false;
         attackRoutine = null;
     }
+
 
     #region Subscribe
     private void OnEnable()

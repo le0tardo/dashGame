@@ -603,6 +603,9 @@ MonoBehaviour:
   attackDamage: 0
   attackSpeed: 0
   baseAttackSpeed: 3
+  petBlockLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &6271414285424902397
 GameObject:
   m_ObjectHideFlags: 0
