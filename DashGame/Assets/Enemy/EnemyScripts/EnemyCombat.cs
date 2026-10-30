@@ -26,6 +26,8 @@ public class EnemyCombat : MonoBehaviour, IEnemy
     EnemyAnimations animations;
     PlayerStats player;
 
+    [SerializeField] float distanceToPlayer;
+
     [SerializeField] AudioClip[] meleeHitSounds;
 
     private void OnEnable()
@@ -47,7 +49,6 @@ public class EnemyCombat : MonoBehaviour, IEnemy
         animations = GetComponentInChildren<EnemyAnimations>();
         player = FindFirstObjectByType<PlayerStats>();
 
-        InvokeRepeating("DealDamage",0,attackSpeed);
     }
 
     public void TakeMeleeDamage(float dmg)
@@ -103,25 +104,21 @@ public class EnemyCombat : MonoBehaviour, IEnemy
         LevelDeathStats.inst.damageDealt += dmg;
     }
 
-    void DealDamage()
+    private void Update()
     {
-        float dist = Vector3.Distance(player.transform.position,transform.position);
-        if (dist <= attackRange && LevelManager.inst.health>0) inCombat = true; else inCombat = false;
+        distanceToPlayer= Vector3.Distance(player.transform.position, transform.position);
+        if (distanceToPlayer <= attackRange && LevelManager.inst.health > 0) inCombat = true; else inCombat = false;
+    }
 
-        if (!isDead && !move.isFalling)
-        {
-            if (inCombat)
-            {
-                Vector3 halfwayPosition = (transform.position + player.transform.position) * 0.5f;
-                player.TakeDamage(damage, halfwayPosition);
-            }
-        }
+    public void DealAnimationDamage()
+    {
+        if (distanceToPlayer > attackRange) return;
+        Vector3 halfwayPosition = (transform.position + player.transform.position) * 0.5f;
+        player.TakeDamage(damage, halfwayPosition);
     }
 
     public void Die()
     {
-        //Destroy(this.gameObject);
-
         // Tell the room this enemy is dead so it won't be re-enabled
         if (RoomManager.inst.currentRoom != null)
         {

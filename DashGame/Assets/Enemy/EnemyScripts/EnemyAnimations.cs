@@ -88,6 +88,14 @@ public class EnemyAnimations : MonoBehaviour
         }
     }
 
+    public void AttackTrigger()
+    {
+        if (combat != null)
+        {
+            combat.DealAnimationDamage();
+        }
+    }
+
     public void Flash()
     {
         if (flashRoutine != null) StopCoroutine(flashRoutine);
