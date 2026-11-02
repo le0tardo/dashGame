@@ -229,4 +229,15 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
         }
         juiceBar.transform.localScale = finalScale;
     }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
+    }
+    private void OnEnable()
+    {
+        CancelInvoke();
+        Invoke(nameof(AttackLoop), 1f);
+    }
 }
