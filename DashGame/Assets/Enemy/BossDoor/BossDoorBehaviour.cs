@@ -9,6 +9,7 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
     [SerializeField] GameObject eye;
     [SerializeField] Transform player;
     [SerializeField] Animator anim;
+    AudioSource source;
 
     [Header("UI references")]
     [SerializeField] GameObject bossHealthObject;
@@ -21,11 +22,18 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
     [SerializeField] string bossName;
     [SerializeField] public float health;
     [SerializeField] float currentHealth;
+    [SerializeField] float damage;
 
     [Header("Particles")]
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] ParticleSystem[] chargeParticles;
-    [SerializeField] ParticleSystem[] BurstParticles;
+    [SerializeField] ParticleSystem[] burstParticles;
+    [SerializeField] ParticleSystem hitParticle;
+    [SerializeField] Light beamLight;
+    [SerializeField] AudioClip chargeSound;
+    [SerializeField] AudioClip fireSound;
+
+    [SerializeField] bool charging=false;
 
     [SerializeField] float bounce = 1f;
     public float hitBounce => bounce;
@@ -33,14 +41,22 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
     private void Start()
     {
         player = LevelManager.inst.playerMove.transform;
+        source=GetComponent<AudioSource>();
         currentHealth = health;
         bossHealthObject.SetActive(true);
         UpdateUI();
 
         lineRenderer.enabled = false;
+        beamLight.intensity = 1f;
 
+        Invoke(nameof(AttackLoop), 1f);
+    }
+
+    void AttackLoop()
+    {
+        //check if player is still alive, else return;
         ChargeUp();
-        Invoke(nameof(Fire), 2f);
+        Invoke(nameof(Fire), 3f);
     }
 
     private void Update()
@@ -48,6 +64,18 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
         if (eye != null && player != null)
         {
             RotateEyeball();
+        }
+
+        if (charging)
+        {
+            beamLight.intensity = Mathf.PingPong(Time.time*25,10f);
+        }
+        else
+        {
+            if (beamLight.intensity > 0)
+            {
+                beamLight.intensity-=50*Time.deltaTime;
+            }
         }
     }
 
@@ -92,6 +120,13 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
 
     void ChargeUp()
     {
+        print("Charging...");
+
+        if (!charging)charging = true;
+
+        source.clip = chargeSound;
+        source.Play();
+
         foreach (ParticleSystem c in chargeParticles)
         {
             c.Play();
@@ -99,17 +134,24 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
     }
     void Fire()
     {
+        print("Fire!");
+
+        if (charging)charging = false;
+
+        source.clip = fireSound;
+        source.Play();
+
         foreach (ParticleSystem c in chargeParticles)
         {
             c.Stop();
         }
 
-        foreach (ParticleSystem b in BurstParticles)
+        foreach (ParticleSystem b in burstParticles)
         {
             b.Play();
         }
 
-        print("Fire!");
+
         lineRenderer.enabled = true;
 
         Vector3 startPos=new Vector3(lineRenderer.transform.position.x,1.5f,lineRenderer.transform.position.z);
@@ -118,7 +160,17 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);
 
+        hitParticle.transform.position = endPos;
+        hitParticle.Play();
+
+        beamLight.intensity = 33f;
+
         StartCoroutine(Beam());
+
+        Vector3 halfWayPoint = startPos - endPos.normalized;
+        LevelManager.inst.playerStats.TakeDamage(damage,halfWayPoint);
+
+        Invoke(nameof(AttackLoop), 1f);
     }
 
     void RotateEyeball() 
@@ -151,6 +203,7 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
             e += Time.deltaTime;
             float t = e / d;
             lineRenderer.widthMultiplier-=4*Time.deltaTime;
+
             yield return null;
         }
 
