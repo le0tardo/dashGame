@@ -1,8 +1,10 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // Required for UI drag interfaces! 
+using UnityEngine.EventSystems; // needed for UI drag interfaces! 
 
 public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    public static PlayerAimUI inst;
+
     [Header("Launch Stats")]
     [SerializeField] bool aiming;
     [SerializeField] private float maxDragDistance = 10f;
@@ -31,6 +33,10 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     private Vector2 dragStartScreenPos;
     private bool isDragging = false;
 
+    private void Awake()
+    {
+        inst = this;
+    }
     void Start()
     {
         mainCamera = Camera.main;
@@ -63,6 +69,16 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
     }
 
+    public void AbortAim()
+    {
+        //in casae of popup ui while aiming
+        LevelManager.inst.ResetTime();
+        isDragging = false;
+        aiming = false;
+        moveScript.moveState = PlayerMove.MoveState.Idle;
+        anim.aiming = false;
+        playerAnimator.ResetTrigger("idle");
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (LevelManager.inst.playerIsDead) return;
@@ -229,8 +245,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     private Vector3 ConvertScreenVectorToWorldVector(Vector2 screenVector)
     {
-        // Normalizes screen pixels into a usable world drag scale (dividing by a factor like 50 
-        // keeps drag distance feeling consistent across different phone resolutions)
         float sensitivity = 50f;
         Vector3 worldVector = new Vector3(screenVector.x, 0f, screenVector.y) / sensitivity;
 
@@ -246,10 +260,10 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             float angle = Mathf.Atan2(launchDirection.x, launchDirection.z) * Mathf.Rad2Deg;
             angle = angle - 90;
 
-            // Rotate the arrow
+            // rotate the arrow
             arrowSprite.transform.rotation = Quaternion.Euler(90f, angle, 0f);
 
-            // Rotate player object graphics directly
+            // rotate player object graphics directly
             if (!moveScript.isMoving)
             {
                 moveScript.transform.rotation = Quaternion.Euler(0f, angle, 0f);

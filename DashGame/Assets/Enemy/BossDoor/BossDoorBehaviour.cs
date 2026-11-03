@@ -234,10 +234,13 @@ public class BossDoorBehaviour : MonoBehaviour, IHittable, IEnemy
     {
         StopAllCoroutines();
         CancelInvoke();
+
+        bossHealthObject.SetActive(false);
     }
     private void OnEnable()
     {
         CancelInvoke();
         Invoke(nameof(AttackLoop), 1f);
+        bossHealthObject.SetActive(true);
     }
 }

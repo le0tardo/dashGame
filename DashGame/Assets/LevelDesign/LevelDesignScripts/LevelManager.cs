@@ -150,13 +150,18 @@ public class LevelManager : MonoBehaviour
         {
             //do the die thing
             playerIsDead = true;
-            gameOverScreen.SetActive(true);
-            StopAllCoroutines();
-            FreezeTime();
-            //timescale to 0, interrupt aim script? 
-        }
+            //invoke this:
+            Invoke(nameof(DeathDelay), 0.5f);
 
+        }
     }
+     void DeathDelay()
+    {
+        gameOverScreen.SetActive(true);
+        StopAllCoroutines();
+        FreezeTime();
+    }
+
     public void UseStamina(float amount)
     {
         stamina = Mathf.Clamp(stamina - amount, 0f, maxStamina);
@@ -185,6 +190,8 @@ public class LevelManager : MonoBehaviour
 
     void LevelUp()
     {
+        PlayerAimUI.inst.AbortAim();
+
         maxXp = Mathf.Floor(maxXp * 1.5f);
         level++;
         xp = 0;
@@ -263,6 +270,7 @@ public class LevelManager : MonoBehaviour
     public void FreezeTime()
     {
         StopAllCoroutines();
+        ResetTime();
         if (slowDownTimeRoutine == null)
         {
             slowDownTimeRoutine=StartCoroutine(FreezeTimeRoutine());
