@@ -15,9 +15,9 @@ public class PlayerEquipmentGetter : MonoBehaviour
     [SerializeField] Transform offHandSlot;
 
     [Header("Equipment Prefabs")]
-    [SerializeField] GameObject equippedHelmet;
-    [SerializeField] GameObject equippedMainHand;
-    [SerializeField] GameObject equippedOffHand;
+    [SerializeField] public GameObject equippedHelmet;
+    [SerializeField] public GameObject equippedMainHand;
+    [SerializeField] public GameObject equippedOffHand;
 
     private void Start()
     {
