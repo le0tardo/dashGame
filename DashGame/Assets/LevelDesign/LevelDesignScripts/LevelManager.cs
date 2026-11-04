@@ -239,6 +239,11 @@ public class LevelManager : MonoBehaviour
         canvas.UpdateStamina();
     }
 
+    public void NoStamina()
+    {
+        canvas.NoStamina();
+        DamagePopUpManager.inst.PopUp(playerMove.transform.position,"NO STAMINA");
+    }
     public void AddKey()
     {
         keys++;

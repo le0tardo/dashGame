@@ -379409,6 +379409,7 @@ MonoBehaviour:
   heartAnim: {fileID: 404170388}
   staminaText: {fileID: 1832084875}
   staminaBar: {fileID: 52836716}
+  staminaAnim: {fileID: 378039602}
   keyText: {fileID: 827574127}
   goldText: {fileID: 213488340}
   xpText: {fileID: 154337466}

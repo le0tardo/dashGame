@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ public class CanvasScript : MonoBehaviour
     [SerializeField] Animator heartAnim;
     [SerializeField] TextMeshProUGUI staminaText;
     [SerializeField] Image staminaBar;
+    [SerializeField] Animator staminaAnim;
     [SerializeField] TextMeshProUGUI keyText;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI xpText;
@@ -73,6 +73,15 @@ public class CanvasScript : MonoBehaviour
         staminaText.text = "Stamina: " + currentStamina.ToString("F0") + "/" + maxStamina.ToString("F0");
         staminaBar.fillAmount= staminaPercent;
     }
+
+    public void NoStamina()
+    {
+        if (staminaAnim != null)
+        {
+            staminaAnim.SetTrigger("wobble");
+        }
+    }
+
     public void UpdateKeys()
     {
         keyText.text = LevelManager.inst.keys.ToString("F0");

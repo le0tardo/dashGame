@@ -197,6 +197,8 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
                 CameraShake.inst.Shake(0.1f, 1f);
                 AudioManager.inst.PlayFailDashSound();
+
+                LevelManager.inst.NoStamina();
             }
 
         }
