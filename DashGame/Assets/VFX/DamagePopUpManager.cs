@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DamagePopUpManager : MonoBehaviour
 {
     public static DamagePopUpManager inst;
 
     [SerializeField] DamagePopUp[] popUps;
+    [SerializeField] DamagePopUp staminaWarning;
 
     private void Awake()
     {
@@ -41,6 +43,15 @@ public class DamagePopUpManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void StaminaWarning(Vector3 position, string text)
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(position);
+        screenPos.y += 50f;
+        staminaWarning.transform.position=screenPos;
+        staminaWarning.gameObject.SetActive(true);
+        staminaWarning.ShowDamage(text, false);
     }
 
 }
