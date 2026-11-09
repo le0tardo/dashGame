@@ -64,7 +64,6 @@ public class EquipmentButton : MonoBehaviour
     public void SetEquipment()
     {
         LobbyEquipmentManager.inst.Equip(equipment);
-
         equippedMarker.transform.position=transform.position;
     }
 

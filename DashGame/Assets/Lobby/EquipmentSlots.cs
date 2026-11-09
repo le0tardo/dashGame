@@ -16,6 +16,7 @@ public class EquipmentSlots : MonoBehaviour
     }
     public void SetSlotIcons()
     {
+        print("slots happened");
         helmet.sprite = LobbyEquipmentManager.inst.currentHelmet.equipmentIcon;
         mainHand.sprite=LobbyEquipmentManager.inst.currentMainHand.equipmentIcon;
         offHand.sprite=LobbyEquipmentManager.inst.currentOffHand.equipmentIcon;

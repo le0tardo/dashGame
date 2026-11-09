@@ -17,6 +17,8 @@ public class LobbyEquipmentManager : MonoBehaviour
     [SerializeField] GameObject EquipedMainHandPrefab;
     [SerializeField] GameObject EquipedOffHandPrefab;
 
+    [SerializeField] EquipmentSlots slots;
+
     //a new scriptable object class here that tracks current bonuses and carries over to main scene
     //or use existing??
     [SerializeField] AudioClip equipSound;
@@ -93,6 +95,7 @@ public class LobbyEquipmentManager : MonoBehaviour
 
         AudioManager.inst.PlayCustomSound(equipSound,1f);
         LobbyStatManager.inst.EquipItem(equipment);
+        slots.SetSlotIcons();
     }
 
 
