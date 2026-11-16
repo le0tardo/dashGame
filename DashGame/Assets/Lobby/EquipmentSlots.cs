@@ -6,6 +6,7 @@ public class EquipmentSlots : MonoBehaviour
     [SerializeField] Image helmet;
     [SerializeField] Image mainHand;
     [SerializeField] Image offHand;
+    [SerializeField] Image buckle;
     [SerializeField] Image pet;
 
     [SerializeField] Sprite emptySprite;
@@ -16,10 +17,10 @@ public class EquipmentSlots : MonoBehaviour
     }
     public void SetSlotIcons()
     {
-        print("slots happened");
         helmet.sprite = LobbyEquipmentManager.inst.currentHelmet.equipmentIcon;
         mainHand.sprite=LobbyEquipmentManager.inst.currentMainHand.equipmentIcon;
         offHand.sprite=LobbyEquipmentManager.inst.currentOffHand.equipmentIcon;
+        buckle.sprite=LobbyEquipmentManager.inst.currentBuckle.equipmentIcon;
 
         var petManager = LobbyPetManager.inst;
         if (petManager.currentPet != null) { pet.sprite = petManager.currentPet.petIcon; }

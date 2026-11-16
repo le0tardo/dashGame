@@ -7,6 +7,7 @@ public class EquipmentSlotFocus : MonoBehaviour
     [SerializeField] private RectTransform helmets;
     [SerializeField] private RectTransform mainHands;
     [SerializeField] private RectTransform offHands;
+    [SerializeField] private RectTransform buckles;
     [SerializeField] private RectTransform pets;
 
     [Header("Positions & Settings")]
@@ -20,12 +21,13 @@ public class EquipmentSlotFocus : MonoBehaviour
     private void Awake()
     {
         // Cache all panels into an array for easy iteration
-        allPanels = new RectTransform[] { helmets, mainHands, offHands, pets };
+        allPanels = new RectTransform[] { helmets, mainHands, offHands, buckles, pets };
     }
 
     public void ShowHelmets() => SelectPanel(helmets);
     public void ShowMainHands() => SelectPanel(mainHands);
     public void ShowOffHands() => SelectPanel(offHands);
+    public void ShowBuckles() => SelectPanel(buckles);
     public void ShowPets() => SelectPanel(pets);
 
     private void SelectPanel(RectTransform targetPanel)

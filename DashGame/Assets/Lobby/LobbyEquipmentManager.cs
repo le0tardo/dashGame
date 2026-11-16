@@ -8,14 +8,17 @@ public class LobbyEquipmentManager : MonoBehaviour
     [SerializeField] Transform helmetSlot;
     [SerializeField] Transform mainHandSlot;
     [SerializeField] Transform offHandSlot;
+    [SerializeField] Transform buckleSlot;
 
     [SerializeField] public HeroEquipmentObject currentHelmet;
     [SerializeField] public HeroEquipmentObject currentMainHand;
     [SerializeField] public HeroEquipmentObject currentOffHand;
+    [SerializeField] public HeroEquipmentObject currentBuckle;
 
     [SerializeField] GameObject EquipedHelmetPrefab;
     [SerializeField] GameObject EquipedMainHandPrefab;
     [SerializeField] GameObject EquipedOffHandPrefab;
+    [SerializeField] GameObject EquipedBucklePrefab;
 
     [SerializeField] EquipmentSlots slots;
 
@@ -44,6 +47,10 @@ public class LobbyEquipmentManager : MonoBehaviour
         if (currentOffHand != null)
         {
             EquipedOffHandPrefab = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
+        }
+        if (currentBuckle != null)
+        {
+            EquipedBucklePrefab = Instantiate(currentBuckle.equipmentPrefab, buckleSlot);
         }
     }
 
@@ -85,6 +92,17 @@ public class LobbyEquipmentManager : MonoBehaviour
                 EquipedOffHandPrefab= null;
                 currentOffHand = equipment;
                 EquipedOffHandPrefab = Instantiate(currentOffHand.equipmentPrefab, offHandSlot);
+
+            break;
+
+            case HeroEquipmentObject.EquipmentSlot.Buckle:
+
+                LobbyStatManager.inst.UnequipItem(currentBuckle);
+
+                Destroy(EquipedBucklePrefab);
+                EquipedBucklePrefab= null;
+                currentBuckle = equipment;
+                EquipedBucklePrefab = Instantiate(currentBuckle.equipmentPrefab, buckleSlot);
 
             break;
 

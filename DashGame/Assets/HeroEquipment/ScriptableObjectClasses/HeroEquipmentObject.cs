@@ -8,7 +8,8 @@ public class HeroEquipmentObject : ScriptableObject //this class only for visual
     {
         Helmet,
         MainHand,
-        OffHand
+        OffHand,
+        Buckle
         //Relic
         //Pet
         //...tabard?
