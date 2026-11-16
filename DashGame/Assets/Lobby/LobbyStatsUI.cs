@@ -95,7 +95,7 @@ public class LobbyStatsUI : MonoBehaviour
         int targetDefence = Mathf.RoundToInt(stats.heroDefence);
         int targetSpeed = Mathf.RoundToInt(stats.heroMaxSpeed);
         int targetDrag = Mathf.RoundToInt(stats.heroDrag);
-        int targetBounce = Mathf.FloorToInt(stats.heroBounciness * 100f);
+        int targetBounce = Mathf.RoundToInt(stats.heroBounciness * 100f); //removed *100 to stop coroutine
 
         //snap to correct starting int
         health.SetText("{0}", prevHealth);
@@ -105,7 +105,9 @@ public class LobbyStatsUI : MonoBehaviour
         defence.SetText("{0}", prevDefence);
         speed.SetText("{0}", prevSpeed);
         drag.SetText("{0}", prevDrag);
-        bounce.SetText("{0}", prevBounce);
+        bounce.SetText("{0}", prevBounce*100f);
+
+        //print("prev bounce: " + prevBounce + ". target bounce: " + targetBounce);
 
         float elapsed = 0f;
 
@@ -145,7 +147,7 @@ public class LobbyStatsUI : MonoBehaviour
         prevDefence = Mathf.RoundToInt(stats.heroDefence);
         prevSpeed = Mathf.RoundToInt(stats.heroMaxSpeed);
         prevDrag = Mathf.RoundToInt(stats.heroDrag);
-        prevBounce = Mathf.RoundToInt(stats.heroBounciness);
+        prevBounce = Mathf.RoundToInt(stats.heroBounciness*100);
 
         countRoutine = null;
     }

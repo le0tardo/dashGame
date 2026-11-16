@@ -20,6 +20,7 @@ public class SessionData : ScriptableObject
     public HeroEquipmentObject helmet;
     public HeroEquipmentObject mainHand;
     public HeroEquipmentObject offHand;
+    public HeroEquipmentObject buckle;
 
     public PetObject pet;
     /*

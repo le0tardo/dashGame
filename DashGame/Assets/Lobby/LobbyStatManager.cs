@@ -145,6 +145,7 @@ public class LobbyStatManager : MonoBehaviour
         sessionData.helmet = LobbyEquipmentManager.inst.currentHelmet;
         sessionData.mainHand = LobbyEquipmentManager.inst.currentMainHand;
         sessionData.offHand = LobbyEquipmentManager.inst.currentOffHand;
+        sessionData.buckle = LobbyEquipmentManager.inst.currentBuckle;
 
         sessionData.pet=LobbyPetManager.inst.currentPet;
     }
@@ -168,7 +169,7 @@ public class LobbyStatManager : MonoBehaviour
         sessionData.health = 0; sessionData.stamina = 0;
         sessionData.impactDamage = 0; sessionData.weaponDamage = 0; sessionData.defence = 0;
         sessionData.maxSpeed = 0; sessionData.drag = 0; sessionData.bounce = 0;
-        sessionData.helmet = null;sessionData.mainHand = null;sessionData.offHand = null;
+        sessionData.helmet = null;sessionData.mainHand = null;sessionData.offHand = null;sessionData.buckle=null;
 
 #endif
     }

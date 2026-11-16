@@ -8,16 +8,19 @@ public class PlayerEquipmentGetter : MonoBehaviour
     [SerializeField] HeroEquipmentObject helmet;
     [SerializeField] HeroEquipmentObject mainHand;
     [SerializeField] HeroEquipmentObject offHand;
+    [SerializeField] HeroEquipmentObject buckle;
 
     [Header("Equipment Slots")]
     [SerializeField] Transform helmetSlot;
     [SerializeField] Transform mainHandSlot;
     [SerializeField] Transform offHandSlot;
+    [SerializeField] Transform buckleSlot;
 
     [Header("Equipment Prefabs")]
     [SerializeField] public GameObject equippedHelmet;
     [SerializeField] public GameObject equippedMainHand;
     [SerializeField] public GameObject equippedOffHand;
+    [SerializeField] public GameObject equippedBuckle;
 
     private void Start()
     {
@@ -39,5 +42,9 @@ public class PlayerEquipmentGetter : MonoBehaviour
         Destroy(equippedOffHand);
         equippedOffHand = null;
         equippedOffHand = Instantiate(sessionData.offHand.equipmentPrefab, offHandSlot);
+
+        Destroy(equippedBuckle);
+        equippedBuckle = null;
+        equippedBuckle = Instantiate(sessionData.buckle.equipmentPrefab, buckleSlot);
     }
 }
