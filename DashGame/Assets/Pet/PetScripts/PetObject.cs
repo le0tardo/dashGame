@@ -7,6 +7,7 @@ public class PetObject : ScriptableObject
     [Header("Info")]
     [SerializeField] public string petName;
     [SerializeField] public Sprite petIcon;
+    [SerializeField] public int petLevel;
 
     [Header("Stats")]
     [SerializeField] public float petAttackPower;

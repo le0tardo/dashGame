@@ -16,6 +16,7 @@ public class PetButton : MonoBehaviour
     [SerializeField] GameObject lockedGfx;
     [SerializeField] int goldCost;
     TextMeshProUGUI costText;
+    [SerializeField] EquipmentSlots slots;
 
     [Header("Too Poor")]
     float flashDuration = 0.33f;
@@ -45,6 +46,7 @@ public class PetButton : MonoBehaviour
         else
         {
             SetPet();
+            slots.SetSlotIcons();
         }
     }
     public void Unlock()
