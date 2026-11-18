@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ae771a2058014bb04e82ae909f161, type: 3}
+  m_Name: EyeBallPet
+  m_EditorClassIdentifier: 
+  petName: Lesser Beholder
+  petIcon: {fileID: 21300000, guid: 779a59dad82c3e549b670d6722ab9e39, type: 3}
+  petLevel: 1
+  petAttackPower: 15
+  petAttackSpeed: 5
+  petPrefab: {fileID: 5923446241407114055, guid: 97d756cebb3f14441bf30af435ce27d1, type: 3}
+  petSound: {fileID: 8300000, guid: 6880f5dc3cca2aa46a7fc996fb073be0, type: 3}

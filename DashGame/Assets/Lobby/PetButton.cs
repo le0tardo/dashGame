@@ -10,6 +10,7 @@ public class PetButton : MonoBehaviour
     [SerializeField] RectTransform equippedMarker;
     [SerializeField] GameObject petPrefab;
     [SerializeField] AudioClip equipPetSound;
+    [SerializeField] CurrentLobbyPet clp;
 
     [Header("unlock")]
     [SerializeField] bool unlocked = false;
@@ -62,15 +63,28 @@ public class PetButton : MonoBehaviour
 
     public void SetPet()
     {
+        /*
         if (petPrefab != null) //outsource to petManager script TODO
         {
             petPrefab.SetActive(true);
             LobbyPetManager.inst.SetPet(pet);
             AudioManager.inst.PlayCustomSound(pet.petSound, 0.5f);
         }
+        */
+
+        LobbyPetManager.inst.SetPet(pet);
+
+        clp.SpawnPet(petPrefab);
+
+        AudioManager.inst.PlayCustomSound(pet.petSound, 0.5f);
+
 
         AudioManager.inst.PlayCustomSound(equipPetSound, 0.5f);
+
+        print("old equipped marker position: " + equippedMarker.transform.position);
+        print("clicked button position: " + transform.position);
         equippedMarker.transform.position = transform.position;
+        print("equipped marker position: " + equippedMarker.transform.position);
     }
 
     public void TooPoor()
