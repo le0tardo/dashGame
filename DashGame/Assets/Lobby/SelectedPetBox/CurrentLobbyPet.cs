@@ -8,6 +8,6 @@ public class CurrentLobbyPet : MonoBehaviour
     public void SpawnPet(GameObject newPet)
     {
         if(currentPet!=null)Destroy(currentPet);
-        currentPet = Instantiate (newPet, petPosition.position, Quaternion.identity);
+        currentPet = Instantiate (newPet, petPosition.position, Quaternion.identity,this.gameObject.transform);
     }
 }

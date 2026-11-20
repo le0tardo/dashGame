@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class PetObject : ScriptableObject
 {
+    public enum PetType
+    {
+        StoneSpitter,
+        FireDragon,
+        EyeBall,
+        FrostDragon
+
+    }
+
     [Header("Info")]
     [SerializeField] public string petName;
+    [SerializeField] public PetType petType;
     [SerializeField] public Sprite petIcon;
     [SerializeField] public int petLevel;
 

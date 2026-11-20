@@ -149,10 +149,22 @@ public class PetCombat : MonoBehaviour
                 yield return null;
             }
 
-            // --- FIRE PROJECTILE ---
+            // fire projectile
             if (target != null)
             {
-                PetProjectiles.inst.SpawnDragonProjectile(transform.position, target.position);
+                switch (pet.petType) //need enum switch...
+                {
+                    case PetObject.PetType.FireDragon:
+                        PetProjectiles.inst.SpawnDragonProjectile(transform.position, target.position);
+                    break;
+
+                    case PetObject.PetType.EyeBall:
+                        print("spawning eye ball beam...");
+                        PetProjectiles.inst.SpawnEyeBeam(transform.position, target.position);
+                    break;
+                }
+
+                //PetProjectiles.inst.SpawnDragonProjectile(transform.position, target.position);
             }
 
             // --- RECOVERY PHASE (Wait after spawning before next attack) ---

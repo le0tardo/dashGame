@@ -36555,7 +36555,7 @@ GameObject:
   - component: {fileID: 1892127614}
   - component: {fileID: 1892127613}
   m_Layer: 5
-  m_Name: FrameTest
+  m_Name: CurrentlyEquippedPetMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36577,7 +36577,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 26.5, y: -19.5}
   m_SizeDelta: {x: 155, y: 155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1892127613
@@ -50091,7 +50091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1592.6, y: 328}
+  m_AnchoredPosition: {x: -1619.7001, y: 347.90002}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1773428102 &2129397757
@@ -50104,10 +50104,10 @@ ParentConstraint:
   m_Enabled: 1
   serializedVersion: 2
   m_Weight: 1
-  m_TranslationAtRest: {x: -1592.6, y: 328, z: 0}
+  m_TranslationAtRest: {x: -1619.7001, y: 347.90002, z: 0}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 22.22998, y: -20.900024, z: 0}
+  - {x: -3.5151367, y: -1.9949951, z: 0}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 1

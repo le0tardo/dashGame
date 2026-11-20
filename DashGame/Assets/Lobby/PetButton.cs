@@ -8,6 +8,7 @@ public class PetButton : MonoBehaviour
     [SerializeField] PetObject pet;
     [SerializeField] Image petIcon;
     [SerializeField] RectTransform equippedMarker;
+    [SerializeField] Image markerGfx;
     [SerializeField] GameObject petPrefab;
     [SerializeField] AudioClip equipPetSound;
     [SerializeField] CurrentLobbyPet clp;
@@ -29,6 +30,13 @@ public class PetButton : MonoBehaviour
 
         costText = lockedGfx.GetComponentInChildren<TextMeshProUGUI>();
         costText.text = goldCost.ToString();
+
+        markerGfx=equippedMarker.GetComponent<Image>();
+
+        if(LobbyPetManager.inst.currentPet==null && markerGfx.enabled)
+        {
+            markerGfx.enabled = false;
+        }
     }
 
     public void UnlockOrEquip()
@@ -77,14 +85,14 @@ public class PetButton : MonoBehaviour
         clp.SpawnPet(petPrefab);
 
         AudioManager.inst.PlayCustomSound(pet.petSound, 0.5f);
-
-
         AudioManager.inst.PlayCustomSound(equipPetSound, 0.5f);
-
-        print("old equipped marker position: " + equippedMarker.transform.position);
-        print("clicked button position: " + transform.position);
         equippedMarker.transform.position = transform.position;
-        print("equipped marker position: " + equippedMarker.transform.position);
+
+
+        if (!markerGfx.enabled)
+        {
+            markerGfx.enabled = true;
+        }
     }
 
     public void TooPoor()
