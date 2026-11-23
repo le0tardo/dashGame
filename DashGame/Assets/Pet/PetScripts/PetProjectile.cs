@@ -30,7 +30,7 @@ public class PetProjectile : MonoBehaviour
 
         if (moveRoutine != null) StopCoroutine(moveRoutine);
         moveRoutine = StartCoroutine(MoveRoutine(targetPosition));
-        AudioManager.inst.PlayCustomSound(fireballSpawn, 0.85f);
+        AudioManager.inst.PlayCustomSound(fireballSpawn, 0.5f);
     }
     private IEnumerator MoveRoutine(Vector3 targetPosition)
     {
@@ -64,7 +64,7 @@ public class PetProjectile : MonoBehaviour
                 HitFxManager.inst.DragonFireHit(targetPosition, transform.rotation);
             }
 
-            AudioManager.inst.PlayCustomSound(fireballHit, 0.85f);
+            AudioManager.inst.PlayCustomSound(fireballHit, 0.5f);
         }
 
         gameObject.SetActive(false);

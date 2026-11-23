@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyRangedBehavour : MonoBehaviour, IHittable //TODO IEnmy interface connect 
+public class EnemyRangedBehavour : MonoBehaviour, IHittable, IEnemy
 {
     [Header("Refereces")]
     [SerializeField] PlayerStats player;
@@ -111,15 +111,20 @@ public class EnemyRangedBehavour : MonoBehaviour, IHittable //TODO IEnmy interfa
         flash.Flash();
 
         float dealtDamage = Mathf.Floor(power/10);
-        health -= dealtDamage;
+
+        TakeDamage(dealtDamage);
+
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
 
         if (health <= 0)
         {
             Die();
         }
-
     }
-
     public void MeleeHit(float meleeDamage)
     {
         //hurt=true; ??
