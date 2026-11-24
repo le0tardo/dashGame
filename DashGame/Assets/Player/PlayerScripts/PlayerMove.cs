@@ -105,8 +105,9 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveAndBounce()
     {
+        float sweetDrag = drag / 2;
 
-        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, drag * Time.deltaTime);
+        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, sweetDrag * Time.deltaTime);
 
         // Stop check
         if (currentVelocity.magnitude <= stopThreshold)
@@ -159,8 +160,6 @@ public class PlayerMove : MonoBehaviour
                 currentVelocity = Vector3.Reflect(currentVelocity, hit.normal) * currentBounciness;
                 currentVelocity.y = 0f;
                 currentVelocity = Vector3.ClampMagnitude(currentVelocity, maxVelocity);
-
-                anim.BounceAnim();
 
                 if (hit.collider.TryGetComponent<IEnemy>(out IEnemy enemy))
                 {
@@ -340,7 +339,7 @@ public class PlayerMove : MonoBehaviour
     IEnumerator DropDown(Vector3 holePos, float entrySpeed)
     {
         float centeringSpeed = Mathf.Max(entrySpeed, 5f);
-
+        anim.DeactivateTrail();
         while (transform.position.y > -10f)
         {
             float newY = transform.position.y - (fallSpeed * Time.deltaTime);
@@ -369,6 +368,7 @@ public class PlayerMove : MonoBehaviour
         currentVelocity = Vector3.zero;
         moveState=MoveState.Idle;
         anim.IdleAnim();
+        anim.DeactivateTrail();
         LevelManager.inst.stamina=LevelManager.inst.maxStamina;
         transform.position = LevelManager.inst.checkPoint;
     }

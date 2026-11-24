@@ -116,6 +116,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             dragTooShort = false;
             if (!aiming)
             {
+                LevelManager.inst.ResetTime(); //maybe?
                 LevelManager.inst.SlowDownTime();
                 AudioManager.inst.PlayAimSound();
 

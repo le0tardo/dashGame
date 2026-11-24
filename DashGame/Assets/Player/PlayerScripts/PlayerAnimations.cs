@@ -4,10 +4,8 @@ public class PlayerAnimations : MonoBehaviour
 {
     [SerializeField] Animator anim;
 
-    string idle = "idle";
     string aim = "aim";
     string launch = "launch";
-    string dashHit = "hit";
     string stop = "stop";
 
     [SerializeField] public bool aiming=false;
@@ -26,11 +24,13 @@ public class PlayerAnimations : MonoBehaviour
 
         moveScript = GetComponentInParent<PlayerMove>();
         if(flashScript==null)flashScript = GetComponent<FlashRed>();
+
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public void IdleAnim()
     {
-        anim.SetTrigger(idle);
+        anim.Play("spawn");
         aiming = false;
     }
 
@@ -41,7 +41,6 @@ public class PlayerAnimations : MonoBehaviour
             aiming = true;
             anim.SetTrigger(aim);
         }
-        //else aiming=false?
 
     }
 
@@ -50,11 +49,6 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetTrigger(launch);
         aiming= false;
         aimPower = 0f;
-    }
-
-    public void DashHitAnim()
-    {
-        anim.SetTrigger(dashHit);
     }
 
     public void StopAnim()
@@ -70,10 +64,6 @@ public class PlayerAnimations : MonoBehaviour
         {
             flashScript.Flash();
         }
-    }
-    public void BounceAnim()
-    {
-        anim.SetTrigger("bounce");
     }
 
     public void FallAnim()
