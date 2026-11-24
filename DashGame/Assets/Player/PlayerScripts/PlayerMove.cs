@@ -90,6 +90,9 @@ public class PlayerMove : MonoBehaviour
 
         if(speed>maxVelocity)speed = maxVelocity;
 
+        //arbitrary boost for feels?
+        speed = speed * 1.5f;
+
         currentVelocity = direction * speed;
 
         transform.position = new Vector3(transform.position.x, ground_y, transform.position.z); //safety snap back to floor
@@ -110,11 +113,6 @@ public class PlayerMove : MonoBehaviour
         {
             currentVelocity = Vector3.zero;
             isMoving = false;
-
-            if (playerAnimator != null)
-            {
-                playerAnimator.SetTrigger("idle");
-            }
 
             if (anim != null) anim.StopAnim();
             moveState = MoveState.Idle;

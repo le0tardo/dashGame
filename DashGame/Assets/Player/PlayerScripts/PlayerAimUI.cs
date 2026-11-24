@@ -10,6 +10,9 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     [SerializeField] private float maxDragDistance = 10f;
     [SerializeField] private float speedMultiplier = 3f;
     [SerializeField] private float maxSpeed = 20f;
+    [SerializeField] private float dragDistance = 0f;
+    [SerializeField] private float minimumDragDistance = 1f;
+    [SerializeField] bool dragTooShort=false;
 
     [Header("Aim Arrow")]
     [SerializeField] private SpriteRenderer arrowSprite;
@@ -78,6 +81,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         moveScript.moveState = PlayerMove.MoveState.Idle;
         anim.aiming = false;
         playerAnimator.ResetTrigger("idle");
+        ResetArrow();
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -105,10 +109,11 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         Vector3 dragVector = ConvertScreenVectorToWorldVector(screenDragVector);
 
         Vector3 launchDirection = -dragVector.normalized;
-        float dragDistance = dragVector.magnitude;
+        dragDistance = dragVector.magnitude;
 
-        if (dragDistance > 0.25)
+        if (dragDistance >= minimumDragDistance)
         {
+            dragTooShort = false;
             if (!aiming)
             {
                 LevelManager.inst.SlowDownTime();
@@ -120,7 +125,6 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
                 }
                 if (playerAnimator != null)
                 {
-                    //playerAnimator.SetTrigger("aim"); //move this to a bool check in animator script
                     anim.SetAim();
                 }
 
@@ -129,12 +133,28 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
             AimArrow(launchDirection, dragDistance);
         }
+        else
+        {
+            dragTooShort = true;
+            //abort aiming, dont dash etc... set idle trigger
+            ResetArrow();
+            anim.IdleAnim();
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!isDragging) return;
         if (LevelManager.inst.playerIsDead) return;
+
+        if (dragTooShort)
+        {
+            //reset all shit here...
+            anim.IdleAnim();
+            ResetArrow();
+            isDragging = false;
+            return;
+        }
 
         aiming = false;
         anim.aiming = false;
@@ -207,7 +227,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         #region //Melee region
 
         else
-        {
+        { /* skip melee
             Vector3 playerPos = moveScript.gameObject.transform.position;
 
             Plane groundPlane = new Plane(Vector3.up, playerPos);
@@ -234,6 +254,7 @@ public class PlayerAimUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
                     print("clicked exactly on player position");
                 }
             }
+            */
         }
         #endregion
 

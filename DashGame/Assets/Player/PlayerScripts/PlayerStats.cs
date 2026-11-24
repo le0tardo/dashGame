@@ -31,6 +31,10 @@ public class PlayerStats : MonoBehaviour
         move.StartKnockBack(hitPos, dmg/10);
         SubtractHealth(dmg);
         CameraShake.inst.Shake(0.1f,dmg/4);
+
+        #if UNITY_ANDROID || UNITY_IOS
+            Handheld.Vibrate();
+        #endif
     }
 
     public void TakeLightDamage(float dmg, Vector3 hitPos)
