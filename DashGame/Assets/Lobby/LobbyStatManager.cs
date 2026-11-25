@@ -58,7 +58,7 @@ public class LobbyStatManager : MonoBehaviour
         defaultWeaponDamage= currentHero.heroWeaponDamage;
         defaultStamina = currentHero.heroStamina;
         defaultMaxSpeed = currentHero.heroMaxSpeed;
-        defaultFriction=currentHero.heroDrag;
+        defaultFriction=currentHero.heroGlide;
 
         UpdateStats();
     }
@@ -81,7 +81,7 @@ public class LobbyStatManager : MonoBehaviour
         //heroStaminaRecoverySpeed = currentHero.heroStaminaRegenSpeed + level; //skip this stat... for now...
 
         heroMaxSpeed = currentHero.heroMaxSpeed * Mathf.Pow(1f + growthRate, levelOffset);
-        heroDrag = currentHero.heroDrag; 
+        heroDrag = currentHero.heroGlide; 
         heroBounciness = currentHero.heroBounce;
 
         LobbyStatsUI.inst.DrawStats();
@@ -97,7 +97,7 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroDefence -= oldEquipment.defenceBonus;
         currentHero.heroMaxSpeed -= oldEquipment.maxSpeedBonus;
         currentHero.heroBounce -= oldEquipment.bounceBonus;
-        currentHero.heroDrag -= oldEquipment.frictionBonus;
+        currentHero.heroGlide -= oldEquipment.glideBonus;
     }
     public void EquipItem(HeroEquipmentObject equipment)
     {
@@ -109,7 +109,7 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroDefence += equipment.defenceBonus;
         currentHero.heroMaxSpeed += equipment.maxSpeedBonus;
         currentHero.heroBounce += equipment.bounceBonus;
-        currentHero.heroDrag += equipment.frictionBonus;
+        currentHero.heroGlide += equipment.glideBonus;
 
         UpdateStats();
         LobbyStatsUI.inst.DrawStats();
@@ -139,7 +139,7 @@ public class LobbyStatManager : MonoBehaviour
         sessionData.weaponDamage = currentHero.heroWeaponDamage;
         sessionData.defence = currentHero.heroDefence;
         sessionData.maxSpeed = currentHero.heroMaxSpeed;
-        sessionData.drag = currentHero.heroDrag;
+        sessionData.glide = currentHero.heroGlide;
         sessionData.bounce = currentHero.heroBounce;
 
         sessionData.helmet = LobbyEquipmentManager.inst.currentHelmet;
@@ -161,14 +161,14 @@ public class LobbyStatManager : MonoBehaviour
         currentHero.heroWeaponDamage=defaultWeaponDamage;
         currentHero.heroStamina = defaultStamina;
         currentHero.heroMaxSpeed = defaultMaxSpeed;
-        currentHero.heroDrag = defaultFriction;
+        currentHero.heroGlide = defaultFriction;
 
         //also clear session data here
         sessionData.hero = null;
         //TODO add level
         sessionData.health = 0; sessionData.stamina = 0;
         sessionData.impactDamage = 0; sessionData.weaponDamage = 0; sessionData.defence = 0;
-        sessionData.maxSpeed = 0; sessionData.drag = 0; sessionData.bounce = 0;
+        sessionData.maxSpeed = 0; sessionData.glide = 0; sessionData.bounce = 0;
         sessionData.helmet = null;sessionData.mainHand = null;sessionData.offHand = null;sessionData.buckle=null;
 
 #endif

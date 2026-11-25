@@ -82,7 +82,7 @@ public class UpgradeButton : MonoBehaviour
 
             case UpgradeObject.UpgradeStat.DragBonus:
                 //stats.heroDrag += upgrade.upgradeAmount;
-                levelStats.drag += upgrade.upgradeAmount;
+                levelStats.glide += upgrade.upgradeAmount;
                 break;
 
             case UpgradeObject.UpgradeStat.BounceBonus:

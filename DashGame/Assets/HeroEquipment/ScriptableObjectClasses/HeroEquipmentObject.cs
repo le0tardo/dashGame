@@ -33,7 +33,7 @@ public class HeroEquipmentObject : ScriptableObject //this class only for visual
 
     public float maxSpeedBonus;
     public float bounceBonus;
-    public float frictionBonus;
+    public float glideBonus;
 
 
 

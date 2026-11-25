@@ -12,7 +12,8 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Move & Bounce")]
     [SerializeField] private float stopThreshold = 0.1f;
-    [SerializeField] public float drag = 2f;
+    [SerializeField] public float drag = 100f; //drag - glide = friction
+    [SerializeField] public float glide = 2f;
     [SerializeField] public float bounciness = 0.85f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private float fallSpeed = 15f;
@@ -80,7 +81,7 @@ public class PlayerMove : MonoBehaviour
     public void SetMoveStatsAfterLevelUp()
     {
         maxVelocity = LevelManager.inst.maxSpeed;
-        drag = LevelManager.inst.drag;
+        drag = LevelManager.inst.glide;
         bounciness = LevelManager.inst.bounce;
     }
 
@@ -105,9 +106,13 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveAndBounce()
     {
-        float sweetDrag = drag / 2;
+        float baseDrag = 100f; //needs to be larger than glide... 0 is not good... clamp at 1?
+        float friction = baseDrag - glide;
+        if(friction<1)friction = 1; //hard cap to avoid infinity glide
 
-        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, sweetDrag * Time.deltaTime);
+        print("drag: " + baseDrag + ". Glide: " + glide + ". final friction = " + friction);
+
+        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, friction * Time.deltaTime);
 
         // Stop check
         if (currentVelocity.magnitude <= stopThreshold)

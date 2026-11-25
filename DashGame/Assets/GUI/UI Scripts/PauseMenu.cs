@@ -56,6 +56,6 @@ public class PauseMenu : MonoBehaviour
         regenStat.text= levelStats.staminaRegenRate.ToString();
         speedStat.text=levelStats.maxSpeed.ToString();
         bounceStat.text=(levelStats.bounce*100).ToString();
-        dragStat.text=levelStats.drag.ToString();
+        dragStat.text=levelStats.glide.ToString();
     }
 }

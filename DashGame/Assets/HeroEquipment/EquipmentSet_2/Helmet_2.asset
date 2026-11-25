@@ -16,11 +16,12 @@ MonoBehaviour:
   equipmentSlot: 0
   equipmentIcon: {fileID: 21300000, guid: 77af132453bd4834e88e20f7309671bf, type: 3}
   equipmentPrefab: {fileID: 5013687426528502590, guid: 566a1f8da57c12f44bf2bdf4316f3ca8, type: 3}
-  healthBonus: 5
+  healthBonus: 10
   staminaBonus: 0
   staminaRegenBonus: 0
-  impactDamageBonus: 15
+  impactDamageBonus: 10
   weaponDamageBonus: 0
+  defenceBonus: 0
   maxSpeedBonus: 0
   bounceBonus: 0
-  frictionBonus: 10
+  glideBonus: 0

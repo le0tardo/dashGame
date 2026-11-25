@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] public float defence;
     [SerializeField] public float maxSpeed;
     [SerializeField] public float bounce;
-    [SerializeField] public float drag;
+    [SerializeField] public float glide;
 
 
     [Header("Other stats")]
@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour
         heroStats.heroWeaponDamage = sessionData.weaponDamage;
         heroStats.heroDefence = sessionData.defence;
         heroStats.heroMaxSpeed = sessionData.maxSpeed;
-        heroStats.heroDrag=sessionData.drag;
+        heroStats.heroGlide=sessionData.glide;
         heroStats.heroBounce=sessionData.bounce;
 
         //also set from base hero stats...
@@ -108,18 +108,18 @@ public class LevelManager : MonoBehaviour
 
         maxSpeed = heroStats.heroMaxSpeed;
         bounce = heroStats.heroBounce;
-        drag=heroStats.heroDrag;
+        glide=heroStats.heroGlide;
 
         //set hero movement stats
         playerMove.maxVelocity = maxSpeed;
-        playerMove.drag = drag;
+        playerMove.glide = glide;
         playerMove.bounciness = bounce;
     }
 
     public void SetStatsAfterLevelUp()
     {
         playerMove.maxVelocity = maxSpeed;
-        playerMove.drag = drag;
+        playerMove.glide = glide;
         playerMove.bounciness = bounce;
 
         playerMove.SetMoveStatsAfterLevelUp();
@@ -129,7 +129,7 @@ public class LevelManager : MonoBehaviour
     {
         Time.timeScale = timeScale;
 
-        if (stamina < maxStamina && timeScale>0)
+        if (stamina < maxStamina && timeScale>0 && !playerIsDead )
         {
             FillStamina();
         }
@@ -210,7 +210,7 @@ public class LevelManager : MonoBehaviour
         staminaRegenRate = staminaRegenRate++;
 
         maxSpeed = MathF.Floor(maxSpeed * Mathf.Pow(1f + growthRate, levelOffset));
-        drag = drag++;
+        glide = glide++;
 
         bounce = MathF.Floor(bounce * Mathf.Pow(1f + growthRate, levelOffset) * 100f) / 100f; //to perserve decimal points...
 

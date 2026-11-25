@@ -6128,7 +6128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 109367940}
   m_Layer: 5
-  m_Name: drag
+  m_Name: glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9360,7 +9360,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Drag
+  m_text: 'Glide
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e8549546b0d85b48a8f995196258ac4, type: 2}
   m_sharedMaterial: {fileID: 6951614934988282750, guid: 6e8549546b0d85b48a8f995196258ac4, type: 2}
@@ -32782,6 +32784,7 @@ MonoBehaviour:
   pet: {fileID: 11400000, guid: 0a69b1b87fb8ebf49b9ab15a286d685a, type: 2}
   petIcon: {fileID: 536250699}
   equippedMarker: {fileID: 1892127612}
+  markerGfx: {fileID: 0}
   petPrefab: {fileID: 5923446241407114055, guid: 97d756cebb3f14441bf30af435ce27d1, type: 3}
   equipPetSound: {fileID: 8300000, guid: 045e0438ee6f1cb4e81aeb7cb31490ea, type: 3}
   clp: {fileID: 1539435565}
@@ -33352,6 +33355,7 @@ MonoBehaviour:
   pet: {fileID: 11400000, guid: 2d274ea845dcc724b945a8f1d27ac757, type: 2}
   petIcon: {fileID: 726864417}
   equippedMarker: {fileID: 1892127612}
+  markerGfx: {fileID: 0}
   petPrefab: {fileID: 5885583095379383350, guid: abd72d0d5cc2710448762b94843e2bf5, type: 3}
   equipPetSound: {fileID: 8300000, guid: 045e0438ee6f1cb4e81aeb7cb31490ea, type: 3}
   clp: {fileID: 1539435565}

@@ -14,7 +14,7 @@ public class SessionData : ScriptableObject
     public float weaponDamage;
     public float defence;
     public float maxSpeed;
-    public float drag;
+    public float glide;
     public float bounce;
 
     public HeroEquipmentObject helmet;

@@ -24,4 +24,4 @@ MonoBehaviour:
   defenceBonus: 5
   maxSpeedBonus: 0
   bounceBonus: 0
-  frictionBonus: 0
+  glideBonus: 0
