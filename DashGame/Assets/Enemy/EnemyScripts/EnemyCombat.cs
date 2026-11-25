@@ -114,6 +114,7 @@ public class EnemyCombat : MonoBehaviour, IEnemy
     {
         if (distanceToPlayer > attackRange) return;
         Vector3 halfwayPosition = (transform.position + player.transform.position) * 0.5f;
+        HitFxManager.inst.HitSprite(halfwayPosition);
         player.TakeDamage(damage, halfwayPosition);
     }
 

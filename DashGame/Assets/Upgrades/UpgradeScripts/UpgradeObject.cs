@@ -14,7 +14,7 @@ public class UpgradeObject : ScriptableObject
         WeaponDamageBonus,
         DefenceBonus,
         MaxSpeedBonus,
-        DragBonus,
+        GlideBonus,
         BounceBonus
     }
 

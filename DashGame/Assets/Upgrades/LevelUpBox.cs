@@ -20,6 +20,7 @@ public class LevelUpBox : MonoBehaviour
         anim.SetTrigger("pop");
 
         AudioManager.inst.PlayCustomSound(multiPop, 0.5f);
+        CameraShake.inst.StopAllCoroutines();
 
 
 

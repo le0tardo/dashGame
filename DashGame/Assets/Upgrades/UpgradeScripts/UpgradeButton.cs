@@ -80,7 +80,7 @@ public class UpgradeButton : MonoBehaviour
                 levelStats.maxSpeed += upgrade.upgradeAmount;
                 break;
 
-            case UpgradeObject.UpgradeStat.DragBonus:
+            case UpgradeObject.UpgradeStat.GlideBonus:
                 //stats.heroDrag += upgrade.upgradeAmount;
                 levelStats.glide += upgrade.upgradeAmount;
                 break;
@@ -111,7 +111,7 @@ public class UpgradeButton : MonoBehaviour
             UpgradeObject.UpgradeStat.WeaponDamageBonus => "Weapon Damage",
             UpgradeObject.UpgradeStat.DefenceBonus => "Defence",
             UpgradeObject.UpgradeStat.MaxSpeedBonus => "Max Speed",
-            UpgradeObject.UpgradeStat.DragBonus => "Drag",
+            UpgradeObject.UpgradeStat.GlideBonus => "Drag",
             UpgradeObject.UpgradeStat.BounceBonus => "Bounce",
             _ => string.Empty
         };

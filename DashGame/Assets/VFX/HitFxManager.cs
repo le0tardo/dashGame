@@ -12,6 +12,7 @@ public class HitFxManager : MonoBehaviour
     [SerializeField] ParticleSystem[] fireHitFx;
     [SerializeField] ParticleSystem[] dragonFireHitFx;
     [SerializeField] ParticleSystem chestSpawnFX;
+    [SerializeField] ParticleSystem[] hitSprite; 
 
     private void Awake()
     {
@@ -148,6 +149,19 @@ public class HitFxManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void HitSprite(Vector3 pos)
+    {
+        for(int i = 0; i < hitSprite.Length; i++)
+        {
+            if (!hitSprite[i].isPlaying)
+            {
+                hitSprite[i].gameObject.transform.position = pos;
+                hitSprite[i].Play();
+                return;
+            }
+        }   
     }
 
     public void SpawnChestFX(Vector3 position, Quaternion rotation)

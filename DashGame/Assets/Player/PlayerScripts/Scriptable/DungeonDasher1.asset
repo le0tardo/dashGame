@@ -24,7 +24,7 @@ MonoBehaviour:
   heroStaminaRegenSpeed: 0.25
   heroMaxSpeed: 85
   heroGlide: 20
-  heroBounce: 0.85
+  heroBounce: 0.66
   fireDamage: 0
   frostDamage: 0
   shockDamage: 0
